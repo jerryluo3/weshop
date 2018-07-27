@@ -10,7 +10,7 @@ const domain = app.globalData.DOMAIN
 const outUrl = '/pages/outurl/outurl'
 const USERINFO_BUFFER_TIME = 20000//用户信息
 const AUTHORIZE_BUFFER_TIME = 20000//授权缓存时间
-console.log(CustomerSearch)
+
 // import api from '/utils/api.js'
 
 //后端拉取的原始数据,后期不再修改
