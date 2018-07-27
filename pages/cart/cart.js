@@ -527,7 +527,7 @@ Page({
                   wx.navigateTo({
                     url: '/pages/member/member'
                   })
-                }, 2000) //延迟时间
+                }, 1000) //延迟时间
               }
             });
             //that.getCartList();
