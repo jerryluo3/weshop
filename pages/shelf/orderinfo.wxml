@@ -25,14 +25,14 @@
             <image src="/assets/shelf/wepay_ico.png" />
         </view>
         <view class="weui-flex__item">微信安全支付</view>
-        <view class="select_ico"></view>
+        <view class="select_ico" wx:if="{{paytype==1}}"><image src="/assets/shelf/choose_ico.png"></image></view>
     </view>
     <view class="weui-flex paytype_row {{paytype==2?'':'gray'}}" id="yue" data-paytype="2" bindtap="changePay">
     	<view class="pay_ico">
             <image src="/assets/shelf/wallet_ico.png" />
         </view>
         <view class="weui-flex__item">余额安全支付(<span id="usermoney">{{userInfo.mem_account}}</span>元，充值有礼)</view>
-        <view class="select_ico"></view>
+        <view class="select_ico" wx:if="{{paytype==2}}"><image src="/assets/shelf/choose_ico.png"></image></view>
     </view>
 </view>
 

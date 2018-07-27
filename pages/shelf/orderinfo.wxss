@@ -16,7 +16,8 @@
 .paytype_row{border-bottom:1px solid #eee;padding:20rpx 0;font-size:28rpx;line-height:60rpx;}
 .pay_ico{padding-right:30rpx;}
 .pay_ico image{width:60rpx;height:60rpx;display:block;}
-.select_ico{width:100rpx;}
+.select_ico{width:40rpx;display:flex;align-items:center;}
+.select_ico image{width:40rpx;height:40rpx;}
 
 
 .empty_cart{text-align:center;font-size:28rpx;padding:60rpx 0;}
