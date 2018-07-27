@@ -24,6 +24,7 @@ Page({
       paytype:1,//微信支付,
       totalPrize:0,
       oid:0,
+      userInfo:[],
   },
    changePay( e ){
      var paytype = e.currentTarget.dataset.paytype
@@ -135,17 +136,27 @@ Page({
           })
       })
   },
+    getUserInfo(){
+      var scope = this
+        var userInfo = wx.getStorageSync('userInfo')
+        scope.setData({userInfo})
+    },
   onLoad: function ( options ) {
 
     var that = this
     var oid = options.oid
+      //订单编号
       this.setData({
           oid
       })
+
+      //尝试获取总价
       var totalPrize = options.totalPrize
       if(totalPrize){
         this.setData({totalPrize})
       }
+
+      that.getUserInfo()
     that.getBLZOrderInfo(oid)
   },
 

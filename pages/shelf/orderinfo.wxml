@@ -31,7 +31,7 @@
     	<view class="pay_ico">
             <image src="/assets/shelf/wallet_ico.png" />
         </view>
-        <view class="weui-flex__item">余额安全支付(<span id="usermoney">0.00</span>元，充值有礼)</view>
+        <view class="weui-flex__item">余额安全支付(<span id="usermoney">{{userInfo.mem_account}}</span>元，充值有礼)</view>
         <view class="select_ico"></view>
     </view>
 </view>
