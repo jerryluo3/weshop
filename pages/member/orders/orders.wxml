@@ -71,9 +71,8 @@
       <view class='weui-flex order_tips'>
         <view class="weui-flex__item">          </view>
         <view class="delbtn" catchtap='delcart' data-id="{{item.onumber}}">
-          <view class="paybtn" catchtap='orderDetail' data-oid="{{item.onumber}}" data-id="{{item.onumber}}">订单详情</view>
-          <view wx:if="{{ item.status == 0 }}" class="paybtn" catchtap='wepay' data-oid="{{item.onumber}}">去支付</view>
-          <view wx:if="{{ item.status == 3 }}" class="paybtn" catchtap='showComment' data-oid="{{item.onumber}}" data-goodsid="{{item.goodsid}}">我要评论</view>
+          <view wx:if="{{ item.status == 0 }}" class="paybtn" bindtap='wepay' data-oid="{{item.onumber}}">去支付</view>
+          <view wx:if="{{ item.status == 0 }}" class="paybtn" bindtap='delBLZOrder' data-oid="{{item.onumber}}">删除订单</view>
         </view>
       </view>
     </view>

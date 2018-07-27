@@ -1,6 +1,7 @@
 // pages/member/orders/orders.js
 const app = getApp()
 var domain = app.globalData.DOMAIN
+var utils = app.globalData.utils
 Page({
 
   /**
@@ -444,7 +445,35 @@ Page({
 
   },
 
-  
+  delBLZOrder:function(e){
+      var scope = this
+
+      wx.showModal({
+          title: '警告',
+          content: '确定要删除订单吗？',
+          success: function (res) {
+              if (res.confirm) {
+                  var oid = e.currentTarget.dataset.oid;
+                  utils.post(`${domain}qiyue/delBLZMemberOrder`,{oid},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+                      wx.showToast({
+                          title: '操作成功',
+                          icon: 'none',
+                          duration: 1000,
+                          success() {
+                              setTimeout(function () {
+                                  scope.getMemberOrderList(scope.data.fromTM,scope.data.toView);
+                              }, 1000) //延迟时间
+                          }
+                      })
+                  })
+
+
+              }
+          }
+      })
+
+    },
+
 
   uploadimg: function () {//这里触发图片上传的方法
     var pics = this.data.pics;
