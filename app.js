@@ -205,17 +205,35 @@ App({
     tapScan( e ){
       wx.scanCode({
         success: (res) => {
-            var shop_id
-          var url = res.result
-            var result = url.match(/\/\d+.html/g)[0]
-            if(!!result){
-                shop_id = result.match(/\d+/g)[0]
-            }else{
-                shop_id = url.match(/\?shop_id=\d+/g).match(/\d+/g)[0]
+            console.log(res)
+            var isQRCode;
+            var isMiniCode;
+            var url
+
+            //二维码
+            isQRCode = res.hasOwnProperty('result')
+            //小程序码
+            isMiniCode = res.hasOwnProperty('path')
+
+            var shop_id = undefined;
+            //二维码
+            if( isQRCode == true ){
+
+                url = res.result
+                shop_id = url.match(/\/\d+.html/g)[0].match(/\d+/g)[0]
+
+            }
+              //小程序码
+            if( isMiniCode == true){
+
+                url = res.path
+                shop_id = url.match(/\?shopid=\d+/g)[0].match(/\d+/g)[0]
+            }
+
+            if( !!shop_id && shop_id.length!=0 ){
+                wx.setStorageSync('shop_id',shop_id)
             }
             console.log(shop_id)
-
-            wx.setStorageSync('shop_id',shop_id)
             wx.navigateTo({
                 url: '/pages/shelf/index'
             })

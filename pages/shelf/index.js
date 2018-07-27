@@ -103,6 +103,7 @@ Page({
       opened:false
     },
 
+
     cartScroll:{
         scrollY :true
     },
@@ -113,7 +114,7 @@ Page({
         input_value:"",
 
   },
-
+    tapScan:app.tapScan,
     toggleCart(){
       let cart = this.data.cart
       if( cart.opened ){

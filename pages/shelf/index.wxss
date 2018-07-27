@@ -98,6 +98,7 @@ height:68rpx;
 }
         .item.voice{}
         .item.search{}
+        .item.saoyisao{}
         .item.wechat{}
         .item.unfold{}
           .search-container .item image{width:48rpx;
@@ -108,7 +109,9 @@ margin:10rpx;
       padding:0 20rpx;
       height:100%;
       display:flex;
+      position:relative;
     }
+
     .product-scroll-view{height:100%;}
       .product{
         padding:20rpx 0;

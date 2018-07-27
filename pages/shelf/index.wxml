@@ -40,6 +40,10 @@
         <view class="item search" bindtap="search">
           <image src="/assets/shelf/search_btn.png"></image>
         </view>
+
+        <view class="item saoyisao" bindtap="tapScan">
+          <image src="/assets/shelf/saoyisao.png"></image>
+        </view>
         <!--<view class="item weui-flex__item wechat">-->
           <!--<image src="/assets/shelf/wechat.png"></image>-->
         <!--</view>-->
@@ -105,6 +109,8 @@
             </view>
           </view>
         </scroll-view>
+
+
       </view>
 
     </view>
