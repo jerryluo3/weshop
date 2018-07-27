@@ -109,7 +109,6 @@ margin:10rpx;
       padding:0 20rpx;
       height:100%;
       display:flex;
-      position:relative;
     }
 
     .product-scroll-view{height:100%;}
