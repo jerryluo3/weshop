@@ -1,0 +1,115 @@
+<!--pages/member/orders/orders.wxml-->
+
+<view class='scroll_block' wx:if="{{fromTM==1}}">
+  <scroll-view scroll-y bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-x="true" scroll-left="{{scrollLeft}}">
+    <view class="scroll-view-item {{ toView == 99 ? 'item_in' : ''}}" catchtap='orderList' data-type='99'>全部</view>
+    <view class="scroll-view-item {{ toView == 0 ? 'item_in' : ''}}" catchtap='orderList' data-type='0'>待付款</view>
+    <view class="scroll-view-item {{ toView == 1 ? 'item_in' : ''}}" catchtap='orderList' data-type='1'>待发货</view>
+    <view class="scroll-view-item {{ toView == 2 ? 'item_in' : ''}}" catchtap='orderList' data-type='2'>待收货</view>
+    <view class="scroll-view-item {{ toView == 3 ? 'item_in' : ''}}" catchtap='orderList' data-type='3'>待评论</view>
+  </scroll-view>
+</view>
+
+<view class='scroll_block' wx:else>
+<scroll-view scroll-y bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-x="true" scroll-left="{{scrollLeft}}">
+  <view class="scroll-view-item {{ toView == 99 ? 'item_in' : ''}}" bindtap='orderList' data-type='99'>全部</view>
+  <view class="scroll-view-item {{ toView == 0 ? 'item_in' : ''}}" bindtap='orderList' data-type='0'>待付款</view>
+  <view class="scroll-view-item {{ toView == 4 ? 'item_in' : ''}}" bindtap='orderList' data-type='4'>已完成</view>
+</scroll-view>
+</view>
+
+<view class="cartlist">
+
+  <block wx:for="{{orderList}}" wx:key="index">
+    <!--特卖列表-->
+    <view class="cartlist_row" data-oid="{{item.oid}}" wx:if="{{fromTM==1}}">
+      <view class='weui-flex order_title'>
+        <view class="weui-flex__item order_oid">订单号：{{item.oid}}</view>
+        <view class='order_status'>{{item.status == 0 ? '待付款' : ( item.status == 1 ? '待发货' : ( item.status == 2 ? '待收货' : ( item.status == 3 ? '待评论' : ( item.status == -1 ? '取消中' : ( item.status == -2 ? '已取消' : '售后' )) ) ) ) }}</view>
+      </view>
+      <view class="weui-flex order_info">
+        <view class='order_img'><image src='{{siteurl}}{{item.goods_thumb ? item.goods_thumb : item.goods_picture}}'></image></view>
+        <view class="weui-flex__item">
+          <view class="cart_title">
+            {{item.title}}
+          </view>
+          <view class="cart_desc">
+            <text class="pprice_money">￥{{item.fee}} * {{item.snum}}　规格：{{item.guige}}</text>
+          </view>
+        </view>
+      </view>
+      <view class='weui-flex order_tips'>
+        <view class="weui-flex__item">邮费：￥{{item.postcost}}</view>
+        <view class="delbtn" catchtap='delcart' data-id="{{item.cart_id}}">
+          <view class="paybtn" catchtap='orderDetail' data-oid="{{item.oid}}" data-id="{{item.id}}">订单详情</view>
+          <view wx:if="{{ item.status == 0 }}" class="paybtn" catchtap='delOrder' data-oid="{{item.oid}}">删除订单</view>
+          <view wx:if="{{ item.status == 0 }}" class="paybtn" catchtap='wepay' data-oid="{{item.oid}}">去支付</view>
+          <view wx:if="{{ item.status == 1 }}" class="paybtn" catchtap='cancelOrder' data-oid="{{item.oid}}">取消订单</view>
+          <view wx:if="{{ item.status == 2 || item.status == 3 }}" class="infobtn" catchtap='peisong' data-oid="{{item.oid}}">配送信息</view>
+          <view wx:if="{{ item.status == 2 }}" class="paybtn" catchtap='shouhuo' data-oid="{{item.oid}}">确定收货</view>
+          <view wx:if="{{ item.status == 3 }}" class="paybtn" catchtap='showComment' data-oid="{{item.oid}}" data-goodsid="{{item.goodsid}}">我要评论</view>
+        </view>
+      </view>
+    </view>
+    <!--便利站列表-->
+    <view class="cartlist_row" data-oid="{{item.onumber}}" wx:else>
+      <view class='weui-flex order_title'>
+        <view class="weui-flex__item order_oid">订单号：{{item.onumber}}</view>
+        <view class='order_status'>{{item.status == 0 ? '待付款' : ( item.status == 1 ? '待发货' : ( item.status == 2 ? '待收货' : ( item.status == 3 ? '待评论' : ( item.status == -1 ? '取消中' : ( item.status == -2 ? '已取消' : '售后' )) ) ) ) }}</view>
+      </view>
+      <view class="weui-flex order_info">
+        <view class='order_img'><image src='{{siteurl}}{{item.image}}'></image></view>
+        <view class="weui-flex__item">
+          <view class="cart_title">
+            {{item.title}}
+          </view>
+          <view class="cart_desc">
+            <text class="pprice_money">￥{{item.price}} * {{item.snum}}</text>
+          </view>
+        </view>
+      </view>
+      <view class='weui-flex order_tips'>
+        <view class="weui-flex__item">          </view>
+        <view class="delbtn" catchtap='delcart' data-id="{{item.onumber}}">
+          <view class="paybtn" catchtap='orderDetail' data-oid="{{item.onumber}}" data-id="{{item.onumber}}">订单详情</view>
+          <view wx:if="{{ item.status == 0 }}" class="paybtn" catchtap='wepay' data-oid="{{item.onumber}}">去支付</view>
+          <view wx:if="{{ item.status == 3 }}" class="paybtn" catchtap='showComment' data-oid="{{item.onumber}}" data-goodsid="{{item.goodsid}}">我要评论</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>
+
+<view class="gray_bg {{ isshow }}" bindtap='hiddenPeisong'>
+  <view class="kuaidi">
+    <view class="">订单号：{{peisong.oid}}</view>
+    <view class="">快递公司：{{peisong.express_name}}</view>
+    <view class="">快递单号：{{peisong.express_no}}</view>
+  </view>
+</view>
+
+<view class="gray_bg {{ orderqrshow }}" bindtap='hiddenOrderQR'>
+  <view class="kuaidi">
+    <view class="">
+      <image src='{{host}}{{orderqr}}'></image>
+    </view>
+  </view>
+</view>
+
+<view class="gray_bg {{ commentshow }}">
+  <view class="comment_block">
+    <form bindsubmit="formSubmit">
+    <view class="row_title">评论内容</view>
+    <textarea placeholder="" class="input_textarea" style='border:2prx solid #eee;' name="comment"  ></textarea>
+    <view class="row_title">评论图片</view>
+    <view class="shop_pic">
+      <block wx:for="{{pics}}" wx:for-item="i" wx:key="index">
+        <view class="shop_pic_view" bindtap='delchoose' data-ikey="{{index}}"><image src='{{siteurl}}{{i}}' class="view_img" ></image><view class="delimg"><image src='/asset/images/del_white.png' class="del_img" ></image></view></view>
+      </block>
+      <view class="shop_pic_add" bindtap='choose'><image src='/asset/images/add.png' class="add_img" ></image></view>
+    </view>
+    <button formType="submit" class="comment_btn">马上评论</button>
+    <button formType="button" bindtap='hiddenComment' class="close_btn">暂时不评</button>
+    </form>
+  </view>
+</view>

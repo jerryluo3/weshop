@@ -1,0 +1,131 @@
+<!--pages/member/fenxiao/fenxiao.wxml-->
+
+
+<view class='section fenxiao_header'>
+  <view class='fenxiao_header_c'>
+    <view class="weui-flex fenxiao_userinfo">
+      <view><image class="userinfo-avatar" src="{{userInfo.mem_avatar != '' ? userInfo.mem_avatar : userInfo.avatarUrl}}" background-size="cover"></image></view>
+      <view class="weui-flex__item ">
+          <view class="nickname">{{userInfo.mem_nickname != '' ? userInfo.mem_nickname : userInfo.nickName}} <view class="vip_ico"><image src='/asset/member/vip_ico.png'></image></view></view>  
+          <view class="mobile">{{ mobile != '' ? mobile : '手机号未绑定'}}</view>        
+      </view>
+      <view class='tjr'>
+        <text class="tjname">推荐人：{{tjr.mem_nickname ? tjr.mem_nickname : '栖约'}}</text>
+      </view>
+    </view>
+    <view class='weui-flex fenxiao_info'>
+      <view class='weui-flex__item fenxiao_info_words'>
+        <text>可提现金额(元)</text>
+        <text class='tx_money'>{{userInfo.mem_usermoney}}</text>
+      </view>
+      <view class='weui-flex__item'>
+        <view class='tx_btn' bindtap='tixian'>提现</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+
+
+<view class='fenxiao_blank'></view>
+<view class='sy_info'>
+  <view class='weui-flex sy_info_row'>
+    <view class='weui-flex__item sy_info_item' bindtap='tixianMoney'>
+      <text>已提现金额(元)</text>
+      <text class='sy_money'>{{userInfo.mem_txmoney}}</text>
+    </view>
+    <view class='weui-flex__item sy_info_item' bindtap='fenxiaoMoney'>
+      <text>累计收益(元)</text>
+      <text class='sy_money'>{{ all_money }}</text>
+    </view>
+  </view>
+</view>
+<view class="weui-grids fenxiao_tools">
+      <view class="weui-grid js_grid" catchtap='fenxiaoTeam'>
+        <view class="weui-grid__icon">
+          <image class="fx_ico" src="/asset/member/fenxiao/fx_ico_team.png" alt=""></image>
+        </view>
+        <view class="weui-grid__label">
+          <text class="fx_btn_name">我的团队</text>
+          <text class="fx_btn_fee">{{all_teamers}}人</text>
+        </view>
+      </view>
+      <view class="v-line"></view>
+      <view class="weui-grid js_grid" catchtap='popShare'>
+        <view class="weui-grid__icon">
+          <image class="fx_ico" src="/asset/member/fenxiao/fx_ico_qr.png" alt=""></image>
+        </view>
+        <view class="weui-grid__label">
+          <text class="fx_btn_name">邀请海报</text>
+          <text class="fx_btn_fee" style='height:46rpx;'></text>
+        </view>
+      </view>
+      <view class="weui-grid js_grid" catchtap='getHelp'>
+        <view class="weui-grid__icon">
+          <image class="fx_ico" src="/asset/member/fenxiao/fx_ico_help.png" alt=""></image>
+        </view>
+        <view class="weui-grid__label">
+          <text class="fx_btn_name">帮　助</text>
+          <text class="fx_btn_fee" style='height:46rpx;'></text>
+        </view>
+      </view>
+      
+    </view>
+
+
+  <view class='popbg {{popshare}}' bindtap='closeShare'></view>
+  <view class='popShare {{popshare}}'>
+    <view class='popShareC  weui-flex '>
+      <view class='weui-flex__item popShareC_row'>
+        <view class="share_btn"><button open-type="share" style='position: absolute;top:0;right:0;left:0;bottom:0;width:100%;opacity:0;'></button></view>
+        <view class='popShareC_img'><image src='/asset/images/weixin.png'></image></view>
+        <view class='popShareC_btn'>分享给朋友</view>
+      </view>
+      <view class='weui-flex__item popShareC_row' bindtap='popShareHB'>
+        <view class='popShareC_img'><image src='/asset/images/haibao.png'></image></view>
+        <view class='popShareC_btn'>生成分享海报</view>
+      </view>
+    </view>
+    <view class='popShareClose' bindtap='closeShare'>关闭</view>
+  </view>
+
+
+  <view class='popbg {{popsharehb}}' bindtap='closeSharehb'></view>
+  <view class='shareHB {{popsharehb}}'>
+    <view class='shareHB_c'>
+      <image wx:if="{{shareImg}}" src='{{siteurl}}{{shareImg}}' style='width:100%;height:950rpx;display:block'></image>
+    </view>
+    <view class='shareBtn' bindtap='save'>保存图片</view>
+  </view>
+
+  <view class='member_block' style='padding:0;'>
+
+  <view class='weui-flex tools_row' bindtap='vipPOP' wx:if="{{userInfo.mem_type!=1}}">
+    <view class='block_ico'>
+      <image src='/assets/member/ico_vip.png' mode="widthFix" ></image>
+    </view>
+    <view class='weui-flex__item block_name redfont'>
+      <text>马上成为VIP <text class="vipprice">(<text class="del">原:￥{{ year_price }}/年</text> 现:￥{{ year_vipprice }}/年)</text></text>
+    </view>
+    <view class="block_more">
+      <image src='/assets/member/more.png' mode="widthFix" />
+    </view>
+  </view>
+
+  <view class='popbg {{vippophide}}' bindtap='closevipPOP'></view>
+    <view class='popAuth {{vippophide}}'>
+      <view class='popAuth_words'>
+        <view style='font-weight:bold'>栖约惠生活年费VIP会员</view>
+        <view><text class="vipprice">现价：￥{{ year_vipprice }}/年(<text class="del">原价：￥{{ year_price }}/年</text>)</text></view>
+      </view>
+      <view class='popAuth_btn'>
+        <button open-type="primary" style='background:#cea972;color:#fff;' bindtap='vipOrder'> 马上成为VIP </button>
+      </view>
+      <view class='popAuth_close' bindtap='closevipPOP'>
+        <image src='/assets/images/pop_close1.png'></image>
+      </view>
+    </view>
+
+</view>
+

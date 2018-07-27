@@ -1,0 +1,10 @@
+/* pages/vip/vipdetail.wxss */
+
+.header{width:100%;height:160rpx;background:#464646;color:#fff;}
+.vip_item{text-align:center;position:relative;}
+.vip_ico{width:120rpx;height:120rpx;margin:0 auto;}
+.vip_ico image{width:120rpx;height:120rpx;display:inline-block;}
+.vip_words{color:#fff;font-size:28rpx;margin-top:-20rpx;}
+.item_in{background:#d1c0a6;}
+.vip_detail{width:100%;}
+.vip_detail image{width:100%;}

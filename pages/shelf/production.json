@@ -1,0 +1,12 @@
+{
+  "data":[
+    { "name": "农夫水溶C100柠檬水","stock":5,"prize":4.80,"img":"/assets/upload/1529411148_thumb.jpg","icon":"","number":0,"uid":0,"type":0},
+    { "name": "康师傅茉莉蜜茶","stock":3,"prize":2.90,"img":"/assets/upload/1529574112_thumb.jpg","icon":"","number":0,"uid":1,"type":0},
+    { "name": "统一阿萨姆奶茶焙煎绿茶","stock":1,"prize":4.50,"img":"/assets/upload/1530085819_thumb.jpg","icon":"","number":0,"uid":2,"type":3},
+    { "name": "非你杯茶港式丝袜奶茶","stock":3,"prize":5.50,"img":"/assets/upload/1515117212_thumb.jpg","icon":"","number":0,"uid":3,"type":3},
+    { "name": "香飘飘Meco牛乳茶","stock":3,"prize":2.90,"img":"/assets/upload/1515131695_thumb.jpg","icon":"","number":0,"uid":4,"type":2},
+    { "name": "乐虎氨基酸功能饮料","stock":6,"prize":5.50,"img":"/assets/upload/1529574145_thumb.jpg","icon":"","number":0,"uid":5,"type":4},
+    { "name": "康师傅冰红茶柠檬味","stock":4,"prize":2.90,"img":"/assets/upload/1529574122_thumb.jpg","icon":"","number":0,"uid":6,"type":5},
+    { "name": "酷儿橙汁饮料","stock":5,"prize":3.20,"img":"/assets/upload/1529574112_thumb.jpg","icon":"","number":0,"uid":7,"type":6}
+]
+}

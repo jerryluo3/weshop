@@ -1,0 +1,182 @@
+<!--pages/toupiao/toupiao.wxml-->
+
+<scroll-view scroll-y="true" bindscroll="scroll" scroll-top="{{scrollTop}}" bindscrolltolower="getMore" style="position:absolute; top:0; left:0; right:0; bottom:0;">
+<view class='tp_container'>
+  <view class='tp_header'>
+    <image wx:if="{{ads.ads_picture}}" src='{{siteurl}}{{ads.ads_picture}}'></image>
+  </view>
+  <view class='tp_zddw'>
+    <view class='tp_zddw_name'>嘉兴日报报业传媒集团嘉兴在线新闻网</view>
+    <view class='tp_zddw_name'>嘉兴市职业技能培训行业协会</view>
+    <view class='tp_zddw_name'>特别鸣谢: 嘉报优品沈荡酿造专卖店</view>
+  </view>
+  <view class='tp_endtime'>
+    <text class='black_bg'>截止时间</text>：<text class='red_bg'>2018</text>年<text class='red_bg'>07</text>月<text class='red_bg'>16</text>日<text class='black_bg'>00:00</text>
+  </view>
+  <form bindsubmit="formSubmit">
+  <view class='weui-flex search'>    
+    <view class='weui-flex__item search_input'>
+      <view class='search_keys_close' wx:if="{{ keys != '' }}" bindtap='delKeys'><image src='/asset/images/pop_close.png'></image></view>
+      <input type='text' placeholder='编号或公司名' name="keys" value='{{keys}}' ></input>
+    </view>
+    <view class='search_btn'><button class="submit_btn" style='position:absolute;top:0;right:0;left:0;bottom:0; opacity: 0;' formType="submit">搜索</button><image src='/asset/images/search.png'></image></view>    
+  </view>
+  </form>
+  <view class='company_list' wx:if="{{ keys == '' }}">
+    <block wx:for="{{company_list}}" wx:key="">
+    <view class='company_li'>
+      <view class='company_pic'>
+        <view class='company_no'>{{ item.tc_id < 10 ? '0'+item.tc_id : item.tc_id }}</view>
+        <view class='company_base'>
+          <view class='company_name'>{{ item.tc_title }}</view>
+          <view class='company_kouhao'>宗旨：{{item.tc_kouhao}}</view>
+        </view>
+        <image wx:if="{{item.tc_picture}}" src='{{siteurl}}{{item.tc_picture}}'></image>
+      </view>
+      <view class='company_info'>
+        <view class='weui-flex'>
+          <view class='weui-flex__item'>
+            
+            <view class='company_info_btn' bindtap="toupiao" data-index="{{index}}" data-id='{{item.tc_id}}'>
+              <view class='tp_btn_text'>
+                <text>票数：{{item.tc_nums}}</text>
+                <text class='redfont bold'>投我一票</text>
+              </view>              
+              <view class='btp_btn_img'>
+                <image src='/asset/images/tp_ico.png'></image>
+              </view>
+            </view>
+            
+          </view>
+          <view class='company_share' bindtap='popShare' data-id="{{item.tc_id}}">
+            <image src='/asset/images/share1.png'></image>
+            找人投票
+          </view>
+        </view>
+        
+      </view>
+    </view>
+    </block>
+  </view>
+  <view class='company_list' wx:else>
+    <block wx:for="{{search_company_list}}" wx:key="">
+    <view class='company_li'>
+      <view class='company_pic'>
+        <view class='company_no'>{{ item.tc_id < 10 ? '0'+item.tc_id : item.tc_id }}</view>
+        <view class='company_base'>
+          <view class='company_name'>{{ item.tc_title }}</view>
+          <view class='company_kouhao'>宗旨：{{item.tc_kouhao}}</view>
+        </view>
+        <image wx:if="{{item.tc_picture}}" src='{{siteurl}}{{item.tc_picture}}'></image>
+      </view>
+      <view class='company_info'>
+        <view class='weui-flex'>
+          <view class='weui-flex__item'>
+            <view class='company_info_btn' bindtap="toupiao" data-id='{{ item.tc_id }}' data-index='{{ index }}'>
+              <view class='tp_btn_text'>
+                <text>票数：{{item.tc_nums}}</text>
+                <text class='redfont bold'>投我一票</text>
+              </view>
+              <view class='btp_btn_img'>
+              <button formType="submit" class="btp_btn" style='position:absolute;top:0;right:0;bottom:0;left:0;'>投票</button>
+              <image src='/asset/images/tp_ico.png'></image></view>
+            </view>
+          </view>
+          <view class='company_share' bindtap='popShare' data-id="{{item.tc_id}}">
+            <image src='/asset/images/share1.png'></image>
+            找人投票
+          </view>
+        </view>
+        
+      </view>
+    </view>
+    </block>
+  </view>
+</view>
+</scroll-view>
+
+<view class="widget-goTop" bindtap="goTop" wx:if="{{ floorstatus }}">
+  <view class="gotop-wrap">
+    <view class="icon icon-top"></view> <view>顶部</view>
+  </view>
+</view>
+
+<view class='weui-flex menu'>
+  
+  <view class='weui-flex__item menu_item'>
+    <navigator url="/pages/toupiao/toupiao" open-type="redirect" hover-class="active">
+      我要投票
+    </navigator>
+  </view>
+  <view class='weui-flex__item menu_item'>
+    <navigator url="/pages/toupiao/paihang" open-type="redirect" hover-class="active">
+      目前排行
+    </navigator>
+  </view>
+  <view class='weui-flex__item menu_item'>
+    <navigator url="/pages/index/index" open-type="redirect" hover-class="active">
+      <view class='menu_main'>
+      <image src='/asset/images/3z.gif'></image>
+      </view>
+      <view class="menu_words">特卖</view>
+    </navigator>
+  </view>
+  <view class='weui-flex__item menu_item'>
+    <navigator url="/pages/toupiao/jiangxiang" open-type="redirect" hover-class="active">
+      规则奖项
+    </navigator>
+  </view>
+  <view class='weui-flex__item menu_item'>
+    <navigator url="/pages/member/member" open-type="redirect" hover-class="active">
+      我的余额
+    </navigator>
+  </view>
+</view>
+
+<view class='popbg {{pophide}}' bindtap='closeAuth'></view>
+<view class='popAuth {{pophide}}'>
+  <view class='popAuth_words'>我们需要您的授权，非常重要</view>
+  <view class='popAuth_btn'>
+    <button open-type="getUserInfo" style='background:#cea972;color:#fff;' bindgetuserinfo="userInfoHandler"> 点我授权 </button>
+  </view>
+  <view class='popAuth_close' bindtap='closeAuth'>
+    <image src='/asset/images/pop_close1.png'></image>
+  </view>
+</view>
+
+<view class='popbg {{popphone}}' bindtap='closepopphone'></view>
+<view class='popAuth {{popphone}}'>
+  <view class='popAuth_words'>我们需要您授权绑定手机</view>
+  <view class='popAuth_btn'>
+    <button open-type="getPhoneNumber" style='background:#cea972;color:#fff;' bindgetphonenumber="getPhoneNumber"> 立即授权 </button>
+  </view>
+  <view class='popAuth_close' bindtap='closepopphone'>
+    <image src='/asset/images/pop_close1.png'></image>
+  </view>
+</view>
+
+
+<view class='popbg {{popshare}}' bindtap='closeShare'></view>
+<view class='popShare {{popshare}}'>
+  <view class='popShareC  weui-flex '>
+    <view class='weui-flex__item popShareC_row'>
+      <view class="share_btn"><button open-type="share" style='position: absolute;top:0;right:0;left:0;bottom:0;width:100%;opacity:0;'></button></view>
+      <view class='popShareC_img'><image src='/asset/images/weixin.png'></image></view>
+      <view class='popShareC_btn'>分享给朋友</view>
+    </view>
+    <view class='weui-flex__item popShareC_row' bindtap='popShareHB'>
+      <view class='popShareC_img'><image src='/asset/images/haibao.png'></image></view>
+      <view class='popShareC_btn'>生成分享海报</view>
+    </view>
+  </view>
+  <view class='popShareClose' bindtap='closeShare'>关闭</view>
+</view>
+
+
+<view class='popbg {{popsharehb}}' bindtap='closeSharehb'></view>
+<view class='shareHB {{popsharehb}}'>
+  <view class='shareHB_c'>
+    <image wx:if="{{shareImg}}" src='{{siteurl}}{{shareImg}}' style='width:100%;height:950rpx;display:block'></image>
+  </view>
+  <view class='shareBtn' bindtap='save'>保存图片</view>
+</view>

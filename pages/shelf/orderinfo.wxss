@@ -1,0 +1,57 @@
+
+#pop_cart_list{max-height:400rpx;}
+.pop_cart_list{font-size:28rpx;padding:20rpx 0;}
+.pop_cart_price{padding:0 40rpx;text-align:right;}
+.pop_cart_btns{width:160rpx;}
+.pop_cart_jian,.pop_cart_nums,.pop_cart_jia{display:inline-block;}
+.pop_cart_jian{background:#fff;font-family:Arial, Helvetica, sans-serif;border-radius:50%;font-size:48rpx;width:32rpx;height:32rpx;line-height:24rpx;color:#666;text-align:center;border:1px solid #ddd;}
+.pop_cart_jia{background:#fff;font-family:Arial, Helvetica, sans-serif;border-radius:50%;font-size:40rpx;width:36rpx;height:36rpx;line-height:36rpx;color:#666;text-align:center;background:#5cc2cf;color:#fff;}
+.pop_cart_nums{padding:0 10rpx;text-align:center;font-size:28rpx;line-height:36rpx;}
+.pop_cart_name{color:#333;}
+/*****购物车结算页面******/
+.cart_info{display:block;padding:30rpx;color:#666;background:#fff;margin-bottom:30rpx;}
+.cart_info_title{border-bottom:1px solid #eee;line-height:80rpx;}
+.cart_info_title p{}
+
+.paytype_row{border-bottom:1px solid #eee;padding:20rpx 0;font-size:28rpx;line-height:60rpx;}
+.pay_ico{padding-right:30rpx;}
+.pay_ico image{width:60rpx;height:60rpx;display:block;}
+.select_ico{width:100rpx;}
+
+
+.empty_cart{text-align:center;font-size:28rpx;padding:60rpx 0;}
+.empty_cart_words{color:#888;}
+.empty_cart_btn{border:1px solid #ccc;background:#fafafa;padding:10rpx 60rpx;width:200rpx;margin:20rpx auto;color:#333;border-radius:60rpx;}
+.empty_cart_btn a{color:#333;}
+
+.cart_checkout_block{position:fixed;z-index:100;bottom:100rpx;background:#fff;height:100rpx;width:100%;border-top:1px solid #eee;}
+.cart_checkBar{padding:20rpx;align-items: center;}
+.cart_checkBar .cartico{line-height:50rpx;}
+.cartico image{width:50rpx;height:50rpx;}
+.cart_checkBar span em,.cart_checkBar span em b{color: #F40;font-style:normal; vertical-align:top;font-size:36rpx}
+.cart_checkout_btn{display:flex;}
+.cart_checkbtn{background:#5cc1cf;
+padding:10rpx 40rpx;
+margin-right:8px;
+line-height:60rpx;
+height:60rpx;
+align-self:center;
+border-radius:10rpx;
+color:white;
+font-size:28rpx;
+}
+.total{font-size:28rpx;
+line-height:33px;
+height:60rpx;
+padding-left:10rpx;
+}
+.total_price{font-size:36rpx;font-weight:bold;margin-left:10rpx;}
+.cart_counts{display:flex;}
+.gray{
+     -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+     filter: grayscale(100%);
+     color:#ccc;
+}

@@ -1,0 +1,18 @@
+<!--pages/member/fenxiao/money.wxml-->
+
+<view class="money_list">
+  <view class="weui-flex money_row">
+    <view class="time">时间</view>
+    <view class="type">类型</view>
+    <view class="amount">金额</view>
+    <view class="weui-flex__item">备注</view>
+  </view>
+  <block wx:for="{{moneyList}}" wx:key="index">
+  <view class="weui-flex money_row erow">
+    <view class="time">{{item.fx_addtime}}</view>
+    <view class="type">{{item.fx_type == 1 ? '分销' : '提现'}}</view>
+    <view class="amount">{{item.fx_amount}}</view>
+    <view class="weui-flex__item">{{item.fx_desc}}</view>
+  </view>
+  </block>
+</view>

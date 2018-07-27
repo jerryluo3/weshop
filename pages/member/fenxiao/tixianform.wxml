@@ -1,0 +1,42 @@
+<!--pages/member/fenxiao/tixianform.wxml-->
+
+<form bindsubmit="bindFormSubmit">
+<view class='section fenxiao_header'>
+  <view class='fenxiao_header_c'>
+    <view class='userMoney'>
+      <view class='tx_money'>{{userInfo.mem_usermoney}}</view>
+      <view class='tx_words'>可提现金额(元)</view>
+    </view>
+    <view class='tx_amount'><input class="txmoney" name="txmoney" value='{{inputmoney}}' placeholder="请输入金额" auto-focus ></input></view>
+    <view class='weui-flex tx_type'>
+      <view class='weui-flex__item item {{ ctype == 0 ? "item_in" : "" }}' bindtap='changeType' data-ctype='0'>
+        <view class='tx_ico'><image src='/asset/member/fenxiao/tx_ico_qy.png'></image></view>
+        <view class='tx_title'>梄约余额</view>
+        <view class='tx_desc'>提现到余额</view>
+      </view>
+      <view class='weui-flex__item item {{ ctype == 1 ? "item_in" : "" }}' bindtap='changeType' data-ctype='1'>
+        <view class='tx_ico'><image src='/asset/member/fenxiao/tx_ico_weipay.png'></image></view>
+        <view class='tx_title'>微信</view>
+        <view class='tx_desc'>微信提现</view>
+      </view>
+      <view class='weui-flex__item item {{ ctype == 2 ? "item_in" : "" }}' bindtap='changeType' data-ctype='2'>
+        <view class='tx_ico'><image src='/asset/member/fenxiao/tx_ico_alipay.png'></image></view>
+        <view class='tx_title'>支付宝</view>
+        <view class='tx_desc'>支付宝提现</view>
+      </view>
+    </view>
+    <view class='tx_account' wx:if="{{ ctype > 0 }}">
+      <view class='tx_account_row'><input class="txmoney" name="txname" placeholder="请输入姓名" ></input></view>
+      <view class='tx_account_row'><input class="txmoney" name="txaccount" placeholder="请输入账号" ></input></view>
+    </view>
+    <view><button class="tx_btn" formType="submit">立即提现</button></view>
+    <view class='tx_tips'>
+      <view class='tx_tips_row'>*提现金额≥100元，可提现至微信、支付宝。转账收取5%手续费。到账时间3-5个工作日，双休日、法定节假日顺延。</view>
+      <view class='tx_tips_row'>*提现至栖约余额，金额不限，不收取任何手续费，即时到账。</view>
+      <view class='tx_tips_row'>*栖约余额只适用于栖约惠生活平台消费，不可提现。</view>
+    </view>
+  </view>
+  
+</view>
+</form>
+

@@ -1,0 +1,35 @@
+<!--pages/member/fenxiao/order.wxml-->
+
+<view class='scroll_block'>
+  <scroll-view scroll-y bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-x="true" scroll-left="{{scrollLeft}}">
+    <view class="scroll-view-item {{ toView == 99 ? 'toview' : ''}}" catchtap='orderList' data-type='99'>全部</view>
+    <view class="scroll-view-item {{ toView == 0 ? 'toview' : ''}}" catchtap='orderList' data-type='0'>待付款</view>
+    <view class="scroll-view-item {{ toView == 1 ? 'toview' : ''}}" catchtap='orderList' data-type='1'>待发货</view>
+    <view class="scroll-view-item {{ toView == 2 ? 'toview' : ''}}" catchtap='orderList' data-type='2'>待收货</view>
+    <view class="scroll-view-item {{ toView == 3 ? 'toview' : ''}}" catchtap='orderList' data-type='3'>已完成</view>
+  </scroll-view>
+</view>
+
+<view class="cartlist">
+  <block wx:for="{{orderList}}" wx:key="index">
+  <view class="cartlist_row">
+    <view class="weui-flex">
+      <view class="weui-flex__item">
+        <view class="cart_title">
+            订单号：{{item.oid}} 
+        </view>
+        <view class="cart_title">
+            {{item.title}}
+        </view>
+        <view class="cart_desc">
+          <text class="pprice_money">{{item.fee}} * {{item.snum}}</text>
+        </view>
+      </view>
+      <view class="delbtn" catchtap='delcart' data-id="{{item.cart_id}}">
+        {{item.status == 1 ? '待发货' : ( item.status == 2 ? '待收货' : ( item.status == 3 ? '已完成' : ( item.status == 4 ? '已评论' : ( item.status == -1 ? '取消中' : ( item.status == -2 ? '已取消' : '待付款')))))}}
+        <view wx:if="{{ item.status == 0 }}" class="paybtn" catchtap='wepay' data-oid="{{item.oid}}"> 去支付 </view>
+      </view>
+    </view>
+  </view>
+  </block>
+</view>

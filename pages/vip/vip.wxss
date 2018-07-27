@@ -1,0 +1,28 @@
+/* pages/vip/vip.wxss */
+.vip_header{width:100%;}
+.vip_header image{width:100%;height:558rpx;display:block}
+.vip_btn{background:#f2f6f9;text-align:center;margin-top:20rpx;}
+.vip_btn image{width:750rpx;height:120rpx;}
+
+.ty_vip_btn{border:3rpx solid #cea972;border-radius:60rpx;width:90%;margin:0 auto 40rpx;text-align:center;padding:10rpx 0;position:relative;}
+.ty_vip_words{font-weight:bold;color:#cea972;line-height:40rpx;font-size:32rpx;}
+.ty_vip_share{font-size:24rpx;}
+.share_btn{position: absolute;top:0;right:0;left:0;bottom:0;}
+
+.vip_goods_list{width:100%;background:#fff;padding:30rpx 0;}
+.vip_goods_list_row{padding:20rpx;border-bottom:1rpx solid #eee;font-size:24rpx;position:relative;}
+.vip_goods_img{width:200rpx;height:200rpx;}
+.vip_goods_img image{width:200rpx;height:200rpx;display:block;}
+.vip_goods_info{padding:0 0 0 20rpx;}
+.vip_goods_name{font-size:32rpx;height:50rpx;line-height:50rpx;overflow:hidden;}
+.vip_goods_price{width:100%;}
+.vip_vipprice{display: inline-block;color:#e40064}
+.vip_price{padding-left:10rpx;display: inline-block;color:#aaa;text-decoration:line-through}
+.vip_buy_btn{position:absolute;right:0;bottom:20rpx;}
+.vip_goods_tips{height:110rpx;line-height:110rpx;font-size:20rpx;}
+
+.vip_title{width:100%;background:#fff;border-bottom:1rpx solid #eee;height:100rpx;line-height:100rpx;font-weight:bold;text-align:center;}
+
+.djs{color:#666;}
+.djs text{background:#5bc1d0;color:#fff;font-size:20rpx;width:50rpx;height:40rpx;line-height:40rpx;text-align:center;display:inline-block;margin:0 2rpx;border-radius:4rpx;}
+

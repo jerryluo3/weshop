@@ -1,0 +1,58 @@
+<!--pages/toupiao/jiangxiang.wxml-->
+<import src="../../wxParse/wxParse.wxml"/>
+
+
+<view class='tp_container'>
+  <view class='tp_header'>
+    <image wx:if="{{ads.ads_picture}}" src='{{siteurl}}{{ads.ads_picture}}'></image>
+  </view>
+  <view class='tp_zddw'>
+    <view class='tp_zddw_name'>嘉兴日报报业传媒集团嘉兴在线新闻网</view>
+    <view class='tp_zddw_name'>嘉兴市职业技能培训行业协会</view>
+    <view class='tp_zddw_name'>特别鸣谢: 嘉报优品沈荡酿造专卖店</view>
+  </view>
+  <view class='tp_endtime'>
+    <text class='black_bg'>截止时间</text>：<text class='red_bg'>2018</text>年<text class='red_bg'>07</text>月<text class='red_bg'>16</text>日<text class='black_bg'>00:00</text>
+  </view>
+  <view class='phb_title'>规则奖项</view>
+  <view class='jiangxiang_content'>
+    <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
+  </view>
+</view>
+
+<view class="widget-goTop" bindtap="goTop" wx:if="{{ floorstatus }}">
+  <view class="gotop-wrap">
+    <view class="icon icon-top"></view> <view>顶部</view>
+  </view>
+</view>
+
+<view class='weui-flex menu'>
+  <view class='weui-flex__item menu_item'>
+    <navigator url="/pages/toupiao/toupiao" open-type="redirect" hover-class="active">
+      我要投票
+    </navigator>
+  </view>
+  <view class='weui-flex__item menu_item'>
+    <navigator url="/pages/toupiao/paihang" open-type="redirect" hover-class="active">
+      目前排行
+    </navigator>
+  </view>
+  <view class='weui-flex__item menu_item'>
+    <navigator url="/pages/index/index" open-type="redirect" hover-class="active">
+      <view class='menu_main'>
+      <image src='/asset/images/3z.gif'></image>
+      </view>
+      <view class="menu_words">特卖</view>
+    </navigator>
+  </view>
+  <view class='weui-flex__item menu_item'>
+    <navigator url="/pages/toupiao/jiangxiang" open-type="redirect" hover-class="active">
+      规则奖项
+    </navigator>
+  </view>
+  <view class='weui-flex__item menu_item'>
+    <navigator url="/pages/member/member" open-type="redirect" hover-class="active">
+      我的余额
+    </navigator>
+  </view>
+</view>

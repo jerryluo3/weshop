@@ -1,0 +1,40 @@
+<!--pages/vip/vip.wxml-->
+<view class='vip_header'>
+  <image class="nav-icon" mode="aspectFill" src="{{siteurl}}{{header_ads.ads_picture}}" bindtap='jumpUrl' data-url="{{ header_ads.ads_url }}" />
+</view>
+<view class='vip_btn' wx:if="{{ userInfo.mem_type != 1 }}">
+  <image class="nav-icon" mode="aspectFill" src="{{siteurl}}{{button_ads.ads_picture}}" bindtap='jumpUrl' data-url="{{ button_ads.ads_url }}" />
+</view>
+<!--<view class='ty_vip_btn' wx:if="{{ userInfo.mem_type == 0 }}">
+  <view class="share_btn"><button open-type="share" style='width:100%;height:100rpx;opacity:0;'></button></view>
+  <view class='ty_vip_words'>-免费VIP体验1天-</view>
+  <view class='ty_vip_share'>分享5个微信群即可获得(还差{{ 5-shareNums }}次哦)</view>
+</view>-->
+
+<view class='vip_title'>会员专属尝鲜区</view>
+
+<view class='vip_goods_list'>
+  <block wx:for="{{tejia_list}}" wx:key="">
+  <view class='weui-flex vip_goods_list_row' bindtap='jumpUrl' data-url="/pages/goods/goods?id={{item.goods_id}}">
+    <view class='vip_goods_img'><image src='{{siteurl}}{{item.goods_picture}}'></image></view>
+    <view class="weui-flex__item vip_goods_info">
+      <view class='vip_goods_name'>{{item.goods_title}}</view>
+      <view class='vip_goods_tips weui-flex'>
+        <view class='djs weui-flex__item'>倒计时 <text>{{ tejiadataList[index][0] }}天</text><text>{{ tejiadataList[index][1] }}时</text><text>{{ tejiadataList[index][2] }}分</text><text>{{ tejiadataList[index][3] }}秒</text></view>
+        <view class="sy">剩余：{{item.goods_stocks}}件</view>
+      </view>
+      <view class='vip_goods_price'>
+        <view class='vip_vipprice'>VIP价:￥{{item.goods_vipprice}}</view>
+        <view class='vip_price'>零售价:￥{{item.goods_price}}</view>
+      </view>
+      <view class='vip_buy_btn'>
+        <button type="default" class="goods_btn" style='background:#e40064;color:#fff;padding:0rpx 20rpx;height:60rpx;line-height:60rpx;margin:20rpx 20rpx 0 0;font-size:28rpx;' bindtap="primary">马上抢</button>
+      </view>
+    </view>
+  </view>
+  </block>
+</view>
+
+
+<import src="/template/footer/footer.wxml"/>
+<template is="tempFooter" data="{{footer}}"/>

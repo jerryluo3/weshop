@@ -1,0 +1,29 @@
+/* pages/member/address/address.wxss */
+
+.address_block{background:#fff;margin-bottom:20rpx;font-size:24rpx;color:#111;}
+.address_info{padding:40rpx;border-bottom:1rpx solid #eee;font-size:28rpx;line-height:44rpx;position:relative;}
+.address_info_row{display:block}
+.address_use{position:absolute;top:40rpx;right:40rpx;}
+.address_use image{width:40rpx;height:40rpx;display: block;}
+.useaddr{border:1rpx solid #eee;padding:6rpx 15rpx;border-radius:6rpx;color:#666;}
+.address_tools{color:#888;}
+.address_tools{padding:0 20rpx;height:70rpx;line-height:70rpx;}
+.address_tools_op{text-align: center}
+.op_edit{ display:inline-block;margin-left:20rpx;}
+.op_edit image{width:26rpx;height:26rpx;display: inline-block;vertical-align:middle;margin-right:4rpx;}
+
+.isdefault{display: block}
+.isdefault image{width:26rpx;height:26rpx;display: inline-block;vertical-align:middle;margin-right:4rpx;}
+.checked{color:#d4237a;}
+
+.address_btn{height:100rpx;line-height:100rpx;text-align:center;color:#fff;background:#5cc1cf;width:100%;font-size:32rpx;}
+.address_btn image{width:26rpx;height:26rpx;display: inline-block;vertical-align:middle;margin-right:10rpx;}
+
+.btn_block{position:fixed;bottom:0;height:100rpx;width:100%;background:#fff;color:#888;}
+.btn_block_item{width:120rpx;text-align:center;position:relative;}
+.btn_block_item image{width:50rpx;height:50rpx;display:block;margin:4px auto 0;}
+.btn_block_item text{font-size:24rpx;display:block;}
+.btn_block_item .cart_nums_t{position:absolute;top:10rpx;right:15rpx;background:#e40064;color:#fff;border-radius:50%;font-size:24rpx;padding:0 12rpx;}
+.border_right_gray{border-right:1rpx solid #eee;}
+.kefu_btn{position:absolute;top:0;left:0;right:0;bottom:0;}
+.addtocart{background:#e40064;color:#fff;text-align:center;display:block;height:100rpx;line-height:100rpx;}

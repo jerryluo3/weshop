@@ -1,0 +1,6 @@
+<!--index.wxml-->
+<view class="container">
+
+  <import src="/template/footer/footer.wxml"/>
+  <template is="tempFooter" data="{{footer}}"/>
+</view>

@@ -1,0 +1,46 @@
+<!--pages/member/address/address.wxml-->
+
+<block wx:for="{{addressList}}" wx:key=''>
+<view class='address_block'>
+  <view class='address_info'>
+    <view class='address_info_row'>{{item.a_contacter}},{{item.a_mobile}}</view>
+    <view class="address_info_row">{{item.a_address}}</view>
+    <view class="address_use" wx:if="{{ comefrom == 'cart' }}" bindtap='useAddress' data-aid="{{ item.a_id }}"><view wx:if="{{ (useaddr == item.a_id) || ( useaddr=='' && item.a_isdefault == 1 ) }}"><image src='/asset/images/checked.png'></image></view><view class="useaddr" wx:else>使用</view></view>
+  </view>
+  <view class="weui-flex address_tools">
+    <view class='weui-flex__item' wx:if="{{item.a_isdefault == 1 }}">
+      <view class='isdefault checked'><image src='/asset/member/radio_on.png'></image>设为默认</view>
+    </view>
+    <view class='weui-flex__item' wx:else>
+      <view class='isdefault' bindtap="setDefault" data-aid="{{item.a_id}}"><image src='/asset/member/radio_off.png'></image>设为默认</view>
+    </view>
+    <view class="address_tools_op">
+      <view class="op_edit" bindtap='editAddress' data-url="/pages/member/address/modaddress?id={{item.a_id}}"><image src='/asset/member/edit.png' mode="widthFix"></image>编辑</view>
+      <view class="op_edit" bindtap='delbtn' data-id="{{item.a_id}}"><image src='/asset/member/del.png' mode="widthFix"></image>删除</view>
+    </view>
+  </view>
+</view>
+</block>
+
+
+
+
+<view class='weui-flex btn_block'>
+  <view class='btn_block_item border_right_gray' bindtap='jumpUrl' data-url='/pages/index/index'>
+    <image src='/asset/images/home.png'></image>
+    <text>首页</text>
+  </view>
+  <view class='btn_block_item border_right_gray' bindtap='jumpUrl' data-url='/pages/member/member'>
+    <image src='/asset/images/member.png'></image>
+    <text>我的</text>
+  </view>
+  <view class='btn_block_item' bindtap='jumpUrl' data-url='/pages/cart/cart'>
+    <view class="cart_nums_t">{{cartnums}}</view>
+    <image src='/asset/images/cart.png'></image>
+    <text>购物车</text>
+  </view>
+  
+  <view class="weui-flex__item" bindtap='popCart'>
+    <view class="address_btn" bindtap='editAddress' data-url="/pages/member/address/modaddress"><image src='/asset/member/add.png' mode="widthFix"></image>添加新地址</view>
+  </view>
+</view>

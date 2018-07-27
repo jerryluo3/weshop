@@ -1,0 +1,39 @@
+<!--pages/member/kefu/kefu.wxml-->
+<import src="../../../wxParse/wxParse.wxml"/>
+
+<view class='kefu_block'>
+    <view class='kefu_btn'>
+      <button open-type="contact" class="member_kefu" style='opacity:0'></button>
+      <view class='kefu_btn_text'>在线客服</view>
+    </view>
+    <view class='kefu_time'>
+      <view class='kefu_ico'><image src='/asset/member/kefu_ico.png'></image></view>
+      客服热线：0573-82531509
+    </view>
+    <view class='kefu_tips'>温馨提示：客服工作时间 9:00-7:30</view>
+</view>
+
+<view class='kefu_content'>
+  <view class='kefu_content_title'>
+    <view class='kefu_content_ico'><image src='/asset/member/kefu_ico_1.png'></image></view>
+    猜你想问
+  </view>
+  <view class='kefu_content_c'>
+    <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
+  </view>
+</view>
+<view class='kefu_content'>
+  <view class='kefu_content_title'>
+    <view class='kefu_content_ico'><image src='/asset/member/kefu_ico_2.png'></image></view>
+    退换货流程
+  </view>
+  <view class='kefu_content_c'>
+    <template is="wxParse" data="{{wxParseData:tcontent.nodes}}"/>
+  </view>
+
+
+</view>
+
+
+<import src="/template/footer/footer.wxml"/>
+<template is="tempFooter" data="{{footer}}"/>

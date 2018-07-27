@@ -1,0 +1,15 @@
+/* pages/member/fenxiao/order.wxss */
+
+.section{margin:0;}
+.scroll_block{white-space: nowrap;background:#fff;color:#000;}
+.scroll-view-item{display: inline-block;padding:0 30rpx;height:80rpx;line-height:80rpx;color:#000;font-size:28rpx;}
+.toview{color:#5cc1cf;border-bottom:1rpx solid #5cc1cf;}
+
+.cartlist_title{height:80rpx;width:100%;line-height:80rpx;color:#fff;background:#9d8557;text-align:center;margin-bottom:20rpx;}
+.cartlist{margin:20rpx 0;}
+.cartlist_row{border-bottom:1rpx solid #ccc;padding:20rpx;background:#fff;font-size:28rpx;}
+
+.delbtn{width:180rpx;text-align:center;}
+.delbtn image{width:50rpx;height:50rpx;}
+
+.paybtn{background:#ff6633;color:#fff;margin:30rpx auto 0;width:140rpx;border-radius:6rpx;font-size:24rpx;line-height:60rpx;}

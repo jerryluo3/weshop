@@ -1,0 +1,33 @@
+<!--pages/member/tools/address/modaddress.wxml-->
+
+<form bindsubmit="formSubmit">
+<view class="rz_body">
+  <view class="rz_body_row">
+    <view class="weui-flex">
+      <view class="row_title">收货人</view>
+      <view class="weui-flex__item"><input placeholder="请输入收货人" value='{{contacter}}' name="a_contacter" maxlength='-1' class="input_txt" ></input></view>
+    </view>
+  </view>
+  <view class="rz_body_row">
+    <view class="weui-flex">
+      <view class="row_title">联系电话</view>
+      <view class="weui-flex__item"><input placeholder="请输入电话" value='{{mobile}}' name="a_mobile" maxlength='-1' class="input_txt" ></input>
+        
+      </view>
+    </view>
+  </view>
+
+  <view class="rz_body_row">
+    <view class="weui-flex">
+      <view class="row_title">收货地址</view>
+      <view class="weui-flex__item addr">
+        <view class='address_ico' bindtap="chooseLocation"><image src='/asset/images/addr_ico.png'></image></view>
+        
+        <textarea name="a_address" value='{{address.address ? address.address : address }}' class="a_address" placeholder="请输入街道地址门牌号" />
+      </view>
+    </view>
+  </view> 
+
+</view>
+<button class="rz_btn" formType="submit">保存</button>
+</form>

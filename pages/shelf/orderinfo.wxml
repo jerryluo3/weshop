@@ -1,0 +1,54 @@
+<view class="cart_info">
+	<view class="cart_info_title"><p>已选商品(<span id="nums_cart">1</span>)</p></view>
+
+    <view id="pop_cart_list">
+        <scroll-view class="sort-scroll-view" scroll-y="{{listScroll.scrollY}}">
+            <view  wx:for="{{orderInfo}}" wx:key="item.id" class="weui-flex pop_cart_list">
+                <view class="weui-flex__item pop_cart_name">{{item.title}}</view>
+                <view class="pop_cart_price">x {{item.snum}}</view>
+                <view class="pop_cart_price">{{item.price}} 元</view>
+             </view>
+        </scroll-view>
+    </view>
+</view>
+
+<view class="cart_info">
+	<view class="cart_info_title"><p>请选择支付方式</p></view>
+    <!--<view class="weui-flex paytype_row pay_selected hide" id="alipay" data-tid="0">-->
+    	<!--<view class="pay_ico">-->
+        <!--<image src="/assets/shelf/alipay_ico.png" /></view>-->
+        <!--<view class="weui-flex__item">支付宝安全支付</view>-->
+        <!--<view class="select_ico"></view>-->
+    <!--</view>-->
+    <view class="weui-flex paytype_row {{paytype==1?'':'gray'}}" id="wepay" data-paytype="1" bindtap="changePay">
+    	<view class="pay_ico">
+            <image src="/assets/shelf/wepay_ico.png" />
+        </view>
+        <view class="weui-flex__item">微信安全支付</view>
+        <view class="select_ico"></view>
+    </view>
+    <view class="weui-flex paytype_row {{paytype==2?'':'gray'}}" id="yue" data-paytype="2" bindtap="changePay">
+    	<view class="pay_ico">
+            <image src="/assets/shelf/wallet_ico.png" />
+        </view>
+        <view class="weui-flex__item">余额安全支付(<span id="usermoney">0.00</span>元，充值有礼)</view>
+        <view class="select_ico"></view>
+    </view>
+</view>
+
+<view class="weui-flex cart_checkout_block" style="bottom:0;">
+    <view class="weui-flex__item cart_checkBar weui-flex">
+        <view class="cartico">
+            <image src="/assets/shelf/ico-cart.png" width="30" height="30"></image>
+        </view>
+        <view class="total weui-flex">合计：
+            <view class="cart_counts weui-flex__item theme-color-f40-text" >¥
+                <view class="total_price">{{totalPrize}}</view>
+            </view>
+        </view>
+
+    </view>
+    <view class="cart_checkout_btn">
+        <view class="weui-btn weui-btn_mini cart_checkbtn" id="checkOrder" bindtap="pay">立即支付</view>
+    </view>
+</view>

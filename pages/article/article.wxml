@@ -1,0 +1,42 @@
+<!--pages/article/article.wxml-->
+
+<view class="swiper">
+  <swiper indicator-dots="true" autoplay="true" interval="3000" duration="1200">
+    <swiper-item wx:for="{{ads_list}}" wx:key="{{index}}">
+      <image class="nav-icon" mode="aspectFill" src="{{siteurl}}{{item.ads_picture}}" bindtap='jumpUrl' data-url="{{ item.ads_url }}" />
+    </swiper-item>
+  </swiper>
+</view>
+
+<view class='article_cat weui-flex'>
+  <view class='weui-flex__item'>
+    <view class='article_cat_img'><image src='/asset/images/new.png'></image></view>
+    <view class='article_cat_name'>最新</view>
+  </view>
+  <view class='weui-flex__item'>
+    <view class='article_cat_img'><image src='/asset/images/hot.png'></image></view>
+    <view class='article_cat_name'>热门</view>
+  </view>
+  <view class='weui-flex__item'>
+    <view class='article_cat_img'><image src='/asset/images/zt.png'></image></view>
+    <view class='article_cat_name'>专题</view>
+  </view>
+</view>
+
+<view class="article_list">
+  <block wx:for="{{article_list}}" wx:key="index">
+  <view class="weui-flex article_list_row">
+    <view class="article_img" bindtap='getarticleview' data-id="{{item.id}}"><image src='{{siteurl}}{{item.picture}}'></image></view>
+    <view class='weui-flex__item'>
+      <view class="article_title" bindtap='getarticleview' data-id="{{item.id}}">{{item.title}}</view>
+      <view class="article_tips">
+        <view class='article_tips_zan' bindtap="acticleZan" data-key="{{index}}" data-id='{{item.id}}'><image src='/asset/images/zan.png'></image><text>{{item.zan}}</text></view>
+        <view class='article_tips_view'><image src='/asset/images/view.png'></image><text>{{item.count}}</text></view>
+      </view>
+    </view>
+  </view>
+  </block>
+</view>
+
+<import src="/template/footer/footer.wxml"/>
+<template is="tempFooter" data="{{footer}}"/>

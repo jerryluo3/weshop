@@ -1,0 +1,184 @@
+<!--pages/goods/goods.wxml-->
+<import src="../../wxParse/wxParse.wxml"/>
+
+<view class="goods_img" wx:if="{{ showinfo == 0 }}">
+  <image wx:if="{{goods.goods_picture}}" src='{{siteurl}}{{goods.goods_picture}}'></image>
+</view>
+
+<view class="goods_price_block">
+  <view class="weui-flex">
+    <view class="weui-flex__item">
+      <view class="goods_price">
+        <view class="goods_price_item">
+          <text class="goods_redprice">VIP价：<text class="big_price">￥{{goods.goods_vipprice}}</text></text>
+        </view>
+        <view class="goods_price_item">
+          <text class="">零售价：￥{{goods.goods_price}}</text>
+        </view>
+      </view>
+      <view class='goods_stocks'>
+        <text>已售出{{goods.goods_sales}}件 · 库存：{{goods.goods_stocks}}</text>
+      </view>
+    </view>
+    <view class="goods_share" bindtap='popShare'>
+      <image src='/asset/images/share1.png'></image>
+    </view>
+  </view>
+</view>
+
+<view class="goods_title">
+  {{goods.goods_title}}
+</view>
+
+<view class='goods_desc weui-flex' bindtap='popGoodsDesc'>
+  <view class="weui-flex__item">商品说明</view>
+  <view class='goods_desc_more'><image src='/asset/images/more.png'></image></view>
+</view>
+
+<view class='goods_attr'>
+  <view class="goods_attr_row">配送区域：{{goods.goods_area}}</view>
+  <view class="goods_attr_row">配送时间：{{goods.goods_pstime}}</view>
+  <view class="goods_attr_row">商品标签：{{goods.goods_tags}}</view>
+</view>
+
+
+<view class="goods_comment">
+  <view class='goods_comment_title weui-flex'>
+    <view class='weui-flex__item title_name'>商品评价 ({{ comment_list.length }})</view>
+    <view class='comment_title_more'></view>
+  </view>
+  <view class="goods_comment_content">
+      <block wx:for="{{comment_list}}" wx:key="item">
+      <view class="goods_comment_row">
+        <view class="comment_info weui-flex">
+          <view class='weui-flex__item comment_user'><image wx:if="{{item.mem_avatar}}" src='{{item.mem_avatar}}'></image>{{item.mem_nickname}}</view>
+          <view class='comment_time'>{{item.c_addtime}}</view>
+        </view>
+        <view class='comment_desc'>
+            {{item.c_comment}}
+        </view>
+        <view class='comment_pics' wx:if="{{ item.pics != '' }}">
+          <block wx:for="{{item.pics}}" wx:key="idx" wx:for-item="subitem">
+          <view class='comment_img'><image src='{{siteurl}}{{subitem}}' data-src="{{siteurl}}{{subitem}}" bindtap="previewImage"></image></view>
+          </block>
+        </view>
+      </view>
+      </block>
+  </view>
+</view>
+
+<view class="goods_content">
+  <view class='goods_content_title'>商品描述</view>
+  <view class='goods_content_main'>
+    <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
+  </view>
+</view>
+
+
+
+
+
+<view class='weui-flex btn_block'>
+  <view class='btn_block_item border_right_gray' bindtap='gohome'>
+    <image src='/asset/images/home.png'></image>
+    <text>首页</text>
+  </view>
+  <view class='btn_block_item border_right_gray' bindtap='gotocart'>
+    <view class="cart_nums_t">{{cartnums}}</view>
+    <image src='/asset/images/cart.png'></image>
+    <text>购物车</text>
+  </view>
+  <view class='btn_block_item'>
+    <image src='/asset/images/kefu.png'></image>
+    <text>客服</text>
+    <view class="kefu_btn"><button open-type="contact" style='width:100%;height:100rpx;opacity:0;'></button></view>
+  </view>
+  
+  <view class="weui-flex__item" wx:if="{{ goods.goods_starttime > nowtime }}">
+    <view class="addtocart unused">即将开售</view>
+  </view>
+  <view class="weui-flex__item" bindtap='popCart' wx:else>
+    <view class="addtocart">立即购买</view>
+  </view>
+</view>
+
+<view class="pop_bg {{ hideitem == 1 ? 'hideitem' : '' }}" bindtap='closePopCart' id="pop_bg"></view>
+<view class="pop_cart {{ hideitem == 1 ? 'hideitem' : '' }}">
+  <view class='weui-flex pop_cart_title'>
+    <view class="pop_cart_img"><image wx:if="{{goods.goods_picture}}" src='{{siteurl}}{{goods.goods_picture}}'></image></view>
+    <view class="weui-flex__item pop_cart_mtitle">
+      <view class="goods_redprice pop_price" wx:if="{{ guige_price == 0 }}">￥{{goods.goods_vipprice}}</view>
+      <view class="goods_redprice pop_price" wx:else>￥{{guige_price}}</view>
+      <view class="goods_guige" wx:if="{{ guige_name == '' }}">请选择 规格</view>
+      <view class="goods_guige" wx:else>已选择 {{guige_name}}</view>
+    </view>
+    <view class="pop_cart_close" bindtap='closePopCart'><image src='/asset/images/pop_close.png'></image></view>
+  </view>
+  <view class='pop_cart_guige'>
+    <view class="pop_cart_guige_title">规格</view>
+    <block wx:for="{{ guige }}" wx:key="">
+    <view class='pop_cart_guige_item {{ guige_key == index ? "guige_itemin" : "" }}' data-key="{{ index }}" data-price="{{ item[1] }}" data-vipprice="{{ item[2] }}" data-guige="{{ item[0] }}" data-fencheng="{{ item[3] }}" bindtap='chooseGuige'>{{ item[0] }}</view>
+    </block>       
+  </view>
+  <view class="weui-flex pop_cart_nums">
+      <view class='weui-flex__item'>数量　<text class="redfont" wx:if="{{ limitnums > 0 }}">限购{{ limitnums }}件</text></view>
+      <view class='pop_cart_nums_btns'>
+        <view class="nums_jian" bindtap='cartNumsJIAN' wx:if="{{ nums > 1}}"><image src='/asset/images/jian.png'></image></view>
+        <view class="nums_jian gray_bg" bindtap='cartNumsJIAN' wx:else><image src='/asset/images/jian_disable.png'></image></view>
+        <input type='number' class='nums' value='{{ nums }}' bindblur="updateCartNums" />
+        <view class="nums_jia" bindtap='cartNumsADD' wx:if="{{ (limitnums > 0 && nums < limitnums) || (limitnums == 0 && nums > 0) }}"><image src='/asset/images/jia.png'></image></view>
+        <view class="nums_jia gray_bg" bindtap='cartNumsADD' wx:else><image src='/asset/images/jia_disable.png'></image></view>
+      </view>
+  </view>
+  <view class='pop_cart_submit' bindtap='addToCart'>确定</view>
+</view>
+
+<view class='popbg {{popgoodsdesc}}' bindtap='closeGoodsDesc'></view>
+<view class='popSanbao {{popgoodsdesc}}'>
+  <view class='sanbao_title'>
+    <view class='sanbao_title_bg'><image src='/asset/images/sanbao_title_bg.png'></image></view>
+    <view class='sanbao_title_w'>商品说明</view>
+  </view>
+  <view class='sanbao_row'>
+    {{ goods.cat_desc }}
+  </view>
+  <view class='popSanbao_close' bindtap='closeGoodsDesc'>
+    <image src='/asset/images/pop_close1.png'></image>
+  </view>
+</view>
+
+<view class='popbg {{pophide}}' bindtap='closeAuth'></view>
+<view class='popAuth {{pophide}}'>
+  <view class='popAuth_words'>我们需要您的授权，非常重要</view>
+  <view class='popAuth_btn'>
+    <button open-type="getUserInfo" style='background:#cea972;color:#fff;' bindgetuserinfo="userInfoHandler"> 点我授权 </button>
+  </view>
+  <view class='popAuth_close' bindtap='closeAuth'>
+    <image src='/asset/images/pop_close1.png'></image>
+  </view>
+</view>
+
+<view class='popbg {{popshare}}' bindtap='closeShare'></view>
+<view class='popShare {{popshare}}'>
+  <view class='popShareC  weui-flex '>
+    <view class='weui-flex__item popShareC_row'>
+      <view class="share_btn"><button open-type="share" style='position: absolute;top:0;right:0;left:0;bottom:0;width:100%;opacity:0;'></button></view>
+      <view class='popShareC_img'><image src='/asset/images/weixin.png'></image></view>
+      <view class='popShareC_btn'>分享给朋友</view>
+    </view>
+    <view class='weui-flex__item popShareC_row' bindtap='popShareHB'>
+      <view class='popShareC_img'><image src='/asset/images/haibao.png'></image></view>
+      <view class='popShareC_btn'>生成分享海报</view>
+    </view>
+  </view>
+  <view class='popShareClose' bindtap='closeShare'>关闭</view>
+</view>
+
+
+<view class='popbg {{popsharehb}}' bindtap='closeSharehb'></view>
+<view class='shareHB {{popsharehb}}'>
+  <view class='shareHB_c'>
+    <image wx:if="{{shareImg}}" src='{{siteurl}}{{shareImg}}' style='width:100%;height:950rpx;display:block'></image>
+  </view>
+  <view class='shareBtn' bindtap='save'>保存图片</view>
+</view>

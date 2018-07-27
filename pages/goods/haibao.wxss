@@ -1,0 +1,31 @@
+/* pages/goods/haibao.wxss */
+
+page{background:#fff;}
+.hb{padding:30rpx;}
+.hb_header{border-bottom:1rpx solid #ccc;text-align:right;}
+.hb_header image{height:97rpx;width:300rpx;}
+
+.hb_main{margin:20rpx 0;text-align:center;}
+.hb_main .hb_tj{font-size:32rpx;text-align:center;width:100%;}
+.hb_main .hb_shen{font-size:38rpx;}
+
+.hb_pic{width:100%;border-radius:10rpx;text-align:center;margin-top:60rpx;position:relative;}
+.hb_pic image{width:100%;height:680rpx;display: block;border-radius:20rpx;}
+
+.hb_pic .avatar{position:absolute;z-index:10;width:100%;}
+.hb_pic .avatar image{width:120rpx;height:120rpx;border:6rpx solid #fff;margin:-64rpx auto 0;border-radius:50%}
+
+
+.hb_footer{width:100%;}
+.hb_ewm{width:200rpx;}
+.hb_ewm image{width:200rpx;height:200rpx;display:inline-block;}
+.hb_ewm text{font-size:24rpx;text-align:center;display:inline-block;}
+
+.hb_goods_title{font-size:32rpx;font-weight:bold;}
+.hb_goods_desc{font-size:24rpx;color:#666;}
+.hb_goods_vipprice{color:#c3b17f;font-size:32rpx;margin-top:40rpx;}
+.hb_goods_vipprice .vipprice{color:#e7096c;font-size:48rpx;font-weight:bold;}
+.hb_goods_price{font-size:28rpx;text-decoration:line-through;color:#666;}
+
+
+.bluefont{color:#5fcada;}

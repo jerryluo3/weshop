@@ -1,0 +1,7 @@
+/* pages/member/fenxiao/money.wxss */
+
+.money_list{text-align:center;background:#fff;line-height:60rpx;}
+.money_row{border-bottom:1rpx solid #ddd;font-size:20rpx;}
+.time{width:160rpx;}
+.type{width:100rpx;}
+.amount{width:100rpx;}

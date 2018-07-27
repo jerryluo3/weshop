@@ -1,0 +1,54 @@
+<!--pages/member/orders/orders.wxml-->
+
+<view class='scroll_block'>
+  <scroll-view scroll-y bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-x="true" scroll-left="{{scrollLeft}}">
+    <view class="scroll-view-item {{ toView == 0 ? 'item_in' : ''}}" catchtap='orderList' data-type='0'>待付款</view>
+    <view class="scroll-view-item {{ toView == 1 ? 'item_in' : ''}}" catchtap='orderList' data-type='1'>待发货</view>
+    <view class="scroll-view-item {{ toView == 2 ? 'item_in' : ''}}" catchtap='orderList' data-type='2'>待收货</view>
+    <view class="scroll-view-item {{ toView == 3 ? 'item_in' : ''}}" catchtap='orderList' data-type='3'>已完成</view>
+    <view class="scroll-view-item {{ toView == 4 ? 'item_in' : ''}}" catchtap='orderList' data-type='4'>售后</view>
+  </scroll-view>
+</view>
+
+<view class="cartlist">
+  <block wx:for="{{orderList}}" wx:key="index">
+  <view class="cartlist_row" data-oid="{{item.oid}}">
+    <view class="weui-flex">
+      <view class="weui-flex__item">
+        <view class="cart_title">
+            订单号：{{item.oid}} 
+        </view>
+        <view class="cart_title">
+            {{item.title}}
+        </view>
+        <view class="cart_desc">
+          <text class="pprice_money">{{item.fee}} * {{item.snum}}</text>
+        </view>
+      </view>
+      <view class="delbtn" catchtap='delcart' data-id="{{item.cart_id}}">
+        {{item.status == 0 ? '待付款' : ( item.status == 1 ? '待发货' : ( item.status == 2 ? '待收货' : ( item.status == 3 ? '已完成' : ( item.status == -1 ? '取消中' : ( item.status == -2 ? '已取消' : '售后' )) ) ) ) }}
+        <view wx:if="{{ item.status == 0 }}" class="paybtn" catchtap='wepay' data-oid="{{item.oid}}"> 去支付 </view>
+        <view wx:if="{{ item.status == 1 }}" class="paybtn" catchtap='cancelOrder' data-oid="{{item.oid}}"> 取消订单 </view>
+        <view wx:if="{{ item.status == 2 }}" class="paybtn" catchtap='shouhuo' data-oid="{{item.oid}}"> 确定收货 </view>
+        <view wx:if="{{ item.status == 2 && item.ptype == 0 }}" class="paybtn" catchtap='peisong' data-oid="{{item.oid}}"> 快递信息 </view>
+      </view>
+    </view>
+  </view>
+  </block>
+</view>
+
+<view class="gray_bg {{ isshow }}" catchtap='hiddenPeisong'>
+  <view class="kuaidi">
+    <view class="">订单号：{{peisong.oid}}</view>
+    <view class="">快递公司：{{peisong.p_company}}</view>
+    <view class="">快递单号：{{peisong.p_number}}</view>
+  </view>
+</view>
+
+<view class="gray_bg {{ orderqrshow }}" catchtap='hiddenOrderQR'>
+  <view class="kuaidi">
+    <view class="">
+      <image src='{{host}}{{orderqr}}'></image>
+    </view>
+  </view>
+</view>

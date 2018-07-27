@@ -1,0 +1,27 @@
+<!--pages/goods/haibao.wxml-->
+<view class='hb'>
+  <view class='hb_main'>
+    <view class='hb_tj'>"我是 <text class="bluefont">{{userInfo.mem_nickname}}</text> 推荐给您<text class="bluefont">【{{goods.goods_hb_title}}】</text>"</view>
+    <view class='hb_shen'>为您省了<text class='redfont'>{{goods.goods_price}}</text>元，一起享受特惠吧</view>
+    <view class='hb_pic'>
+        <view class='avatar'><image src='{{userInfo.mem_avatar}}'></image></view>
+        <image src='{{siteurl}}{{goods.goods_picture}}'></image>
+    </view>
+  </view>
+
+  <view class='hb_footer'>
+    <view class="weui-flex">
+      <view class="weui-flex__item">
+        <view class='hb_goods_title'>{{goods.goods_hb_title}}</view>
+        <view class='hb_goods_desc'>{{goods.goods_desc}}</view>
+        <view class='hb_goods_vipprice'>VIP专享价￥<text class="vipprice">{{goods.goods_vipprice}}</text>元</view>
+        <view class='hb_goods_price'>普通价￥{{goods.goods_price}}元</view>
+      </view>
+      <view class="hb_ewm">
+        <image src='{{siteurl}}data/ewm/1.png'></image>
+        <text>长按识别二维码</text>
+      </view>
+    </view>
+  </view>
+  <view class='tips' bindtap='saveImageToPhotosAlbum'>点击保存图片</view>
+</view>

@@ -1,0 +1,25 @@
+<!--pages/articleview/articleview.wxml-->
+<import src="../../wxParse/wxParse.wxml"/>
+
+<view class="article_header">
+  {{row.title}}
+</view>
+
+<view class="article_main">
+  <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
+</view>
+
+<view class='article_comment'>
+
+</view>
+
+<view class='article_ads {{showad}}' wx:if="{{row.ads_picture}}">
+  <view class='article_ads_c'>
+    <image class='close_btn' src='/asset/images/pop_close.png' bindtap='close_ad'></image>
+    <image wx:if="{{row.ads_picture}}" bindtap='jumpUrl' data-url="{{row.ads_url}}" src='{{siteurl}}{{row.ads_picture}}'></image>
+  </view>
+</view>
+
+
+<import src="/template/footer/footer.wxml"/>
+<template is="tempFooter" data="{{footer}}"/>

@@ -1,0 +1,61 @@
+<template name="tempFooter">
+  <view class="footer-container weui-flex">
+    <block wx:for="{{footer}}" wx:key="{{index}}">
+      <!--<view class="icon-container weui-flex__item {{item.active?'active':''}}">-->
+      <view class="icon-container weui-flex__item">
+        <navigator url="{{item.pagePath}}" open-type="redirect" hover-class="active" wx:if="{{item.navigator}}">
+          <image class="icon" src="{{item.active?item.selectedIconPath:item.iconPath}}"/>
+          <view class="text {{item.active?'theme-color-cyan-text':''}}">
+            {{item.text}}
+          </view>
+        </navigator>
+        <view hover-class="active" wx:else style="align-self:center;margin:0 auto;" bindtap="indexScan">
+          <image class="icon" src="{{item.active?item.selectedIconPath:item.iconPath}}" style="margin-top:8rpx;"/>
+          <view class="text {{item.active?'theme-color-cyan-text':''}}" style="font-size:20rpx;color:#d4237a">
+            {{item.text}}
+          </view>
+        </view>
+      </view>
+      <!--<view class="bottom-item" wx:if="{{item.pageUrl == ('/' + thisurl)}}" hover-class="active">-->
+        <!--<navigator url="{{item.pagePath}}" open-type="redirect" hover-class="active">-->
+          <!--<view wx:if="{{item.pagePath == '/pages/cart/cart'  && popcartnums > 0}}" class="popcart_nums" data-nums="{{popcartnums}}">{{popcartnums}}</view>-->
+          <!--<image src="{{item.selectedIconPath}}" mode="widthFix" class="item-img"></image>-->
+          <!--<view class="item-text" style="color: {{selectedColor}};">{{item.text}}</view>-->
+        <!--</navigator>-->
+      <!--</view>-->
+      <!--<view class="bottom-item" wx:else hover-class="active">-->
+        <!--<navigator url="{{item.pagePath}}" open-type="redirect" hover-class="active">-->
+          <!--<view wx:if="{{item.pagePath == '/pages/cart/cart' && popcartnums > 0}}" class="popcart_nums" data-nums="{{popcartnums}}">{{popcartnums}}</view>-->
+          <!--<image src="{{item.iconPath}}" mode="widthFix" class="item-img"></image>-->
+          <!--<view class="item-text" style="color: {{color}}">{{item.text}}</view>-->
+        <!--</navigator>-->
+      <!--</view>-->
+    </block>
+
+  </view>
+  <view class="patcher"></view>
+</template>
+
+<!--<template name="goHome">-->
+  <!--<navigator url="/pages/index/index" open-type="redirect" class="goHome" hover-class="active">-->
+    <!--<image src="/asset/images/home.png" mode="widthFix"></image>-->
+  <!--</navigator>-->
+<!--</template>-->
+
+<!--<template name="popkefu">-->
+  <!--<view class='popkefu'>-->
+    <!--<button open-type="contact" class="popkefu_btn" style='opacity:0'></button>-->
+    <!--<image src="/asset/images/popkefu.png" mode="widthFix"></image>-->
+  <!--</view>-->
+<!--</template>-->
+
+<!--<template name="popAuth">-->
+  <!--<view class='popbg {{pophide}}' bindtap='closeAuth'></view>-->
+  <!--<view class='popAuth {{pophide}}'>-->
+    <!--<view class="popAuth_logo"><image src='/asset/images/auth_logo.png'></image></view>-->
+    <!--<view class='popAuth_words'>我们需要您的授权，非常重要</view>-->
+    <!--<view class='popAuth_btn'>-->
+      <!--<button open-type="getUserInfo" style='background:#068595;color:#fff;' bindgetuserinfo="userInfoHandler"> 点我授权 </button>-->
+    <!--</view>-->
+  <!--</view>-->
+<!--</template>-->

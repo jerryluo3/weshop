@@ -1,0 +1,33 @@
+<!--pages/member/info/info.wxml-->
+
+<form bindsubmit="formSubmit">
+<view class="rz_body">
+  <view class="rz_body_row">
+    <view class="weui-flex">
+      <view class="row_title">头像</view>
+      <view class="weui-flex__item">
+          <view class='shop_pic_view'><image src="{{ avatar != '' ? avatar : '/asset/images/add.png' }}" bindtap="chooseAvatar" class="view_img" ></image></view>
+          <input type='text' name="mem_avatar" value='{{avatar}}' style='display:none' ></input>
+      </view>
+    </view>
+  </view>
+
+  <view class="rz_body_row">
+    <view class="weui-flex">
+      <view class="row_title">昵称</view>
+      <view class="weui-flex__item" bindtap="chooseLocation"><input placeholder="请输入昵称" value='{{user.mem_nickname ? user.mem_nickname : "" }}' name="mem_nickname" maxlength='-1' class="input_txt" ></input></view>
+    </view>
+  </view> 
+
+  <view class="rz_body_row">
+    <view class="weui-flex">
+      <view class="row_title">手机</view>
+      <view class="weui-flex__item"><input placeholder="请输入电话" value='{{user.mem_mobile}}' name="mem_mobile" maxlength='-1' class="input_txt" ></input></view>
+    </view>
+  </view>
+
+  
+
+</view>
+<button class="rz_btn" formType="submit">保存</button>
+</form>

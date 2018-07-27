@@ -1,0 +1,81 @@
+/* pages/member/tools/address/modaddress.wxss */
+
+.rz_body{background:#fff;font-size:28rpx;}
+.rz_body_row{border-bottom:1rpx solid #eee;padding:10rpx 20rpx;height:80rpx;line-height:80rpx;}
+.rz_logo{width:150rpx;height:150rpx;margin:0 auto;border:1rpx solid #eee;}
+.row_title{margin-right:30rpx;width:150rpx;}
+.input_txt{font-size:28rpx;}
+.input_textarea{width:500rpx;padding:10rpx 0;height:200rpx;}
+
+.shop_un_location{padding:10rpx 0;text-align:center;}
+.un_location_p{color:#000;}
+.un_location_span{color:#777;}
+
+.location_choose,.location_clear{border:1rpx solid #ccc;color:#000;height:80rpx;line-height:80rpx;padding:10rpx 30rpx;text-align:center;margin:0 20rpx;border-radius:10rpx;}
+.location_choose{border:1rpx solid #ff6600;color:#ff6600;}
+
+.shop_pic_add{width:70rpx;height:70rpx;border:1rpx solid #ddd;padding:20rpx;}
+.add_img{width:70rpx;height:70rpx;}
+
+.a_address{width:80%;height:80rpx;line-height:40rpx;}
+
+.input {
+  padding-top: 300rpx;
+  width: 100%;
+}
+
+.input input {
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1px #d9d9d9 solid;
+  border-top: 1px #d9d9d9 solid;
+  padding: 20rpx 50rpx;
+}
+.citypickers{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  min-height: 100%;
+  background-color: red;
+}
+
+.citypicker{
+  color:#000;
+}
+.citybody {
+  position: fixed;
+  bottom: 0px;
+}
+
+.cityheader {
+  position: absolute;
+  top:0px;
+  width: 100%;
+  z-index: 4;
+}
+
+.city-cancel {
+  float: left;
+  margin: 20rpx;
+  color: #818181;
+}
+
+.city-true {
+  float: right;
+  margin: 20rpx;
+  color: #2FB42E
+}
+
+.section .picker {
+  background-color: #fff;
+  border-bottom: 1px #d9d9d9 solid;
+  border-top: 1px #d9d9d9 solid;
+  padding: 20rpx;
+}
+
+.addr{position:relative;}
+.addr .address_ico{position:absolute;top:-6rpx;right:0;padding:0 10px;z-index:100;}
+.addr .address_ico image{width:60rpx;height:60rpx;margin-top:10rpx;}
+
+
+.rz_btn{background:#5cc1cf;height:80rpx;line-height:80rpx;color:#fff;margin:20rpx;text-align:center;border-radius:10rpx;}

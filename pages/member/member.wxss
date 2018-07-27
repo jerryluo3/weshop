@@ -1,0 +1,54 @@
+/* pages/member/member.wxss */
+
+.member_block{background:#fff;width:100%;margin-bottom:20rpx;padding:20rpx 0;font-size:28rpx;}
+.member_info{padding:10rpx 0;font-size:28rpx;margin-bottom:20rpx;}
+.member_avatar{width:100rpx;height:100rpx;margin:0 20rpx;}
+.member_avatar image{width:100rpx;height:100rpx;border-radius:50%;}
+.member_nickname{padding:10rpx 0 0;font-weight:bold;font-size:28rpx;}
+.member_mobile{color:#888;}
+.vip_ico{width:76rpx;height:24rpx;display:inline-block;}
+.vip_ico image{width:76rpx;height:24rpx;display:block;}
+.scope_mobile{background:#e40064;color:#fff;padding:4rpx 10rpx;border-radius:6rpx;width:120rpx;text-align:center;display: inline-block;}
+.info_more{width:40rpx;height:40rpx;padding:20rpx;}
+.info_more image{width:40rpx;height:40rpx;display: block;}
+
+.order-block{padding-top:0;}
+.member_block_title{padding:20rpx;font-size:28rpx;border-bottom:1rpx solid #eee;}
+.member_block_title_name{font-weight:bold;line-height:70rpx;height:70rpx;}
+.title_more{height:40rpx;text-align:right;}
+.title_more_words{display: inline-block;line-height:70rpx;vertical-align:middle;margin-right:6rpx;}
+.title_more_img{width:30rpx;height:30rpx;display:inline-block; vertical-align:middle}
+.title_more_img image{width:30rpx;height:30rpx;display:block;}
+
+.order_status_list{padding:20px 0;font-size:28rpx;}
+.order_status{text-align:center;border-right:1rpx solid #eee;position:relative;}
+.order_status image{width:100rpx;height:100rpx;display:block;margin:0 auto;}
+
+.status_list_li{width:100rpx;height:100rpx;margin:0 auto;position:relative;}
+.order_nums_tip{background:#d4237a;
+color:#fff;
+border-radius:50%;
+width:20rpx;
+height:20rpx;
+line-height:20rpx;
+font-size:20rpx;
+padding:8rpx;
+position:absolute;
+right:0;
+}
+
+.block_ico{width:100rpx;height:100rpx;text-align:center;}
+.block_ico image{width:50rpx;height:50rpx;margin:25rpx 0 0;display:inline-block;}
+.block_more{width:100rpx;height:100rpx;text-align:right;}
+.block_more image{width:30rpx;height:30rpx;margin:40rpx 20rpx 0;}
+.block_name{line-height:100rpx;font-weight:bold;font-size:30rpx;}
+.tools_row{border-bottom:1rpx solid #eee;line-height:100rpx;height:100rpx;position:relative;}
+.member_kefu{position:absolute;top:0;right:0;left:0;bottom:0;}
+.del{text-decoration:line-through;color:#888;}
+.vipprice{font-weight:normal;font-size:24rpx;}
+
+.member_account{font-size:24rpx;color:#666;font-weight:normal;padding-left:40rpx;}
+
+.redfont{color:#d4237a;}
+
+

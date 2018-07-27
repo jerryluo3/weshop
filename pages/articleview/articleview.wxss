@@ -1,0 +1,11 @@
+/* pages/articleview/articleview.wxss */
+
+.article_header{border-bottom:1rpx solid #eee;line-height:48rpx;padding:20rpx;display: block;background:#fff;}
+.article_main{padding:20rpx;font-size:28rpx;background:#fff;margin-bottom:120rpx;}
+.article_main image{width:100%;}
+
+.article_ads{position:fixed;bottom:100rpx;width:100%;}
+.article_ads_c{position:relative;}
+.article_ads image{width:100%;height:120rpx;display:block;}
+.article_ads .close_btn{position:absolute;top:0;right:10rpx;background:#fff;border:1rpx solid #eee;border-radius:50%;width:30rpx;height:30rpx;padding:10rpx;}
+.article_ads .close_btn image{width:30rpx;height:30rpx;}

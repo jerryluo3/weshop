@@ -1,0 +1,52 @@
+<!--pages/member/orders/orderdetail.wxml-->
+
+
+<view class="cartlist">
+  <view class="cartlist_row" data-oid="{{order.oid}}">
+    <view class='weui-flex order_title'>
+      <view class="weui-flex__item order_oid">订单号：{{order.oid}}</view>
+      <view class='order_status'>{{order.status == 0 ? '待付款' : ( order.status == 1 ? '待发货' : ( order.status == 2 ? '待收货' : ( order.status == 3 ? '已完成' : ( order.status == -1 ? '取消中' : ( order.status == -2 ? '已取消' : '售后' )) ) ) ) }}</view>
+    </view>
+    <view class="weui-flex order_info">      
+      <view class='order_img'><image src='{{siteurl}}{{ item.goods_thumb ? item.goods_thumb : item.goods_picture }}'></image></view>
+      <view class="weui-flex__item">
+        <view class="cart_title">
+            {{order.title}}
+        </view>
+        <view class="cart_desc">
+          <text class="pprice_money">￥{{order.fee}} * {{order.snum}}　规格：{{order.guige}}</text>
+        </view>
+      </view>
+    </view>
+    <view class='weui-flex order_tips'>
+      <view class="weui-flex__item">下单时间：{{ order.order_addtime }}</view>
+    </view>
+    <view class='weui-flex order_tips' style='padding-bottom:50rpx;'>
+      <view class="weui-flex__item">订单总价：￥{{order.amounts}}</view>
+      <view class="weui-flex__item"> 邮费：￥{{order.postcost}}</view>
+    </view>
+    <view wx:if="{{ order.posttype == 1 }}">
+      <view class='weui-flex order_tips'>
+        <view class="weui-flex__item">配送方式：自提</view>
+      </view>
+    </view>
+    <view wx:else>
+      <view class='weui-flex order_tips'>
+        <view class="weui-flex__item">收货地址：{{order.a_address}}</view>
+      </view>
+      <view class='weui-flex order_tips'>
+        <view class="weui-flex__item">联系人：{{order.a_contacter}}</view>
+      </view>
+      <view class='weui-flex order_tips' style='padding-bottom:50rpx;'>
+        <view class="weui-flex__item">联系电话：{{order.a_mobile}}</view>
+      </view>
+    </view>
+    <view class='btns' style='text-align:center'>
+        <view wx:if="{{ order.status == 0 }}" class="paybtn" catchtap='delOrder' data-oid="{{order.oid}}">删除订单</view>
+        <view wx:if="{{ order.status == 0 }}" class="paybtn" catchtap='wepay' data-oid="{{order.oid}}">去支付</view>
+        <view wx:if="{{ order.status == 1 }}" class="paybtn" catchtap='cancelOrder' data-oid="{{order.oid}}">取消订单</view>
+        <view wx:if="{{ order.status == 2 }}" class="paybtn" catchtap='shouhuo' data-oid="{{order.oid}}">确定收货</view>
+        <view wx:if="{{ order.status == 3 }}" class="paybtn" catchtap='showComment' data-goodsid="{{order.goodsid}}">我要评论</view>
+    </view>
+  </view>
+</view>

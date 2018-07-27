@@ -1,0 +1,132 @@
+<!--pages/cart/cart.wxml-->
+
+
+
+<view wx:if="{{ cartlist != '' }}">
+  <view class='weui-flex addr_tab'>
+    <view class='weui-flex__item {{ posttype == 0 ? "active" : "" }}' bindtap='changePostType' data-ptype='0'>快递</view>
+    <view class='weui-flex__item {{ posttype == 1 ? "active" : "" }}' bindtap='changePostType' data-ptype='1'>自提</view>
+  </view>
+  <view wx:if="{{ posttype == 0 }}">
+    <view class='adress_list' wx:if="{{ address != '' }}">
+      <view class="weui-flex address_row " bindtap='goaddress' data-comefrom="cart">
+        <view class="address_ico"><image src='/asset/images/addr_ico.png' ></image></view>
+        <view class="weui-flex__item address_info">
+            <view class="a_name">{{address.a_contacter}} <text>{{address.a_mobile}}</text></view>
+            <view class="a_address">{{address.a_address}}</view>
+        </view>
+        <view class="address_checked">
+          <image src='/asset/images/more.png'></image>
+        </view>
+      </view>
+
+      <view class="address_bg"><image src='/asset/images/address_bg.png' width="100%"></image></view>
+    </view>
+
+    <view class="no_address" wx:if="{{ aid == '' }}">
+      <view class="no_address_p">您还没有添加收货地址</view>
+      <view class="no_address_btn" bindtap="goaddress" data-comefrom="cart">马上添加</view>
+    </view>
+  </view>
+  <view wx:else>
+    <view class='adress_list'>
+      <view class="weui-flex address_row ">
+        <view class="address_ico"><image src='/asset/images/addr_ico.png' ></image></view>
+        <view class="weui-flex__item address_info">
+            <view class="a_address">提货点</view>
+            <view class="a_address">浙江省嘉兴市迎宾大道99号嘉兴日报社北楼218</view>
+        </view>
+      </view>
+
+      <view class="address_bg"><image src='/asset/images/address_bg.png' width="100%"></image></view>
+    </view>
+  </view>
+
+</view>
+
+<view class="cart_empty" wx:if="{{ cartlist == '' }}">
+  <image src='/asset/images/cart_empty_logo.png'></image>
+  <view class='empty_words'>购物车中暂时没有商品</view>
+  <view class='empty_btn' bindtap='jumpUrl' data-url="/pages/index/index">去逛逛</view>
+</view>
+
+<view class="cart_list" wx:else>
+  <block wx:for="{{cartlist}}" wx:key=''>
+  <view class="weui-flex cart_list_row">
+    <view class="checkrow" bindtap='chooseItem' data-goodsid='{{ item.cart_goodsid }}' data-price="{{item.cart_fee}}" data-index="{{index}}" wx:if="{{ item.selected }}"><image src='/asset/member/radio_on.png'></image></view>
+    <view class="checkrow" bindtap='chooseItem' data-goodsid='{{ item.cart_goodsid }}' data-price="{{item.cart_fee}}" data-index="{{index}}"  wx:else><image src='/asset/member/radio_off.png'></image></view>
+    <view class="cart_goods_img"><image src='{{siteurl}}{{item.goods_picture}}'></image></view>
+    <view class="weui-flex__item cart_goodsinfo">
+      <view class='cart_goods_title'><text wx:if="{{ item.goods_iscommend == 1 && item.goods_commend_type == 1 }}" class='goods_state_tips'>尝鲜商品</text>{{item.goods_title}}</view>
+      <view class='cart_goods_guige'>规格：{{item.cart_goodsguige}}</view>
+      <view class='weui-flex cart_mrow'>
+          <view class='weui-flex__item goods_price'>￥{{item.cart_fee}}</view>
+          <view class="cart_pannel">
+              <view class='pop_cart_nums_btns'>
+              <view class="nums_jian" bindtap='cartNumsJIAN' data-id="{{ index }}" wx:if="{{ item.cart_goodsnum > 1}}"><image src='/asset/images/jian.png'></image></view>
+              <view class="nums_jian gray_bg" bindtap='cartNumsJIAN' data-id="{{ index }}" wx:else><image src='/asset/images/jian_disable.png'></image></view>
+              <input type='number' class='nums' value='{{ item.cart_goodsnum }}' />
+              <view class="nums_jia" bindtap='cartNumsADD' data-id="{{ item.cart_id }}" wx:if="{{ (limitnums > 0 && nums < limitnums) || (limitnums == 0 && item.cart_goodsnum > 0) }}"><image src='/asset/images/jia.png'></image></view>
+              <view class="nums_jia gray_bg" bindtap='cartNumsADD' data-id="{{ index }}" wx:else><image src='/asset/images/jia_disable.png'></image></view>
+            </view>
+          </view>
+          <view class="cart_del" bindtap="delcart" data-id="{{item.cart_id}}"><image src='/asset/member/del.png'></image></view>
+      </view>
+    </view>
+  </view>
+  </block>
+  
+</view>
+
+<view class='postcost' wx:if="{{ cartlist != '' && needcost_amount < postcost_manjian && needcost > 0 && posttype == 0 }}">
+    邮费：￥{{ postcost }}  <text>(还差{{ postcost_cha  }}元免邮费)</text>
+</view>
+
+<view class="paylist" wx:if="{{ cartlist != '' }}">
+    <view class='weui-flex paylist_row' bindtap='changePayType' data-type="0">
+      <view class='paylist_row_check' wx:if="{{ paytype == 0 }}"><image src='/asset/member/radio_on.png'></image></view>
+      <view class='paylist_row_check' wx:else><image src='/asset/member/radio_off.png'></image></view>
+      <view class="paylist_row_img"><image src='/asset/images/wepay_ico.png'></image></view>
+      <view class='weui-flex__item'>微信支付<text class='tj_pay'>推荐</text></view>
+    </view>
+    <view class='weui-flex paylist_row {{ allamount > userAccount ? "gray" : "" }}' bindtap='changePayType' data-type="1">
+      <view class='paylist_row_check' wx:if="{{ paytype == 1 }}"><image src='/asset/member/radio_on.png'></image></view>
+      <view class='paylist_row_check' wx:else><image src='/asset/member/radio_off.png'></image></view>
+      <view class="paylist_row_img"><image src='/asset/images/wallet_ico.png'></image></view>
+      <view class='weui-flex__item'>余额支付<text class='member_account'>(可用余额:{{ userAccount }})</text></view>
+    </view>
+</view>
+
+<view class="weui-flex cart_bar" wx:if="{{ cartlist != '' }}">
+  <view class='weui-flex__item all_amount' wx:if="{{ allamount < postcost_manjian && needcost > 0 && posttype == 0 }}">总计：<text class='redprice'>￥{{ all_fee }}</text></view>
+  <view class='weui-flex__item all_amount' wx:else>总计：<text class='redprice'>￥{{allamount}}</text></view>
+  <view class="checkout" bindtap='orderOrder'>确定下单</view>
+</view>
+
+
+<view class='popbg {{popPhonehide}}' bindtap='closePhoneAuth'></view>
+<view class='popAuth {{popPhonehide}}'>
+  <view class='popAuth_words'>我们需要您授权手机</view>
+  <view class='popAuth_btn'>
+    <button open-type="getPhoneNumber" style='background:#cea972;color:#fff;'bindgetphonenumber="getPhoneNumber"> 点我授权 </button>
+  </view>
+  <view class='popAuth_close' bindtap='closePhoneAuth'>
+    <image src='/asset/images/pop_close1.png'></image>
+  </view>
+</view>
+
+<view class='popbg {{pophide}}' bindtap='closeAuth'></view>
+<view class='popAuth {{pophide}}'>
+  <view class='popAuth_words'>我们需要您的授权，非常重要</view>
+  <view class='popAuth_btn'>
+    <button open-type="getUserInfo" style='background:#cea972;color:#fff;' bindgetuserinfo="userInfoHandler"> 点我授权 </button>
+  </view>
+  <view class='popAuth_close' bindtap='closeAuth'>
+    <image src='/asset/images/pop_close1.png'></image>
+  </view>
+</view>
+
+
+
+<import src="/template/footer/footer.wxml"/>
+<template is="tempFooter" data="{{footer}}"/>

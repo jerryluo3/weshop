@@ -1,0 +1,27 @@
+<!--pages/vip/vipdetail.wxml-->
+
+<import src="../../wxParse/wxParse.wxml"/>
+
+<view class='weui-flex header'>
+  <view class='weui-flex__item vip_item'>
+    <view class='vip_ico'><image src='/asset/images/vip.png'></image></view>
+    <view class='vip_words'>栖约会员</view>
+  </view>
+  <view class='weui-flex__item vip_item {{ ctype == 0 ? "item_in" : "" }}' bindtap='changeVip' data-ctype='0' >
+    <view class='vip_ico'><image src='/asset/images/vip_zhuan.png'></image></view>
+    <view class='vip_words'>专享价格</view>
+  </view>
+  <view class='weui-flex__item vip_item {{ ctype == 1 ? "item_in" : "" }}' bindtap='changeVip' data-ctype='1'>
+    <view class='vip_ico'><image src='/asset/images/vip_0.png'></image></view>
+    <view class='vip_words'>超值尝鲜</view>
+  </view>
+  <view class='weui-flex__item vip_item {{ ctype == 2 ? "item_in" : "" }}' bindtap='changeVip' data-ctype='2'>
+    <view class='vip_ico'><image src='/asset/images/vip_share.png'></image></view>
+    <view class='vip_words'>推荐返利</view>
+  </view>
+</view>
+
+
+<view class="vip_detail">
+  <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
+</view>

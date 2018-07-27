@@ -1,0 +1,172 @@
+<!--pages/member/member.wxml-->
+<view class='member_block'>
+  <view class="weui-flex member_info" wx:if="{{uid > 0}}">
+    <view class='member_avatar'><image src="{{ user.mem_avatar }}"></image></view>
+    <view class='weui-flex__item'>
+      <view class='member_nickname'>{{user.mem_nickname == '' ? '昵称' : user.mem_nickname}} <view class="vip_ico" wx:if="{{user.mem_gender == 1 || user.mem_gender == 2}}"><image src='/assets/member/vip_ico.png'></image></view></view>
+      <view class='member_mobile' wx:if="{{ !user.mem_mobile}}">手机号未受权  <view class='scope_mobile' style='position:relative'><button open-type="getPhoneNumber" style='position:absolute;top:0;left:0;right:0;bottom:0;z-index:100;opacity:0;' bindgetphonenumber="getPhoneNumber">123</button>立即授权</view></view>
+      <view class='member_mobile' wx:else>{{ user.mem_mobile }}</view>
+    </view>
+    <view class='info_more' bindtap='jumpUrl' data-url="/pages/member/info/info"><image src='/assets/images/more.png'></image></view>
+  </view>
+  <view class="weui-flex member_info" wx:else>
+    <view class='member_avatar'><image src="/assets/member/avatar.png"></image></view>
+    <view class='weui-flex__item'>
+      <view class='member_nickname'>{{user.mem_nickname}}昵称</view>
+      <view class='member_mobile'>您还没有授权获取信息  <text class='scope_mobile' bindtap='popAuth'>立即授权</text></view>
+    </view>
+    <view class='info_more'><image src='/assets/images/more.png'></image></view>
+  </view>
+</view>
+
+
+<view class='member_block order-block'>
+  <view class='weui-tab'>
+    <view class="weui-navbar">
+      <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+              <view class="weui-navbar__title">{{item}}</view>
+          </view>
+      </block>
+      <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+    <view class="weui-tab__panel">
+      <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+        <!--特卖订单-->
+        <view class='member_block order-container'>
+          <!--<view class="weui-flex member_block_title">-->
+            <!--<view class='weui-flex__item member_block_title_name'>特卖订单</view>-->
+            <!--<view class='title_more' bindtap='jumpUrl' data-url="/pages/member/orders/orders?otype=99"><view class="title_more_words">全部订单</view><view class='title_more_img'><image mode="widthFix" src='/assets/member/more.png'></image></view></view>-->
+          <!--</view>-->
+          <view class='weui-flex order_status_list'>
+            <view class='weui-flex__item order_status' bindtap='jumpUrl' data-url="/pages/member/orders/orders?otype=0&fromTM=1">
+              <view class='status_list_li'>
+                <view class='order_nums_tip' wx:if="{{ unpay_nums > 0 }}">{{ unpay_nums }}</view>
+                <image src='/assets/member/order_unpay.png' mode="widthFix" ></image>
+                <text>待付款</text>
+              </view>
+            </view>
+            <view class='weui-flex__item order_status' bindtap='jumpUrl' data-url="/pages/member/orders/orders?otype=1&fromTM=1">
+              <view class='status_list_li'>
+                <view class='order_nums_tip' wx:if="{{ unsend_nums > 0 }}">{{ unsend_nums }}</view>
+                <image src='/assets/member/order_express.png' mode="widthFix" ></image>
+                <text>待发货</text>
+              </view>
+            </view>
+            <view class='weui-flex__item order_status' bindtap='jumpUrl' data-url="/pages/member/orders/orders?otype=2&fromTM=1">
+              <view class='status_list_li'>
+                <view class='order_nums_tip' wx:if="{{ uncollect_nums > 0 }}">{{ uncollect_nums }}</view>
+                <image src='/assets/member/order_unshouhuo.png' mode="widthFix" ></image>
+                <text>待收货</text>
+              </view>
+
+            </view>
+            <view class='weui-flex__item order_status' bindtap='jumpUrl' data-url="/pages/member/orders/orders?otype=3&fromTM=1">
+              <view class='status_list_li'>
+                <view class='order_nums_tip' wx:if="{{ unfinish_nums > 0 }}">{{ unfinish_nums }}</view>
+                <image src='/assets/member/order_finish.png' mode="widthFix" ></image>
+                <text>已完成</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+        <!--便利站订单-->
+        <view class='member_block order-container'>
+          <!--<view class="weui-flex member_block_title">-->
+            <!--<view class='weui-flex__item member_block_title_name'>便利站订单</view>-->
+            <!--<view class='title_more' bindtap='jumpUrl' data-url="/pages/member/orders/orders?otype=99"><view class="title_more_words">全部订单</view><view class='title_more_img'><image mode="widthFix" src='/assets/member/more.png'></image></view></view>-->
+          <!--</view>-->
+          <view class='weui-flex order_status_list'>
+            <view class='weui-flex__item order_status' bindtap='jumpUrl' data-url="/pages/member/orders/orders?otype=0&fromTM=0">
+              <view class='status_list_li'>
+                <view class='order_nums_tip' wx:if="{{ blz_unpay_nums > 0 }}">{{ blz_unpay_nums }}</view>
+                <image src='/assets/member/order_unpay.png' mode="widthFix" ></image>
+                <text>待付款</text>
+              </view>
+            </view>
+
+            <view class='weui-flex__item order_status' bindtap='jumpUrl' data-url="/pages/member/orders/orders?otype=4&fromTM=0">
+              <view class='status_list_li'>
+                <view class='order_nums_tip' wx:if="{{ blz_finish_nums > 0 }}">{{ blz_finish_nums }}</view>
+                <image src='/assets/member/order_finish.png' mode="widthFix" ></image>
+                <text>已完成</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class='member_block' style='padding:0;'>
+  <view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/fenxiao/fenxiao" wx:if="{{ user.mem_type > 0 || user.mem_type==0}}">
+    <view class='block_ico'><image src='/assets/member/ico_vip.png' mode="widthFix" ></image></view>
+    <view class='weui-flex__item block_name redfont'>
+      <text>VIP中心</text>
+    </view>
+    <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
+  </view>
+  <!--<view class='weui-flex tools_row' bindtap='vipPOP' wx:else>-->
+    <!--<view class='block_ico'><image src='/assets/member/ico_vip.png' mode="widthFix" ></image></view>-->
+    <!--<view class='weui-flex__item block_name redfont'>-->
+      <!--<text>马上成为VIP <text class="vipprice">(<text class="del">原:￥{{ year_price }}/年</text> 现:￥{{ year_vipprice }}/年)</text></text>-->
+    <!--</view>-->
+    <!--<view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>-->
+  <!--</view>-->
+
+  <view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/recharge/recharge">
+    <view class='block_ico'><image src='/assets/member/ico_money.png' mode="widthFix" ></image></view>
+    <view class='weui-flex__item block_name'>
+      <text>我的钱包</text><text class='member_account'>账户可用余额(￥{{ user != '' ? user.mem_account : '0.00' }})</text>
+    </view>
+    <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
+  </view>
+  <view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/address/address">
+    <view class='block_ico'><image src='/assets/member/ico_addr.png' mode="widthFix" ></image></view>
+    <view class='weui-flex__item block_name'>
+      <text>收货地址</text>
+    </view>
+    <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
+  </view>
+
+
+  <!--<view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/address/address">-->
+    <!--<view class='block_ico'><image src='/assets/member/ico_company.png' mode="widthFix" ></image></view>-->
+    <!--<view class='weui-flex__item block_name'>-->
+      <!--<text>我的公司</text>-->
+    <!--</view>-->
+    <!--<view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>-->
+  <!--</view>-->
+
+
+  <view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/kefu/kefu">
+    <view class='block_ico'><image src='/assets/member/ico_kefu.png' mode="widthFix" ></image></view>
+    <view class='weui-flex__item block_name'>
+      <text>客服与帮助</text>
+    </view>
+    <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
+  </view>
+
+</view>
+
+
+
+<view class='popbg {{pophide}}' bindtap='closeAuth'></view>
+
+<view class='popAuth {{pophide}}'>
+  <view class='popAuth_words'>我们需要您的授权，非常重要</view>
+  <view class='popAuth_btn'>
+    <button open-type="getUserInfo" style='background:#cea972;color:#fff;' bindgetuserinfo="userInfoHandler"> 点我授权 </button>
+  </view>
+  <view class='popAuth_close' bindtap='closeAuth'>
+    <image src='/assets/images/pop_close1.png'></image>
+  </view>
+</view>
+
+<import src="/template/footer/footer.wxml"/>
+<template is="tempFooter" data="{{footer}}"/>
+
+

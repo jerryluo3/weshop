@@ -1,0 +1,15 @@
+<!--pages/member/fenxiao/team.wxml-->
+
+<view class="weui-flex team_bar">
+  <view class="weui-flex__item {{ selected == 1 ? 'selected' : ''}}" catchtap='chooseGrade' data-type="1">VIP成员({{firstnums}})</view>
+  <view class="weui-flex__item {{ selected == 2 ? 'selected' : ''}}" catchtap='chooseGrade' data-type="2">普通成员({{secondnums}})</view>
+</view>
+
+<view class="team_list">
+  <block wx:for="{{teamList}}" wx:key="index">
+  <view class="teamer">
+    <view class="weui-flex__item"><image src='{{item.mem_avatar}}' class="avatar"></image></view>
+    <view class="weui-flex__item teamer_name">{{item.mem_nickname}}</view>
+  </view>
+  </block>
+</view>

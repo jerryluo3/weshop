@@ -1,0 +1,188 @@
+<!--index.wxml-->
+<view class="topblank">
+  <scroll-view scroll-x="true" class="tab-h fixed" scroll-left="{{scrollLeft}}">
+    <view class="tab-item {{currentTab == 0 ?'active':''}}"  data-current="0" bindtap="swichNav" data-cid="0" >每日优选</view>
+    <block wx:for="{{navs}}" wx:key="">
+      <view class="tab-item {{currentTab == index+1 ?'active':''}}"  data-current="{{index+1}}" bindtap="swichNav" data-cid="{{item.cat_id}}" >{{item.cat_name}}</view>
+    </block>
+  </scroll-view>
+</view>
+
+<view class="swiper">
+<swiper indicator-dots="true" autoplay="true" interval="3000" duration="1200" style='height:350rpx;'>
+  <block wx:for="{{ads_list}}" wx:key="{{index}}">
+    <swiper-item style="background:url({{siteurl}}{{item.ads_picture}});background-repeat: no-repeat;background-size:100% 100%;height:350rpx; " bindtap='jumpUrl' data-url="{{item.ads_url}}">
+    </swiper-item>
+  </block>
+</swiper>
+</view>
+
+
+<view class="sanbao" wx:if="{{ cid == 0 }}">
+<view class="sanbao_block">
+  售后三包:<image class="sanbao_ico" src="/asset/images/sanbao.png" ></image>运输损坏 / <image class="sanbao_ico" src="/asset/images/sanbao.png" ></image>坏果问题 / <image class="sanbao_ico" src="/asset/images/sanbao.png" ></image>分量不足
+  <view class="sanbao_detail" bindtap='popSanbao'>详情</view>
+</view>
+</view>
+
+<view class="vip_ads" wx:if="{{ cid == 0 && (userInfo == '' ||  userInfo.mem_type == 0 ) }}">
+<block wx:for="{{midadds_list}}" wx:key="">
+  <image src="{{siteurl}}{{item.ads_picture}}" bindtap='jumpUrl' data-url="{{item.ads_url}}"></image>
+</block>
+</view>
+
+<view class="tggp" wx:if="{{ cid == 0 }}">
+<view class="tggp_title" bindtap='jumpUrl' data-url="/pages/vip/vip"><image src="/asset/images/king.png"></image>会员专属尝鲜区<view class='tggp_more'>更多<image src='/asset/images/tggp_more.png'></image></view></view>
+<scroll-view scroll-x="true" class="tggp_list" scroll-left="{{scrollLeft}}">
+  <block wx:for="{{tejia_list}}" wx:key="">
+    <view class="tggp_block" bindtap='getGoodsInfo' data-id="{{item.goods_id}}">
+      <view class='dtime' wx:if="{{ dataList[index][4] != '' }}">{{ dataList[index][4] }}</view>
+      <view class='ltime' wx:else><text>{{ tejiadataList[index][0] }}天</text><text>{{ tejiadataList[index][1] }}时</text><text>{{ tejiadataList[index][2] }}分</text><text>{{ tejiadataList[index][3] }}秒</text></view>
+      <image src='{{siteurl}}{{item.goods_picture}}'></image>
+      <view class='tggp_block_footer weui-flex'>
+        <view class='weui-flex__item tggp_tname'>{{item.goods_hb_title}}</view>
+        <view class='sy'>剩余{{item.goods_stocks}}件</view>
+      </view>
+    </view>
+  </block>
+
+</scroll-view>
+</view>
+
+<view class="main_block" wx:if="{{ cid == 0 }}">
+<view class="topblank">
+  <view class='main_block_title {{ midfixed }}'>
+    <view class='weui-flex'>
+      <view class="weui-flex__item" bindtap='chooseblock' data-id="0"><text class="{{ showblock == 0 ? 'main_block_title_item' : ''}}">正在热售</text></view>
+      <view class="weui-flex__item" bindtap='chooseblock' data-id="1"><text class="{{ showblock == 1 ? 'main_block_title_item' : ''}}">上新预告</text></view>
+    </view>
+  </view>
+</view>
+<view class="goods_list" wx:if="{{ showblock == 0 }}">
+  <block wx:for="{{goods_list}}" wx:for-item="item" wx:key="id">
+    <view class='goods_list_row' bindtap='getGoodsInfo' data-id="{{item.goods_id}}">
+      <view class="goods_img">
+        <view class='dtime' wx:if="{{ dataList[index][4] != '' }}">{{ dataList[index][4] }}</view>
+        <view class='ltime' wx:else><text>{{ dataList[index][0] }}天</text><text>{{ dataList[index][1] }}时</text><text>{{ dataList[index][2] }}分</text><text>{{ dataList[index][3] }}秒</text></view>
+        <image src='{{siteurl}}{{item.goods_commend_picture}}'></image>
+      </view>
+      <view class="goods_footer">
+        <view class='weui-flex'>
+          <view class="weui-flex__item">
+            <view class='goods_info'>
+              <view class='goods_title'>{{item.goods_title}}</view>
+              <view class='goods_tips'>零售价:<text class='goods_price'>￥{{item.goods_price}}</text>　<text class="fontred">VIP价:</text><text class='goods_vipprice'>￥{{item.goods_vipprice}}</text></view>
+            </view>
+          </view>
+          <view>
+            <button type="default" class="goods_btn" style='background:#e40064;color:#fff;padding:0rpx 30rpx;height:80rpx;line-height:80rpx;margin:30rpx 20rpx 0 0;' bindtap="primary">马上抢</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>
+<view class="goods_list" wx:if="{{ showblock == 1 }}">
+  <block wx:for="{{pre_goods_list}}" wx:key="">
+    <view class='goods_list_row'>
+      <view class="goods_img" bindtap='getGoodsInfo' data-id="{{item.goods_id}}">
+        <view class='dtime' wx:if="{{ predataList[index][4] != '' }}">{{ predataList[index][4] }}</view>
+        <view class='ltime' wx:else><text>{{ predataList[index][0] }}天</text><text>{{ predataList[index][1] }}时</text><text>{{ predataList[index][2] }}分</text><text>{{ predataList[index][3] }}秒</text></view>
+        <image src='{{siteurl}}{{item.goods_commend_picture}}'></image>
+      </view>
+      <view class="goods_footer">
+        <view class='weui-flex'>
+          <view class="weui-flex__item">
+            <view class='goods_info'>
+              <view class='goods_title'>{{item.goods_title}}</view>
+              <view class='goods_tips'>零售价:<text class='goods_price'>￥{{item.goods_price}}</text>　<text class="fontred">VIP价:</text><text class='goods_vipprice'>￥{{item.goods_vipprice}}</text></view>
+            </view>
+          </view>
+          <view wx:if="{{ item.tixing == 1 }}">
+            <button formType="submit" class="goods_btn" style='background:#fafafa;color:#999;padding:0rpx 30rpx;height:80rpx;line-height:80rpx;margin:30rpx 20rpx 0 0;'>已预约</button>
+          </view>
+          <view wx:else>
+            <form bindsubmit="tixing" data-id='{{ item.goods_id }}' data-index='{{ index }}' report-submit="true">
+              <button formType="submit" class="goods_btn" style='background:#e40064;color:#fff;padding:0rpx 30rpx;height:80rpx;line-height:80rpx;margin:30rpx 20rpx 0 0;'>提醒我</button>
+            </form>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>
+</view>
+
+
+<view class='weui-flex order_tab' wx:if="{{ cid > 0 }}">
+<view class="weui-flex__item {{ tag_all == 1 ? 'active' : '' }}" bindtap='changeOrder' data-order='1'>综合</view>
+<view class="weui-flex__item {{ tag_addtime == 1 ? 'active' : '' }}" bindtap='changeOrder' data-order='2'>上新</view>
+<view class="weui-flex__item {{ tag_price == 1 || tag_price == 2 ? 'active' : '' }}" bindtap='changeOrder' data-order='3'>价格<image src='/asset/images/price_jt{{ tag_price }}.png'></image></view>
+</view>
+
+<view class="goods_cat_list" wx:if="{{ cid > 0 }}">
+<block wx:for="{{ cat_goods_list }}" wx:key="index">
+  <view class='goods_cat_list_li {{ index%2 == 1 ? "no_border" : "" }}' bindtap='getGoodsInfo' data-id="{{item.goods_id}}">
+    <image src='{{siteurl}}{{ item.goods_thumb }}'></image>
+    <view class="goods_cat_title">{{ item.goods_title }}</view>
+    <view class="goods_cat_price"><text class='vipprice'>￥{{ item.goods_vipprice }}</text><text class='price'>￥{{ item.goods_price }}</text></view>
+  </view>
+</block>
+</view>
+
+<view class='popbg {{pophide}}' bindtap='closeAuth'></view>
+<view class='popAuth {{pophide}}'>
+<view class='popAuth_words'>我们需要您的授权，非常重要</view>
+<view class='popAuth_btn'>
+  <button open-type="getUserInfo" style='background:#cea972;color:#fff;' bindgetuserinfo="userInfoHandler"> 点我授权 </button>
+</view>
+<view class='popAuth_close' bindtap='closeAuth'>
+  <image src='/asset/images/pop_close1.png'></image>
+</view>
+</view>
+
+<view class='popbg {{sanbaohide}}' bindtap='closeSanbao'></view>
+<view class='popSanbao {{sanbaohide}}'>
+<view class='sanbao_title'>
+  <view class='sanbao_title_bg'><image src='/asset/images/sanbao_title_bg.png'></image></view>
+  <view class='sanbao_title_w'>售后三包</view>
+</view>
+<view class='sanbao_row'>
+  <image src='/asset/images/sanbao.png'></image>
+  <text class='saobao_name'>运输损坏：</text>
+  由于物流在运输过程中导致的商品质量问题，商品按损坏比例赔偿
+</view>
+<view class='sanbao_row'>
+  <image src='/asset/images/sanbao.png'></image>
+  <text class='saobao_name'>坏果问题：</text>
+  收货时如遇商品质量问题，出现鲜果损坏、其他商品破损、漏气情况，商品按损坏比例赔偿
+</view>
+<view class='sanbao_row'>
+  <image src='/asset/images/sanbao.png'></image>
+  <text class='saobao_name'>分量不足：</text>
+  收货时如遇少发、漏发问题，我司承诺全额退款
+</view>
+<view class='sanbao_row' style='text-align:center;padding-top:30rpx;' bindtap='jumpUrl' data-url="/pages/member/kefu/kefu">
+  查看更多>>
+</view>
+<view class='popSanbao_close' bindtap='closeSanbao'>
+  <image src='/asset/images/pop_close1.png'></image>
+</view>
+</view>
+
+<view class='popbg {{popadshide}}' style='opacity:0;' bindtap='closeAds'></view>
+<view class='popads {{popadshide}}'>
+<view class='popads_img' bindtap='jumpUrl' data-url="{{popads.ads_url}}">
+  <image wx:if="{{popads.ads_picture}}" src='{{siteurl}}{{popads.ads_picture}}'></image>
+</view>
+<view class='popads_close' bindtap='closeAds'>
+  <image src='/asset/images/pop_close1.png'></image>
+</view>
+</view>
+
+
+
+<import src="/template/footer/footer.wxml"/>
+<template is="tempFooter" data="{{footer}}"/>
+
+<!--<template is="popkefu" data="{{...tabBar}}"/>-->

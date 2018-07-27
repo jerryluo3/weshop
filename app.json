@@ -1,0 +1,44 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/article/article",
+    "pages/articleview/articleview",
+    "pages/shelf/index",
+    "pages/shelf/orderinfo",
+    "pages/message/message",
+    "pages/member/member",
+
+    "pages/outurl/outurl",
+    "pages/goods/goods",
+
+    "pages/cart/cart",
+    "pages/member/info/info",
+    "pages/member/recharge/recharge",
+    "pages/member/address/address",
+    "pages/member/address/modaddress",
+    "pages/member/orders/orders",
+    "pages/member/orders/orderdetail",
+    "pages/member/fenxiao/fenxiao",
+    "pages/member/fenxiao/money",
+    "pages/member/fenxiao/tixian",
+    "pages/member/fenxiao/order",
+    "pages/member/fenxiao/tixianform",
+    "pages/member/fenxiao/qr",
+    "pages/member/fenxiao/team",
+    "pages/member/kefu/kefu",
+    "pages/category/category",
+    "pages/vip/vip",
+    "pages/vip/vipdetail",
+    "pages/goods/haibao",
+    "pages/toupiao/toupiao",
+    "pages/toupiao/paihang",
+    "pages/toupiao/jiangxiang"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#5cc1cf",
+    "navigationBarTitleText": "栖约惠生活",
+    "navigationBarTextStyle":"white",
+    "enablePullDownRefresh": true
+  }
+}

@@ -1,0 +1,181 @@
+<!--index.wxml-->
+<view class="container" style="display:flex;">
+
+  <!--swiper-->
+  <view class="swiper-container">
+    <swiper autoplay="{{topSwiper.autoplay}}" interval="{{topSwiper.interval}}" circular="{{topSwiper.circular}}">
+      <block wx:for="{{topSwiper.item}}" wx:key="item.key">
+        <swiper-item>
+          <navigator url="{{item.link}}">
+            <image src="{{item.img}}"></image>
+          </navigator>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="text-container" hidden="{{!md_company}}">
+      <image src="/assets/index/image/ico_addr.png"/>
+      <text>{{md_company}}</text>
+    </view>
+  </view>
+
+  <!--Content-->
+  <view class="weui-flex list-container">
+    <scroll-view class="sort-scroll-view" scroll-y="{{leftScroll.scrollY}}">
+      <view class="sort-list">
+        <view wx:for="{{sortTags}}" data-cat_id="{{item.cat_id}}" wx:key="item.cat_id" class="sorter {{ sorter == item.cat_id ? 'active' : ''}}"  bindtap="sort">
+          {{item.cat_name}}
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="right-container weui-flex__item">
+
+      <view class="search-container weui-flex">
+        <view class="input-container weui-flex__item">
+          <input type="text" id="search" name="search_keys" class="" placeholder="请输入搜索内容" bindinput="oninput"/>
+        </view>
+        <!--<view class="item weui-flex__item voice">-->
+          <!--<image src="/assets/shelf/search_voice.png"></image>-->
+        <!--</view>-->
+        <view class="item search" bindtap="search">
+          <image src="/assets/shelf/search_btn.png"></image>
+        </view>
+        <!--<view class="item weui-flex__item wechat">-->
+          <!--<image src="/assets/shelf/wechat.png"></image>-->
+        <!--</view>-->
+        <!--<view class="item weui-flex__item unfold">-->
+          <!--<image src="/assets/shelf/diy.png"></image>-->
+        <!--</view>-->
+      </view>
+      <view class="product-container">
+        <scroll-view class="product-scroll-view" scroll-y="{{rightScroll.scrollY}}" wx:if="{{showSearchList==false}}">
+          <view class="product weui-flex" wx:for="{{customer.productArray}}" wx:key="item.mp_id" wx:if="{{sorter=='all'||sorter==item.mp_cid}}">
+            <view class="thumbnail">
+              <image src="{{domain}}{{item.mp_picture}}"/>
+            </view>
+            <view class="weui-flex__item product-detail">
+              <view class="product-name theme-product-name title">
+                {{item.mp_title}}
+              </view>
+              <view class="theme-product-stock stock">
+                库存:{{item.mp_stocks}}
+              </view>
+              <view class="prize-line weui-flex">
+                <view class="theme-product-prize weui-flex__item prize">{{item.mp_price}}</view>
+                <view class="button-group weui-flex__item">
+                  <!--商品减号-->
+                  <view class="cart_btn_sub common-display-ib" bindtap="operate" wx:if="{{!!item.number}}" data-mp_id="{{item.mp_id}}" data-op="subOne">-</view>
+                  <!--商品数量-->
+                  <view class="number common-display-ib" wx:if="{{!!item.number}}">{{item.number}}</view>
+                  <!--商品加号-->
+                  <view class="cart_btn_add common-display-ib theme-color-cyan-background" bindtap="operate" data-mp_id="{{item.mp_id}}" data-op="addOne">+</view>
+                </view>
+              </view>
+
+
+            </view>
+          </view>
+        </scroll-view>
+
+        <scroll-view class="product-scroll-view" scroll-y="{{rightScroll.scrollY}}" wx:else>
+          <view class="product weui-flex" wx:for="{{searchList}}" wx:key="item.mp_id">
+            <view class="thumbnail">
+              <image src="{{domain}}{{item.mp_picture}}"/>
+            </view>
+            <view class="weui-flex__item product-detail">
+              <view class="product-name theme-product-name title">
+                {{item.mp_title}}
+              </view>
+              <view class="theme-product-stock stock">
+                库存:{{item.mp_stocks}}
+              </view>
+              <view class="prize-line weui-flex">
+                <view class="theme-product-prize weui-flex__item prize">{{item.mp_price}}</view>
+                <view class="button-group weui-flex__item">
+                  <!--商品减号-->
+                  <view class="cart_btn_sub common-display-ib" bindtap="operate" wx:if="{{!!item.number}}" data-mp_id="{{item.mp_id}}" data-op="subOne">-</view>
+                  <!--商品数量-->
+                  <view class="number common-display-ib" wx:if="{{!!item.number}}">{{item.number}}</view>
+                  <!--商品加号-->
+                  <view class="cart_btn_add common-display-ib theme-color-cyan-background" bindtap="operate" data-mp_id="{{item.mp_id}}" data-op="addOne">+</view>
+                </view>
+              </view>
+
+
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+
+    </view>
+
+  </view>
+
+  <!--shop_cart-->
+  <view class='cart-container weui-flex'>
+    <view class="weui-flex__item weui-flex cart-left">
+      <view class="cart-icon common-display-ib" bindtap="toggleCart">
+        <image src="/assets/index/image/ico-cart.png"/>
+        <span class="number">
+          {{customer.totalNumber}}
+        </span>
+      </view>
+      <view class="calc-container weui-flex">
+        <view class="txt common-display-ib">
+          合计：
+        </view>
+        <view class="num theme-color-f40-text common-display-ib">
+          <span>￥</span>{{customer.totalPrize}}
+        </view>
+      </view>
+    </view>
+    <view class="cart-right">
+      <button class="weui-btn mini-btn theme-color-cyan-background button-account" size="mini" bindtap="pay">去结算</button>
+    </view>
+  </view>
+
+  <!--shop_cart_mask-->
+  <view class="pop-mask" wx:if="{{cart.opened == true}}" bindtap="closeCart"></view>
+  <view class="pop-container" wx:if="{{cart.opened == true}}">
+    <view class="cart-list-container">
+      <view class="cart-list-title">
+        <p class="txt">
+          已选商品<span>({{customer.totalNumber}})</span>
+        </p>
+      </view>
+      <view class="scroll-container-cart">
+        <scroll-view scroll-y="{{cartScroll.scrollY}}">
+          <view class="cart-item weui-flex" wx:for="{{customer.productArray}}" wx:if="{{!!item.number}}" data-mp_cid="{{item.mp_cid}}" wx:key="item.mp_cid" >
+            <view class="name weui-flex__item">{{item.mp_title}}</view>
+            <view class="prize">{{item.mp_prize}}</view>
+            <view class="button-group weui-flex">
+              <!--商品减号-->
+              <view class="cart_btn_sub" bindtap="operate" wx:if="{{!!item.number}}" data-mp_id="{{item.mp_id}}" data-op="subOne">-</view>
+              <!--商品数量-->
+              <view class="number" wx:if="{{!!item.number}}">{{item.number}}</view>
+              <!--商品加号-->
+              <view class="cart_btn_add theme-color-cyan-background" bindtap="operate" data-mp_id="{{item.mp_id}}" data-op="addOne">+</view>
+            </view>
+
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+
+  <!--authorize-tip-->
+   <view class='popAuth' hidden="{{!needAuthorize}}">
+    <view class='popAuth_words'>我们需要您的授权，非常重要</view>
+    <view class='popAuth_btn'>
+      <button open-type="getUserInfo" style='background:#cea972;color:#fff;' bindgetuserinfo="bindGetUserInfo"> 点我授权 </button>
+    </view>
+    <view class='popAuth_close' bindtap='closeAuth'>
+      <image src='/assets/images/pop_close1.png'></image>
+    </view>
+  </view>
+
+  <import src="/template/footer/footer.wxml"/>
+  <template is="tempFooter" data="{{footer}}"/>
+
+
+</view>
