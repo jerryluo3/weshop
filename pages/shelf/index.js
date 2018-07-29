@@ -155,7 +155,9 @@ Page({
 
       let customer = this.data.customer
       //用户加/减 产品uid
-      customer[ op ]( id )
+      var needUpdate = customer[ op ]( id )
+        console.log(needUpdate)
+        if( !needUpdate ){ return }
       this.setData({ customer })
       wx.setStorage({
           key:"customer",

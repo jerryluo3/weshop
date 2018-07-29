@@ -47,6 +47,10 @@ var utils = require('../../utils/util')
         if( typeof this.productObject[ mp_id ].number !='number'){
             this.productObject[ mp_id ].number = 0;
         }
+      
+      if (this.productObject[mp_id].number == this.productObject[mp_id].mp_stocks ){
+        return false
+      }
         this.productObject[ mp_id ].number += 1
 
         //加到购物车列表
@@ -55,6 +59,8 @@ var utils = require('../../utils/util')
         this.totalNumber+=1;
 
         this.totalPrize = (this.totalPrize * 10000 + this.productObject[ mp_id ].mp_price * 10000 ) / 10000
+
+        return true
 
     }
     subOne( mp_id ){
@@ -66,6 +72,7 @@ var utils = require('../../utils/util')
         this.totalNumber-=1;
 
         this.totalPrize = (this.totalPrize * 10000 - this.productObject[ mp_id ].mp_price * 10000 ) / 10000
+        return true
 
     }
     updateProductArray(){
