@@ -115,7 +115,7 @@ Page({
         wx.showToast({
             title: '加载中',
             icon: 'loading',
-            duration: 1000
+            duration: 500
         })
 
       wx.request({
@@ -161,29 +161,14 @@ Page({
       success: function (res) {
         if (res.confirm) {
           var url = app.util.url('qiyue/delMemberOrder')
-          wx.request({
-            url: url,
-            data: {
-              oid: oid
-            },
-            header: {
-              "Content-Type": "application/x-www-form-urlencoded"
-            },
-            method: 'POST',
-            success: function (res) {
-              wx.showToast({
-                title: '操作成功',
-                icon: 'none',
-                duration: 1000,
-                success(ress) {
-                  setTimeout(function () {
-                    that.getMemberOrderList(that.data.toView);
-                  }, 2000) //延迟时间
-                }
-              })
-            }
-          })
-          
+            utils.post(url,{oid},{"Content-Type": "application/x-www-form-urlencoded"}).then((r)=>{
+                wx.showToast({
+                    title: '操作成功',
+                    icon: 'none',
+                    duration: 1000,
+                })
+                that.getMemberOrderList(that.data.fromTM, that.data.toView);
+            })
         }
       }
     })

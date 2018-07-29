@@ -42,12 +42,12 @@
         <view class="weui-flex__item">邮费：￥{{item.postcost}}</view>
         <view class="delbtn" catchtap='delcart' data-id="{{item.cart_id}}">
           <view class="paybtn" catchtap='orderDetail' data-oid="{{item.oid}}" data-id="{{item.id}}">订单详情</view>
-          <view wx:if="{{ item.status == 0 }}" class="paybtn" catchtap='delOrder' data-oid="{{item.oid}}">删除订单</view>
-          <view wx:if="{{ item.status == 0 }}" class="paybtn" catchtap='wepay' data-oid="{{item.oid}}">去支付</view>
-          <view wx:if="{{ item.status == 1 }}" class="paybtn" catchtap='cancelOrder' data-oid="{{item.oid}}">取消订单</view>
-          <view wx:if="{{ item.status == 2 || item.status == 3 }}" class="infobtn" catchtap='peisong' data-oid="{{item.oid}}">配送信息</view>
-          <view wx:if="{{ item.status == 2 }}" class="paybtn" catchtap='shouhuo' data-oid="{{item.oid}}">确定收货</view>
-          <view wx:if="{{ item.status == 3 }}" class="paybtn" catchtap='showComment' data-oid="{{item.oid}}" data-goodsid="{{item.goodsid}}">我要评论</view>
+          <view wx:if="{{ item.status == 0 }}" class="paybtn" bindtap='delOrder' data-oid="{{item.oid}}">删除订单</view>
+          <view wx:if="{{ item.status == 0 }}" class="paybtn" bindtap='wepay' data-oid="{{item.oid}}">去支付</view>
+          <view wx:if="{{ item.status == 1 }}" class="paybtn" bindtap='cancelOrder' data-oid="{{item.oid}}">取消订单</view>
+          <view wx:if="{{ item.status == 2 || item.status == 3 }}" class="infobtn" bindtap='peisong' data-oid="{{item.oid}}">配送信息</view>
+          <view wx:if="{{ item.status == 2 }}" class="paybtn" bindtap='shouhuo' data-oid="{{item.oid}}">确定收货</view>
+          <view wx:if="{{ item.status == 3 }}" class="paybtn" bindtap='showComment' data-oid="{{item.oid}}" data-goodsid="{{item.goodsid}}">我要评论</view>
         </view>
       </view>
     </view>
