@@ -14,7 +14,7 @@ const AUTHORIZE_BUFFER_TIME = 20000//授权缓存时间
 // import api from '/utils/api.js'
 
 //后端拉取的原始数据,后期不再修改
-let origin_productList = [
+var origin_productList = [
     { mp_title: '农夫水溶C100柠檬水',mp_stocks:5,mp_price:4.80,mp_picture:"/assets/upload/1529411148_thumb.jpg",icon:'',number:0,mp_id:0,mp_cid:0},
     { mp_title: '康师傅茉莉蜜茶',mp_stocks:3,mp_price:2.90,mp_picture:"/assets/upload/1529574112_thumb.jpg",icon:'',number:0,mp_id:1,mp_cid:0},
     { mp_title: '统一阿萨姆奶茶焙煎绿茶',mp_stocks:1,mp_price:4.50,mp_picture:"/assets/upload/1530085819_thumb.jpg",icon:'',number:0,mp_id:2,mp_cid:3},
@@ -24,8 +24,6 @@ let origin_productList = [
     { mp_title: '康师傅冰红茶柠檬味',mp_stocks:4,mp_price:2.90,mp_picture:"/assets/upload/1529574122_thumb.jpg",icon:'',number:0,mp_id:6,mp_cid:5},
     { mp_title: '酷儿橙汁饮料',mp_stocks:5,mp_price:3.20,mp_picture:"/assets/upload/1529574112_thumb.jpg",icon:'',number:0,mp_id:7,mp_cid:6},
 ]
-//商品类型映射表,拉取数据后通过工具处理生成,一般情况不需要更新
-let my_productList = {}
 
 //常量定义
 const staticUrl = '/assets/index/image/'//静态图片路径
@@ -351,12 +349,7 @@ Page({
 
     },
 
-    //事件处理函数
-    bindViewTap: function() {
-        wx.navigateTo({
-        url: '../logs/logs'
-        })
-    },
+
     //弹出需要授权层
     closeAuth: function () {
         var that = this
@@ -377,6 +370,94 @@ Page({
         var input_value = e.detail.value
         this.setData({input_value})
     },
+
+    //拉取分类标签
+    updateTagList(){
+        //拉取分类标签
+        utils.post(`${domain}qiyue/getBLZIndexCats`,{shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+            let a = res.data['cat_list']
+            let md_company = a[0].md_company
+            a.push({ cat_name: '全部', cat_id:defaultType,md_company:md_company},)
+            this.setData({
+                sortTags:a,
+                md_company
+            })
+        })
+    },
+    //拉取商品列表
+    updateProductList( callback = function(){} ){
+        var scope = this;
+        utils.post(`${domain}qiyue/getBLZGoodsList`,{shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+
+            //原始数据备份
+            let goods_list = res.data['goods_list']
+            let goods_length = goods_list.length
+            //有数据就用拉取的数据
+            if( !!goods_length ){
+                origin_productList = [...goods_list]
+                origin_productList.forEach(( value, index )=>{
+                    let url = value['mp_picture']
+                    let s = url.split('.')
+                    origin_productList[ index ]['mp_picture'] = s[0]+'_thumb.'+s[1]
+                })
+                wx.setStorage({
+                    key:"origin_productList",
+                    data:origin_productList
+                })
+
+                //用户数据更新
+                var customer = new Customer()
+                var buffer_customer = wx.getStorageSync('customer')
+                if( buffer_customer ){
+                    console.log(customer)
+                    for(var key in buffer_customer){
+                        customer[ key ] = buffer_customer[ key ]
+                    }
+                }
+
+                //先加入10条
+                customer.productArray = origin_productList.slice(0,goods_length>10?10:goods_length)
+                customer.init()
+                customer.SyncProductListWithCart()
+
+                //视图更新
+                scope.setData({
+                    customer : customer
+                })
+
+                var t = setTimeout(function(){
+                    if(customer.productArray.length == goods_length){
+                        clearTimeout(t)
+                        return
+                    }
+                    customer.productArray = customer.productArray.concat(origin_productList.slice(10))
+                    customer.updateProductObject()
+                    customer.SyncProductListWithCart()
+                    scope.setData({
+                        customer
+                    })
+                    wx.setStorage({
+                        key:"customer",
+                        data:customer,
+                    })
+
+                    callback(customer)
+
+                },500)
+
+                wx.setStorage({
+                    key:"customer",
+                    data:customer,
+                })
+
+            }else{
+                console.log('获取不到数据')
+            }
+
+
+        })
+    },
+
     onLoad: function () {
 /*--------------------------数据请求--------------------------*/
 
@@ -408,155 +489,12 @@ Page({
       /*拉取商品列表*/
 
       var scope = this
-      var customer
-
-      let detect_customer = utils.getBuffer('customer')
-      let detect_settime = utils.getBuffer('settime')
-      if( false ){
-
-        detect_customer.then(( data )=>{
-              //用户数据更新
-              customer = new Customer()
-            var bufferCustomer = data.data
-
-             //主要是比较长度
-              var origin_productList = wx.getStorageSync("origin_productList")
-              var l = origin_productList.length
-            //还有剩余数据，先渲染，再补充剩余数组
-              if( bufferCustomer.productArray.length < l){
-                  Object.assign(customer,data.data)
-                  scope.setData({
-                      customer
-                  })
-                setTimeout(function(){
-                    customer.productArray = customer.productArray.concat(origin_productList.slice(10))
-                    customer.updateProductObject()
-                    scope.setData({
-                        customer
-                    })
-                    wx.setStorage({
-                        key:"customer",
-                        data:customer,
-                    })
-                },1500)
-              }
-              //没有需要补充的，先打断数组，渲染10个，稍微进行拼接其它的
-              else{
-                  customer.totalNumber = bufferCustomer.totalNumber
-                  customer.totalPrize= bufferCustomer.totalPrize
-                  var temp_arr = bufferCustomer.productArray.slice(10)
-                  customer.productArray = bufferCustomer.productArray.slice(0,10)
-                  customer.updateProductObject()
-                  scope.setData({
-                      customer
-                  })
-                  setTimeout(function(){
-                      customer.productArray = customer.productArray.concat(temp_arr)
-                      customer.updateProductObject()
-                      scope.setData({
-                          customer
-                      })
-                  },1000)
-
-              }
-
-              //视图更新
-              this.setData({
-                  customer : customer
-              })
-
-
-
-
-              wx.setStorage({
-                  key:'settime',
-                  data:new Date().getTime()
-              })
-          })
-      }
-      else{
-          utils.post(`${domain}qiyue/getBLZGoodsList`,{shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
-
-              //原始数据备份
-              let goods_list = res.data['goods_list']
-              let goods_length = goods_list.length
-              //有数据就用拉取的数据
-              if( !!goods_length ){
-                  origin_productList = [...goods_list]
-                  origin_productList.forEach(( value, index )=>{
-                      let url = origin_productList[ index ]['mp_picture']
-                      var s = url.split('.')
-                      origin_productList[ index ]['mp_picture'] = s[0]+'_thumb.'+s[1]
-                  })
-                  wx.setStorage({
-                      key:"origin_productList",
-                      data:origin_productList
-                  })
-
-                  //用户数据更新
-                  customer = new Customer()
-                  customer.productArray = origin_productList.slice(0,goods_length>10?10:goods_length)
-                  customer.init()
-
-                  //视图更新
-                  scope.setData({
-                      customer : customer
-                  })
-
-                  var t = setTimeout(function(){
-                      if(customer.productArray.length == goods_length){
-                          clearTimeout(t)
-                          return
-                      }
-                      customer.productArray = customer.productArray.concat(origin_productList.slice(10))
-                      customer.updateProductObject()
-                      scope.setData({
-                          customer
-                      })
-                      wx.setStorage({
-                          key:"customer",
-                          data:customer,
-                      })
-
-                  },500)
-
-                  wx.setStorage({
-                      key:"customer",
-                      data:customer,
-                  })
-                  wx.setStorage({
-                      key:"settime",
-                      data:new Date().getTime(),
-                  })
-
-              }else{
-                  console.log('获取不到数据')
-              }
-
-
-          })
-      }
-
-
-          // utils.getBuffer('settime').then(( data )=>{
-          //     if( ( new Date().getTime() - data.data ) > BUFFER_TIME ){
-          //         console.log("超时")
-          //     }else{
-          //         console.log('没超时')
-          //     }
-          // })
-
-
-      //拉取分类标签
-      utils.post(`${domain}qiyue/getBLZIndexCats`,{shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
-          let a = res.data['cat_list']
-          let md_company = a[0].md_company
-          a.push({ cat_name: '全部', cat_id:defaultType,md_company:md_company},)
-          this.setData({
-              sortTags:a,
-              md_company
-          })
+      scope.updateTagList()
+      scope.updateProductList(function(customer){
+          console.log(customer)
       })
+
+
 /*--------------------------视图处理--------------------------*/
       //处理导航条
       router.setActive(2)
@@ -576,6 +514,7 @@ Page({
 
   },
     onPullDownRefresh: function () {
+        this.updateProductList()
         wx.stopPullDownRefresh();
     },
 })

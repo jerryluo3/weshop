@@ -100,6 +100,13 @@ var utils = require('../../utils/util')
         this.totalPrize = 0
         this.updateProductArray()
     }
+    SyncProductListWithCart(){
+        var cart_list = this.cart_list
+        for( var key in cart_list ){
+            this.productObject[ key ].number = cart_list[ key ]
+        }
+        this.updateProductArray()
+    }
 }
 
 class CustomerSearch extends Customer{
