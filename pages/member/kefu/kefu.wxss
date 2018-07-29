@@ -14,3 +14,5 @@
 .kefu_content_ico{width:36rpx;height:36rpx;display:inline-block; vertical-align: middle;background:#d3bea5;padding:10rpx;border-radius:50%;}
 .kefu_content_ico image{width:36rpx;height:36rpx;display:block;}
 .kefu_content_c{font-size:28rpx;}
+
+.wxParse-img{width:100% !important;}
