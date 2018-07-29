@@ -53,7 +53,7 @@
       </view>
       <view class="product-container">
         <scroll-view class="product-scroll-view" scroll-y="{{rightScroll.scrollY}}" wx:if="{{showSearchList==false}}">
-          <view class="product weui-flex" wx:for="{{customer.productArray}}" wx:key="item.mp_id" wx:if="{{sorter=='all'||sorter==item.mp_cid}}">
+          <view class="product weui-flex" wx:for="{{customer.productArray}}" wx:key="item.mp_id" wx:if="{{item.mp_stocks!=0 &&(sorter=='all'||sorter==item.mp_cid)}}">
             <view class="thumbnail">
               <image src="{{domain}}{{item.mp_picture}}"/>
             </view>
@@ -72,7 +72,7 @@
                   <!--商品数量-->
                   <view class="number common-display-ib" wx:if="{{!!item.number}}">{{item.number}}</view>
                   <!--商品加号-->
-                  <view class="cart_btn_add common-display-ib theme-color-cyan-background" bindtap="operate" data-mp_id="{{item.mp_id}}" data-op="addOne">+</view>
+                  <view class="cart_btn_add common-display-ib theme-color-cyan-background" wx:if="{{item.mp_stocks!=0}}" bindtap="operate" data-mp_id="{{item.mp_id}}" data-op="addOne">+</view>
                 </view>
               </view>
 
