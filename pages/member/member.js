@@ -648,6 +648,9 @@ Page({
     if (uid > 0) {
       that.getUserInfo(uid);
     }
+    else{
+      that.popAuth()
+    }
     that.getOrderStatusNums();
     wx.stopPullDownRefresh();
   },
