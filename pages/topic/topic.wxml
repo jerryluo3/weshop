@@ -1,0 +1,38 @@
+<!--index.wxml-->
+<view class="container">
+  <!--swiper-->
+  <view class="swiper-container" wx:if="{{topSwiper.use}}">
+    <swiper autoplay="{{topSwiper.autoplay}}" indicator-dots="{{topSwiper.indicatorDots}}" interval="{{topSwiper.interval}}" circular="{{topSwiper.circular}}">
+      <block wx:for="{{topSwiper.item}}" wx:key="item.key" wx:for-item="i">
+        <swiper-item>
+          <navigator url="{{i.link}}">
+            <image src="{{i.img}}"></image>
+          </navigator>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view class="topad-container" wx:else>
+        <image src="{{topAd}}" mode="widthFix"></image>
+  </view>
+
+
+  <view class="middle-container">
+    <image src="{{middleAd}}" class=""></image>
+  </view>
+
+  <view class="goods_cat_list">
+    <block wx:for="{{ cat_goods_list }}" wx:key="index">
+      <view class='goods_cat_list_li {{ index%2 == 1 ? "no_border" : "" }}' bindtap='getGoodsInfo' data-id="{{item.goods_id}}">
+        <image src='{{siteurl}}{{ item.goods_thumb }}'></image>
+        <view class="goods_cat_title">{{ item.goods_title }}</view>
+        <view class="goods_cat_price"><text class='vipprice'>￥{{ item.goods_vipprice }}</text><text class='price'>￥{{ item.goods_price }}</text></view>
+      </view>
+    </block>
+  </view>
+
+  <!--<import src="/template/footer/footer.wxml"/>-->
+  <!--<template is="tempFooter" data="{{footer}}"/>-->
+
+
+</view>
