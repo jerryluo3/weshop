@@ -38,11 +38,14 @@ Page({
       customer:undefined,
 
       binder:{
-        tel:"",
-          code:"",
-          needShowBindedTip:false,
-
+        tel:"",//手机号
+          code:"",//验证码
+          needShowBindedTip:false,//控制提示框
+          normalText:"获取验证码",//常规文字
+          code_canBeUsed:"",//控制显示倒计时或者常规文字
       },
+      code_clock:undefined,
+      countdown:''//倒计时
   },
 
   tabClick: function (e) {
@@ -519,6 +522,8 @@ Page({
         this.setData({
             binder
         })
+        this.clearCodeInterval()
+        this.allowButtonCode()
     },
     onTelinput(e){
         var binder = this.data.binder
@@ -530,7 +535,63 @@ Page({
         binder.code = e.detail.value
         this.setData({binder})
     },
+    //禁用"获取验证码"按钮
+    banButtonCode(){
+      var scope = this
+        var binder = scope.data.binder
+        binder.code_canBeUsed = 'false'
+        scope.setData({
+            binder,
+        })
+    },
+    //恢复"获取验证码"按钮
+    allowButtonCode(){
+        var scope = this
+        var binder = scope.data.binder
+        binder.code_canBeUsed = ''
+        scope.setData({
+            binder
+        })
+    },
+    //开启验证码定时器
+    startCodeInterval(){
+      var count = 60
+        var countdown ='(60s)'
+        var scope = this
+
+      var code_clock = setInterval(function(){
+        if(count>0){
+          count--
+            countdown = `(${count}s)`
+            scope.setData({
+                countdown
+            })
+        }
+
+      },1000)
+        scope.setData({
+            code_clock,
+            countdown
+        })
+    },
+    //清理验证码定时器
+    clearCodeInterval(){
+      var h = this.data.code_clock
+        if(h){
+            clearInterval(h)
+        }
+    },
     buttonGetCode(){
+
+        var b={
+            tel:"",
+                code:"",
+                needShowBindedTip:false,
+                normalText:"获取验证码",
+                lastTime:60,
+                code_canBeUsed:"",
+                clockHandler:undefined,
+        }
       var phone = this.data.binder.tel
         var reg=/^[1][3,4,5,7,8][0-9]{9}$/;
       var isRight = reg.test(phone)
@@ -542,6 +603,10 @@ Page({
           });
             return
         }
+
+        var scope = this
+        scope.banButtonCode()
+        scope.startCodeInterval()
         wx.showToast({
             title: '注意查收验证码',
             icon: 'success',//none
@@ -561,6 +626,7 @@ Page({
 
     },
     buttonBind(){
+
         var scope = this
         var safecode = this.data.binder.code
         var phone = this.data.binder.tel
@@ -598,7 +664,7 @@ Page({
                     icon: 'success',
                     duration: 3000
                 });
-                scope.getUserInfo()
+                scope.getUserInfo(uid)
             }
             //手机号错误
             else if(res.data.result == -1){
