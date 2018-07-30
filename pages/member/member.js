@@ -36,6 +36,13 @@ Page({
     sliderOffset: 0,
     sliderLeft: 0,
       customer:undefined,
+
+      binder:{
+        tel:"",
+          code:"",
+          needShowBindedTip:false,
+
+      },
   },
 
   tabClick: function (e) {
@@ -495,6 +502,139 @@ Page({
     })
   },
     indexScan: app.tapScan,
+
+    //绑定功能
+    accountBindTip(){
+        var binder = this.data.binder
+        binder.needShowBindedTip = true
+        this.setData({
+            binder
+        })
+    },
+    accountBindTipClose(){
+        var binder = this.data.binder
+        binder.needShowBindedTip = false
+        binder.tel = ''
+        binder.code = ''
+        this.setData({
+            binder
+        })
+    },
+    onTelinput(e){
+        var binder = this.data.binder
+        binder.tel = e.detail.value
+        this.setData({binder})
+    },
+    onIdinput(e){
+        var binder = this.data.binder
+        binder.code = e.detail.value
+        this.setData({binder})
+    },
+    buttonGetCode(){
+      var phone = this.data.binder.tel
+        var reg=/^[1][3,4,5,7,8][0-9]{9}$/;
+      var isRight = reg.test(phone)
+        if(!isRight){
+          wx.showToast({
+              title: '请输入正确的手机号',
+              icon: 'none',
+              duration: 2000
+          });
+            return
+        }
+        wx.showToast({
+            title: '注意查收验证码',
+            icon: 'success',//none
+            duration: 3000
+        });
+        var url = `${domain}qiyue/getSafeCode`
+
+        utils.post(url,{phone},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+          console.log('上传手机号',res)
+            if(res.status == 200){
+              //成功
+            }
+            else if(res.status == 1){
+              //原来没有手机号，不需要绑定
+            }
+        })
+
+    },
+    buttonBind(){
+        var scope = this
+        var safecode = this.data.binder.code
+        var phone = this.data.binder.tel
+        var uid = wx.getStorageSync('uid')
+        if(uid>0){
+
+        }else{
+          scope.popAuth()
+            return
+        }
+        //正则判断手机号
+        var reg=/^[1][3,4,5,7,8][0-9]{9}$/;
+        var isRight = reg.test(phone)
+        if(!isRight){
+            wx.showToast({
+                title: '请输入正确的手机号',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+        }
+
+        var url = `${domain}qiyue/checkHaveAccountByPhone`
+        wx.showLoading({
+            title: '请稍后',
+        });
+        utils.post(url,{uid,phone,safecode},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+            console.log('上传验证码',res)
+            //成功
+            wx.hideLoading()
+            if(res.data.result == 200){
+                scope.accountBindTipClose()
+                wx.showToast({
+                    title: '绑定成功',
+                    icon: 'success',
+                    duration: 3000
+                });
+                scope.getUserInfo()
+            }
+            //手机号错误
+            else if(res.data.result == -1){
+                wx.showToast({
+                    title: '手机号错误',
+                    icon: 'none',
+                    duration: 3000
+                });
+            }
+            //验证码位数不对
+            else if(res.data.result == -2){
+                wx.showToast({
+                    title: '验证码错误',
+                    icon: 'none',
+                    duration: 3000
+                });
+            }
+            //账号不存在
+            else if(res.data.result == -3){
+                wx.showToast({
+                    title: '账号不存在',
+                    icon:"none",
+                    duration: 3000
+                });
+            }
+            //验证码错误
+            else if(res.data.result == -4){
+                wx.showToast({
+                    title: '验证码错误',
+                    icon: 'none',
+                    duration: 3000
+                });
+            }
+        })
+
+    },
   /**
    * 生命周期函数--监听页面加载
    */

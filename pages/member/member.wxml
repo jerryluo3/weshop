@@ -132,7 +132,6 @@
     <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
   </view>
 
-
   <!--<view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/address/address">-->
     <!--<view class='block_ico'><image src='/assets/member/ico_company.png' mode="widthFix" ></image></view>-->
     <!--<view class='weui-flex__item block_name'>-->
@@ -146,6 +145,14 @@
     <view class='block_ico'><image src='/assets/member/ico_kefu.png' mode="widthFix" ></image></view>
     <view class='weui-flex__item block_name'>
       <text>客服与帮助</text>
+    </view>
+    <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
+  </view>
+
+  <view class='weui-flex tools_row' wx:if="{{!user.haveBinded}}" bindtap="accountBindTip">
+    <view class='block_ico'><image src='/assets/member/ico_account.png' mode="widthFix" ></image></view>
+    <view class='weui-flex__item block_name'>
+      <text>绑定原有账号</text>
     </view>
     <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
   </view>
@@ -164,6 +171,25 @@
   <view class='popAuth_close' bindtap='closeAuth'>
     <image src='/assets/images/pop_close1.png'></image>
   </view>
+</view>
+<view class="bind-mask" wx:if="{{binder.needShowBindedTip}}">
+  <view class='bind-container'>
+  <view class='title'>将原有账号与小程序进行绑定</view>
+  <view class="input-container tel-container weui-flex">
+    <input type="tel" class="tel weui-flex__item" placeholder="请输入手机号" bindinput="onTelinput"/>
+    <button class="weui-btn mini-btn" size="mini" type="default" bindtap="buttonGetCode">获取验证码</button>
+  </view>
+  <view class="input-container id-container">
+    <input type="tel" class="code" placeholder="请输入验证码" bindinput="onIdinput"/>
+  </view>
+  <view class="button-group weui-flex">
+    <button class="weui-btn mini-btn confirm" size="mini" type="primary" bindtap="buttonBind">提交</button>
+  <button class="weui-btn mini-btn cancel" size="mini" type="warn" bindtap="accountBindTipClose">取消</button>
+  </view>
+</view>
+
+  
+
 </view>
 
 <import src="/template/footer/footer.wxml"/>
