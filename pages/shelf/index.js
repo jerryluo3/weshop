@@ -357,7 +357,7 @@ Page({
     },
     search(){
         var scope = this
-        utils.post("https://www.qiyue99.com/weshop/qiyue/getBLZSearchGoods",{keys:scope.data.input_value,shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+        utils.post(`${domain}qiyue/getBLZSearchGoods`,{keys:scope.data.input_value,shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
             var searchList = res.data.goods_list
             // var customer = scope.data.customer
 
@@ -366,7 +366,6 @@ Page({
         })
     },
     oninput(e){
-        console.log(e)
         var input_value = e.detail.value
         this.setData({input_value})
     },
