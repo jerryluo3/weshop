@@ -63,6 +63,7 @@ class Router{
                 navigator: true,
             },
             {
+                // "pagePath": "/pages/topic/topic",
                 "pagePath": "/pages/member/member",
                 "text": "我的",
                 "iconPath": "/assets/tarbar/tab_member.png",

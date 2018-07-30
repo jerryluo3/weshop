@@ -31,7 +31,8 @@
     "pages/goods/haibao",
     "pages/toupiao/toupiao",
     "pages/toupiao/paihang",
-    "pages/toupiao/jiangxiang"
+    "pages/toupiao/jiangxiang",
+    "pages/topic/topic"
   ],
   "window":{
     "backgroundTextStyle":"light",
