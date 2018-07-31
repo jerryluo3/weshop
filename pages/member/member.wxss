@@ -67,3 +67,7 @@ right:0;
           .button-group button{margin:0;padding:0 50rpx;}
 
 
+.weui-navbar__item.weui-bar__item_on{color:#d4237a}
+
+.weui-navbar__slider{position:absolute;content:" ";left:0;bottom:0;width:6em;height:3px;background-color:#d4237a;-webkit-transition:-webkit-transform .3s;transition:-webkit-transform .3s;transition:transform .3s;transition:transform .3s,-webkit-transform .3s}
+
