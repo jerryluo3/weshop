@@ -1,0 +1,487 @@
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-tab">
+            <view class="weui-navbar">
+                <block wx:for="{{tabs}}" wx:key="*this">
+                    <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+                        <view class="weui-navbar__title">{{item}}</view>
+                    </view>
+                </block>
+            </view>
+            <view class="weui-tab__panel ">
+                <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+                    <view id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+                        <view id="dataForm1">
+                            <view class="weui-cells__title">请选择充值金额</view>
+
+                            <view class="weui-flex">
+                                <view class="weui-flex__item">
+                                    <view class="recharegepaytype {{type==20?'checkin':''}}" data-type='20' data-amount="20.00" data-fee="20.00" bindtap="choseMoney">
+                                        <view class="number">20.00
+                                            <text class="yuan">元</text>
+                                        </view>
+                                        <view class=".zf">支付金额：￥20.00</view>
+                                    </view>
+                                </view>
+                                <view class="weui-flex__item">
+                                    <view class="recharegepaytype {{type==50?'checkin':''}}" data-type='50' data-amount="48.00" data-fee="50.00" bindtap="choseMoney">
+                                        <view class="number">50.00
+                                            <text class="yuan">元</text>
+                                        </view>
+                                        <view class=".zf">支付金额：￥48.00</view>
+                                    </view>
+                                </view>
+                            </view>
+                            <view class="weui-flex">
+                                <view class="weui-flex__item">
+                                    <view class="recharegepaytype {{type==100?'checkin':''}}" data-type='100' data-amount="95.50" data-fee="100.00" bindtap="choseMoney">
+                                        <view class="number">100.00
+                                            <text class="yuan">元</text>
+                                        </view>
+                                        <view class=".zf">支付金额：￥95.50</view>
+                                    </view>
+                                </view>
+                                <view class="weui-flex__item">
+                                    <view class="recharegepaytype {{type==200?'checkin':''}}" data-type='200' data-amount="190.00" data-fee="200.00" bindtap="choseMoney">
+                                        <view class="number">200.00
+                                            <text class="yuan">元</text>
+                                        </view>
+                                        <view class="zf">支付金额：￥190.00</view>
+                                    </view>
+                                </view>
+                            </view>
+
+                            <!--<view class="weui-cells__title">请选择支付方式</view>-->
+                            <!--<view class="weui-cells weui-cells_form">-->
+                                <!--<view class="weui-flex">-->
+                                    <!--<view class="weui-flex__item" id="wepay">-->
+                                        <!--<view class="pay_type checked" data-attr="1">-->
+                                            <!--<image src="data/asset/images/weipay.png"></image>-->
+                                        <!--</view>-->
+                                    <!--</view>-->
+                                    <!--<view class="weui-flex__item" id="alipay" style="display:none">-->
+                                        <!--<view class="pay_type checked" data-attr="0">-->
+                                            <!--<img src="data/asset/images/alipay.png"/>-->
+                                        <!--</view>-->
+                                    <!--</view>-->
+                                <!--</view>-->
+                            <!--</view>-->
+                            <!--<view class="weui-cells__title"></view>-->
+
+                            <button class="weui-btn weui-btn_primary checkbtn theme-color-cyan-background" id="rechargebtn" bindtap="pay">马上充值</button>
+                            <view class="weui-cells__tips" style="text-align:center">
+                                <!--<font color="red" id="warninginfo1"></font>-->
+                            </view>
+                        </view>
+                        <view class="weui-cells__title" style="padding:10px 0;">
+                            <view>
+                                1.充值本额不可提现、转移、转赠、账户余额无有效期
+                            </view>
+                            <view>
+                                2.根据全国税务局规定，预充值业务只能在充值时开增值税普通发票，且用储值消费时不再另外开具发票
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+                    <view id="tab2" class="weui-tab__bd-item">
+                        <view id="dataForm2">
+                            <view class="weui-cells__title">请输入充值卡信息</view>
+                            <view class="weui-cells weui-cells_radio rechargetype">
+                                <!--卡号-->
+                                <view class="weui-cell">
+                                    <view class="weui-cell__hd">
+                                        <label for="card_number" class="weui-label">充值卡卡号</label>
+                                    </view>
+                                    <view class="weui-cell__bd">
+                                        <input class="weui-input" type="text" name="card_number" id="card_number" value="" placeholder="请输入卡号">
+                                        </input>
+                                    </view>
+                                </view>
+                                <!--密码-->
+                                <view class="weui-cell">
+                                    <view class="weui-cell__hd">
+                                        <label for="card_pass" class="weui-label">充值卡密码</label>
+                                    </view>
+                                    <view class="weui-cell__bd">
+                                        <input class="weui-input" type="number" name="card_pass" id="card_pass" pattern="[0-9]*" value=""
+                                               placeholder="请输入密码">
+                                        </input>
+                                    </view>
+                                </view>
+                            </view>
+                            <view class="weui-cells__title">确认充值账号信息</view>
+                            <view class="weui-cells weui-cells_form">
+                                <view class="weui-cell">
+                                    <view class="weui-cell__hd">
+                                        <label for="card_phone" class="weui-label">充值账号</label>
+                                    </view>
+                                    <view class="weui-cell__bd">
+                                        <input class="weui-input" type="number" name="card_phone" id="card_phone" pattern="[0-9]*" value=""
+                                               placeholder="请输充值手机号">
+                                        </input>
+                                    </view>
+                                </view>
+                                <view class="weui-cell">
+                                    <view class="weui-cell__hd">
+                                        <label for="card_rephone" class="weui-label">确认手机</label>
+                                    </view>
+                                    <view class="weui-cell__bd">
+                                        <input class="weui-input" type="number" name="card_rephone" id="card_rephone" pattern="[0-9]*"
+                                               value="" placeholder="确认手机号">
+                                        </input>
+                                    </view>
+                                </view>
+                            </view>
+                            <button class="weui-btn weui-btn_primary checkbtn m_t_20 theme-color-cyan-background" id="card_recharge">马上充值</button>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<!--<view class="weui-tab__bd p_10" style="background:#fff;display:none;">-->
+<!--<view id="tab1" class="weui-tab__bd-item weui-tab__bd-item&#45;&#45;active">-->
+    <!--<view id="dataForm1">-->
+        <!--<view class="weui-cells__title">请选择充值金额</view>-->
+
+        <!--<view class="weui-flex">-->
+            <!--<view class="weui-flex__item">-->
+                <!--<view class="recharegepaytype " data-amount="20.00" data-fee="20.00">-->
+                    <!--<view>20.00-->
+                        <!--<text>元</text>-->
+                    <!--</view>-->
+                    <!--<view>支付金额：￥20.00</view>-->
+                <!--</view>-->
+            <!--</view>-->
+            <!--<view class="weui-flex__item">-->
+                <!--<view class="recharegepaytype checkin" data-amount="48.00" data-fee="50.00">-->
+                    <!--<view>50.00-->
+                        <!--<text>元</text>-->
+                    <!--</view>-->
+                    <!--<view>支付金额：￥48.00</view>-->
+                <!--</view>-->
+            <!--</view>-->
+        <!--</view>-->
+        <!--<view class="weui-flex">-->
+            <!--<view class="weui-flex__item">-->
+                <!--<view class="recharegepaytype " data-amount="95.50" data-fee="100.00">-->
+                    <!--<view>100.00-->
+                        <!--<text>元</text>-->
+                    <!--</view>-->
+                    <!--<view>支付金额：￥95.50</view>-->
+                <!--</view>-->
+            <!--</view>-->
+            <!--<view class="weui-flex__item">-->
+                <!--<view class="recharegepaytype " data-amount="190.00" data-fee="200.00">-->
+                    <!--<view>200.00-->
+                        <!--<text>元</text>-->
+                    <!--</view>-->
+                    <!--<view>支付金额：￥190.00</view>-->
+                <!--</view>-->
+            <!--</view>-->
+        <!--</view>-->
+
+        <!--<view class="weui-cells__title">请选择支付方式</view>-->
+        <!--<view class="weui-cells weui-cells_form">-->
+            <!--<view class="weui-flex">-->
+                <!--<view class="weui-flex__item" id="wepay">-->
+                    <!--<view class="pay_type checked" data-attr="1">-->
+                        <!--<img src="data/asset/images/weipay.png"/>-->
+                    <!--</view>-->
+                <!--</view>-->
+                <!--<view class="weui-flex__item" id="alipay" style="display:none">-->
+                    <!--<view class="pay_type checked" data-attr="0">-->
+                        <!--<img src="data/asset/images/alipay.png"/>-->
+                    <!--</view>-->
+                <!--</view>-->
+            <!--</view>-->
+        <!--</view>-->
+        <!--<view class="weui-cells__title"></view>-->
+
+        <!--<view class="weui-btn weui-btn_primary checkbtn" id="rechargebtn">马上充值</view>-->
+        <!--<view class="weui-cells__tips" style="text-align:center">-->
+            <!--&lt;!&ndash;<font color="red" id="warninginfo1"></font>&ndash;&gt;-->
+        <!--</view>-->
+    <!--</view>-->
+    <!--<view class="weui-cells__title" style="padding:10px 0;">-->
+        <!--<view>-->
+            <!--1.充值本额不可提现、转移、转赠、账户余额无有效期-->
+        <!--</view>-->
+        <!--<view>-->
+            <!--2.根据全国税务局规定，预充值业务只能在充值时开增值税普通发票，且用储值消费时不再另外开具发票-->
+        <!--</view>-->
+    <!--</view>-->
+<!--</view>-->
+<!--<view id="tab2" class="weui-tab__bd-item">-->
+        <!--<view id="dataForm2">-->
+            <!--<view class="weui-cells__title">请输入充值卡信息</view>-->
+            <!--<view class="weui-cells weui-cells_radio rechargetype">-->
+                <!--&lt;!&ndash;卡号&ndash;&gt;-->
+                <!--<view class="weui-cell">-->
+                    <!--<view class="weui-cell__hd">-->
+                        <!--<label for="card_number" class="weui-label">充值卡卡号</label>-->
+                    <!--</view>-->
+                    <!--<view class="weui-cell__bd">-->
+                        <!--<input class="weui-input" type="text" name="card_number" id="card_number" value="" placeholder="请输入卡号">-->
+                        <!--</input>-->
+                    <!--</view>-->
+                <!--</view>-->
+                <!--&lt;!&ndash;密码&ndash;&gt;-->
+                <!--<view class="weui-cell">-->
+                    <!--<view class="weui-cell__hd">-->
+                        <!--<label for="card_pass" class="weui-label">充值卡密码</label>-->
+                    <!--</view>-->
+                    <!--<view class="weui-cell__bd">-->
+                        <!--<input class="weui-input" type="number" name="card_pass" id="card_pass" pattern="[0-9]*" value=""-->
+                               <!--placeholder="请输入密码">-->
+                        <!--</input>-->
+                    <!--</view>-->
+                <!--</view>-->
+            <!--</view>-->
+            <!--<view class="weui-cells__title">确认充值账号信息</view>-->
+            <!--<view class="weui-cells weui-cells_form">-->
+                <!--<view class="weui-cell">-->
+                    <!--<view class="weui-cell__hd">-->
+                        <!--<label for="card_phone" class="weui-label">充值账号</label>-->
+                    <!--</view>-->
+                    <!--<view class="weui-cell__bd">-->
+                        <!--<input class="weui-input" type="number" name="card_phone" id="card_phone" pattern="[0-9]*" value=""-->
+                               <!--placeholder="请输充值手机号">-->
+                        <!--</input>-->
+                    <!--</view>-->
+                <!--</view>-->
+                <!--<view class="weui-cell">-->
+                    <!--<view class="weui-cell__hd">-->
+                        <!--<label for="card_rephone" class="weui-label">确认手机</label>-->
+                    <!--</view>-->
+                    <!--<view class="weui-cell__bd">-->
+                        <!--<input class="weui-input" type="number" name="card_rephone" id="card_rephone" pattern="[0-9]*"-->
+                               <!--value="" placeholder="确认手机号">-->
+                        <!--</input>-->
+                    <!--</view>-->
+                <!--</view>-->
+            <!--</view>-->
+            <!--<view class="weui-btn weui-btn_primary checkbtn m_t_20" id="card_recharge">马上充值</view>-->
+        <!--</view>-->
+<!--</view>-->
+<!--</view>-->
+
+
+
+<!--&lt;!&ndash;<script>&ndash;&gt;-->
+    <!--&lt;!&ndash;var storage = window.localStorage;&ndash;&gt;-->
+    <!--&lt;!&ndash;var url = window.location.href;&ndash;&gt;-->
+
+    <!--&lt;!&ndash;if(localStorage.user_name !== ''){&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#phone").val(localStorage.user_name);&ndash;&gt;-->
+    <!--&lt;!&ndash;//$("#rephone").val(localStorage.user_name);&ndash;&gt;-->
+
+    <!--&lt;!&ndash;$("#card_phone").val(localStorage.user_name);&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#card_rephone").val(localStorage.user_name);&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+
+    <!--&lt;!&ndash;$(function() {&ndash;&gt;-->
+    <!--&lt;!&ndash;var ua = window.navigator.userAgent.toLowerCase();&ndash;&gt;-->
+    <!--&lt;!&ndash;//判断是不是微信&ndash;&gt;-->
+    <!--&lt;!&ndash;if ( ua.match(/MicroMessenger/i) == 'micromessenger' ) {&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#wepay").show();&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#alipay").hide();&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#ctype").val(1);&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;//判断是不是支付宝&ndash;&gt;-->
+    <!--&lt;!&ndash;if (ua.match(/AlipayClient/i) == 'alipayclient') {&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#alipay").show();&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#wepay").hide();&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#ctype").val(0);&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+
+    <!--&lt;!&ndash;if( !storage['user_name'] || !storage['user_id']){&ndash;&gt;-->
+    <!--&lt;!&ndash;//userLogin();&ndash;&gt;-->
+    <!--&lt;!&ndash;$.showLoading('正在跳转登录...');&ndash;&gt;-->
+    <!--&lt;!&ndash;location.href='cart/login';&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+
+    <!--&lt;!&ndash;$(".recharegepaytype").click(function(){&ndash;&gt;-->
+    <!--&lt;!&ndash;$(".recharegepaytype").removeClass("checkin");&ndash;&gt;-->
+    <!--&lt;!&ndash;$(this).addClass("checkin");&ndash;&gt;-->
+    <!--&lt;!&ndash;var fee = $(this).attr("data-fee");&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#fee").val(fee);&ndash;&gt;-->
+    <!--&lt;!&ndash;var amount = $(this).attr("data-amount");&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#amount").val(amount);&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+
+    <!--&lt;!&ndash;$(".weui-navbar a").click(function(){&ndash;&gt;-->
+    <!--&lt;!&ndash;var tid = $(this).attr("data-id");&ndash;&gt;-->
+    <!--&lt;!&ndash;if(tid == 1){&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#tab1").addClass("weui-tab__bd-item&#45;&#45;active");&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#tab2").removeClass("weui-tab__bd-item&#45;&#45;active");&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#navbar1").addClass("weui-bar__item&#45;&#45;on");&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#navbar2").removeClass("weui-bar__item&#45;&#45;on");&ndash;&gt;-->
+    <!--&lt;!&ndash;}else{&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#tab1").removeClass("weui-tab__bd-item&#45;&#45;active");&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#tab2").addClass("weui-tab__bd-item&#45;&#45;active");&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#navbar1").removeClass("weui-bar__item&#45;&#45;on");&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#navbar2").addClass("weui-bar__item&#45;&#45;on");&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+
+    <!--&lt;!&ndash;$(document).on('click', '#card_recharge', function() {&ndash;&gt;-->
+    <!--&lt;!&ndash;cardRecharge();&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+
+    <!--&lt;!&ndash;$(document).on('click', '#rechargebtn', function() {&ndash;&gt;-->
+    <!--&lt;!&ndash;onlineRecharge();&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+
+    <!--&lt;!&ndash;//在线充值&ndash;&gt;-->
+    <!--&lt;!&ndash;function onlineRecharge(){&ndash;&gt;-->
+
+    <!--&lt;!&ndash;var phone = $("#phone").val();&ndash;&gt;-->
+    <!--&lt;!&ndash;var ctype = $("#ctype").val();&ndash;&gt;-->
+
+    <!--&lt;!&ndash;if(phone == '' || phone.length != 11){&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#warninginfo1").html('请输入正确的手机号码').parent().show(300);&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#phone").focus();&ndash;&gt;-->
+    <!--&lt;!&ndash;return false;&ndash;&gt;-->
+    <!--&lt;!&ndash;}else{&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#warninginfo1").html('').parent().hide(300);&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+
+    <!--&lt;!&ndash;var params = $('#dataForm1').serialize();&ndash;&gt;-->
+    <!--&lt;!&ndash;var url = "ajax_member/onlineRecharge";&ndash;&gt;-->
+
+
+    <!--&lt;!&ndash;$.showLoading('数据更新中...');&ndash;&gt;-->
+    <!--&lt;!&ndash;$.ajax({&ndash;&gt;-->
+    <!--&lt;!&ndash;type: "post",&ndash;&gt;-->
+    <!--&lt;!&ndash;url: url,&ndash;&gt;-->
+    <!--&lt;!&ndash;dataType: "json",&ndash;&gt;-->
+    <!--&lt;!&ndash;data: params,&ndash;&gt;-->
+    <!--&lt;!&ndash;success: function(msg){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.hideLoading();&ndash;&gt;-->
+    <!--&lt;!&ndash;if(msg.status == 200){&ndash;&gt;-->
+    <!--&lt;!&ndash;//location.href = 'member/wepay/'+msg.oid;&ndash;&gt;-->
+    <!--&lt;!&ndash;if(ctype == 1){&ndash;&gt;-->
+    <!--&lt;!&ndash;location.href = 'member/wepay/'+msg.oid;&ndash;&gt;-->
+    <!--&lt;!&ndash;}else if(ctype == 0){&ndash;&gt;-->
+    <!--&lt;!&ndash;location.href = 'member/alipay/'+msg.oid;&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;else if(msg.status == 1){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.toast('两次手机号码输入不一致', 'cancel');&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;else if(msg.status == 2){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.toast('参数出错', 'cancel');&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+
+    <!--&lt;!&ndash;//充值卡充值&ndash;&gt;-->
+    <!--&lt;!&ndash;function cardRecharge(){&ndash;&gt;-->
+    <!--&lt;!&ndash;var card_number = $("#card_number").val();&ndash;&gt;-->
+    <!--&lt;!&ndash;var card_pass = $("#card_pass").val();&ndash;&gt;-->
+    <!--&lt;!&ndash;var phone = $("#card_phone").val();&ndash;&gt;-->
+    <!--&lt;!&ndash;var rephone = $("#card_rephone").val();&ndash;&gt;-->
+
+    <!--&lt;!&ndash;if(card_number == '' || card_number.length != 10){&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#warninginfo").html('请输入正确的充值卡卡号').parent().show(300);&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#card_number").focus();&ndash;&gt;-->
+    <!--&lt;!&ndash;return false;&ndash;&gt;-->
+    <!--&lt;!&ndash;}else{&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#warninginfo").html('').parent().hide(300);&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+
+    <!--&lt;!&ndash;if(card_pass == '' || card_pass.length != 6){&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#warninginfo").html('请输入正确的充值卡密码').parent().show(300);&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#card_pass").focus();&ndash;&gt;-->
+    <!--&lt;!&ndash;return false;&ndash;&gt;-->
+    <!--&lt;!&ndash;}else{&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#warninginfo").html('').parent().hide(300);&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+
+    <!--&lt;!&ndash;if(phone == '' || phone.length != 11){&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#warninginfo").html('请输入正确的手机号码').parent().show(300);&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#phone").focus();&ndash;&gt;-->
+    <!--&lt;!&ndash;return false;&ndash;&gt;-->
+    <!--&lt;!&ndash;}else{&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#warninginfo").html('').parent().hide(300);&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+
+    <!--&lt;!&ndash;if(rephone == '' || rephone.length != 11){&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#warninginfo").html('请输入正确的确认手机号码').parent().show(300);&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#rephone").focus();&ndash;&gt;-->
+    <!--&lt;!&ndash;return false;&ndash;&gt;-->
+    <!--&lt;!&ndash;}else{&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#warninginfo").html('').parent().hide(300);&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+
+    <!--&lt;!&ndash;if(rephone !== phone){&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#warninginfo").html('两次手机号码输入不一致').parent().show(300);&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#rephone").focus();&ndash;&gt;-->
+    <!--&lt;!&ndash;return false;&ndash;&gt;-->
+    <!--&lt;!&ndash;}else{&ndash;&gt;-->
+    <!--&lt;!&ndash;$("#warninginfo").html('').parent().hide(300);&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+
+
+    <!--&lt;!&ndash;var params = $('#dataForm2').serialize();&ndash;&gt;-->
+    <!--&lt;!&ndash;var url = "ajax/userRecharge";&ndash;&gt;-->
+
+
+    <!--&lt;!&ndash;$.showLoading('数据更新中...');&ndash;&gt;-->
+    <!--&lt;!&ndash;$.ajax({&ndash;&gt;-->
+    <!--&lt;!&ndash;type: "post",&ndash;&gt;-->
+    <!--&lt;!&ndash;url: url,&ndash;&gt;-->
+    <!--&lt;!&ndash;dataType: "json",&ndash;&gt;-->
+    <!--&lt;!&ndash;data: params,&ndash;&gt;-->
+    <!--&lt;!&ndash;success: function(msg){&ndash;&gt;-->
+
+    <!--&lt;!&ndash;$.hideLoading();&ndash;&gt;-->
+    <!--&lt;!&ndash;if(msg.status == 200){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.toast("充值成功");&ndash;&gt;-->
+    <!--&lt;!&ndash;setTimeout(function(){&ndash;&gt;-->
+    <!--&lt;!&ndash;location.href = 'member/recharge/';&ndash;&gt;-->
+    <!--&lt;!&ndash;},2000);&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;else if(msg.status == 1){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.toast('请核对卡号信息', 'cancel');&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;else if(msg.status == 2){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.toast('请核对密码信息', 'cancel');&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;else if(msg.status == 3){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.toast('请核对手机号码', 'cancel');&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;else if(msg.status == 4){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.toast('请核对确认手机号码', 'cancel');&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;else if(msg.status == 5){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.toast('两次手机输入不一致', 'cancel');&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;else if(msg.status == 6){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.toast("请先注册");&ndash;&gt;-->
+    <!--&lt;!&ndash;setTimeout(function(){&ndash;&gt;-->
+    <!--&lt;!&ndash;location.href = 'cart/reg/';&ndash;&gt;-->
+    <!--&lt;!&ndash;},2000);&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;else if(msg.status == 7){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.toast('充值卡已用过或不存在', 'cancel');&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;else if(msg.status == 8){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.toast('请先完善个人信息再充值', 'cancel');&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;else if(msg.status == 9){&ndash;&gt;-->
+    <!--&lt;!&ndash;$.toast('一个账号只能用一张赠送卡', 'cancel');&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+

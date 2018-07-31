@@ -1,0 +1,23 @@
+/******充值******/
+page{background-color:white;}
+.recharegepaytype{border:2rpx solid #ddd;border-radius:10rpx;text-align:center;padding:20rpx;margin:20rpx;color:#999;}
+.recharegepaytype .number{font-size:56rpx;font-weight:bold;margin:0;padding:0;}
+.recharegepaytype .yuan{font-size:32rpx;font-weight:normal;padding-left:10rpx;}
+.recharegepaytype .zf{font-size:28rpx;}
+/*.checkin{border:1rpx solid #5cc1cf;color:#5cc1cf;background:url(../images/member/checkin.png) no-repeat right bottom;background-size:20rpx 20rpx;}*/
+.checkin{border:2rpx solid #5cc1cf;color:#5cc1cf;}
+
+.weui-navbar__item{font-size:32rpx;}
+.weui-navbar__item.weui-bar__item--on{background:#5cc1cf;color:#fff;}
+
+
+.p_10{padding:20rpx;}
+.p_15{padding:30rpx;}
+.m_t_20{margin:40rpx 0 0;}
+
+.weui-navbar__item.weui-bar__item_on{color:white;background-color:#d4237a;}
+.weui-tab__panel{padding-top:100rpx;}
+.weui-tab__content{background-color:white;padding:0 20rpx;}
+.weui-navbar__slider{position:absolute;content:" ";left:0;bottom:0;width:6em;height:6rpx;background-color:#d4237a;}
+
+.checkbtn{color:white;}
