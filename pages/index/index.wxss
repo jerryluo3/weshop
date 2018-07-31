@@ -71,10 +71,10 @@
 .fontred{color:#e40064;}
 
 
-
+.order_tab .active{color:#e40064;}
 
 .order_tab{text-align:center;height:80rpx;line-height:80rpx;background:#fff;margin-top:10rpx;font-size:28rpx;border-bottom:1rpx solid #eee;}
-.order_tab image{width:24rpx;height:24rpx; vertical-align:middle}
+.order_tab image{width:24rpx;height:24rpx; vertical-align:middle;display:inline-block;}
 
 
 .goods_cat_list{width:100%; background:#fff;}
