@@ -5,6 +5,7 @@ var Router = require('./template/footer/footer.js')
 var router = new Router()
 var domain = "https://www.qiyue99.com/weshop/"
 App({
+    
   onLaunch: function () {
     // var haveShopid = wx.getStorageSync('shop_id')
     // if (haveShopid){
