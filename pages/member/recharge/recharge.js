@@ -7,9 +7,29 @@ Page({
    * 页面的初始数据
    */
   data: {
-    moneyList: []
+    moneyList: [],
+      userInfo:{},
   },
-
+//获取会员信息
+  getUserInfo:function(uid){
+        var that = this
+        var url = app.util.url('qiyue/getUserInfo/' + uid);
+        wx.request({
+            url: url,
+            data: {},
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            method: 'POST',
+            success: function (res) {
+                that.setData({
+                    userInfo: res.data.user,
+                })
+                wx.setStorageSync("uid", res.data.user.mem_id);
+                wx.setStorageSync("userInfo", res.data.user);
+            }
+        });
+    },
   getAccountMoneyList: function () {
     var that = this
     var uid = wx.getStorageSync("uid");
@@ -37,8 +57,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    that.getAccountMoneyList();
+    // this.getAccountMoneyList();
+    var uid = wx.getStorageSync("uid");
+    this.getUserInfo(uid)
   },
 
   /**
