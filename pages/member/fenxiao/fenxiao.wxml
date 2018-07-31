@@ -18,7 +18,7 @@
         <text>可提现金额(元)</text>
         <text class='tx_money'>{{userInfo.mem_usermoney}}</text>
       </view>
-      <view class='weui-flex__item'>
+      <view class='weui-flex__item' wx:if="{{userInfo.mem_type>0}}">
         <view class='tx_btn' bindtap='tixian'>提现</view>
       </view>
     </view>
