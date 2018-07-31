@@ -17,7 +17,7 @@
   </view>
 
 
-  <view class="middle-container">
+  <view class="middle-container" wx:if="{{middleAd!=''}}">
     <image src="{{middleAd}}" class=""></image>
   </view>
 

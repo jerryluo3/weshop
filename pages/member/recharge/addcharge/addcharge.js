@@ -1,6 +1,14 @@
 // pages/member/recharge/recharge.js
 var app = getApp()
+var sliderWidth = 96;
+var moneyConfig = {
+    20:{cost:20},
+    50:{cost:48},
+    100:{cost:95.5},
+    200:{cost:190}
+}
 
+var domain = app.globalData.DOMAIN
 Page({
 
   /**
@@ -9,6 +17,12 @@ Page({
   data: {
     moneyList: [],
       userInfo:{},
+      tabs: ["在线充值余额", "充值卡充值"],
+      activeIndex: 0,
+      sliderOffset: 0,
+      sliderLeft: 0,
+      type:'50',
+      cost:48
   },
 //获取会员信息
   getUserInfo:function(uid){
@@ -52,14 +66,56 @@ Page({
       }
     })
   },
+    tabClick: function (e) {
+        this.setData({
+            sliderOffset: e.currentTarget.offsetLeft,
+            activeIndex: e.currentTarget.id
+        });
+},
+    choseMoney(e){
+      var type = e.currentTarget.dataset['type']
+        var cost = moneyConfig[type].cost
+        this.setData({
+            cost,
+            type
+        })
+    },
 
+    createOrderThenWxPay(){
+
+        var uid = wx.getStorageSync('uid')
+        var phone = wx.getStorageSync('mem_mobile')
+        var ctype = 1//1表示微信支付
+        var url = `${domain}qiyue/onlineRecharge`;
+
+            //请求生成订单号oid
+        utils.post(url,{uid,ctype,phone},{"Content-Type": "application/x-www-form-urlencoded"})
+            .then((res)=>{
+                console.log(res)
+                return app.wxPay(res.data)
+            })
+            .then((res)=>{
+
+            })
+    },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     // this.getAccountMoneyList();
+      //顶部tab
+      var that = this
+      wx.getSystemInfo({
+          success: function (res) {
+              that.setData({
+                  sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+                  sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
+              });
+          }
+      });
     var uid = wx.getStorageSync("uid");
     this.getUserInfo(uid)
+
   },
 
   /**

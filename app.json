@@ -13,6 +13,7 @@
     "pages/cart/cart",
     "pages/member/info/info",
     "pages/member/recharge/recharge",
+    "pages/member/recharge/addcharge/addcharge",
     "pages/member/address/address",
     "pages/member/address/modaddress",
     "pages/member/orders/orders",

@@ -265,12 +265,20 @@ Page({
   },
 
   fenxiaoMoney:function(e){
+      var userInfo = this.data.userInfo
+      if( userInfo.mem_type==0 ){
+          return
+      }
     wx.navigateTo({
       url: '/pages/member/fenxiao/money'
     })
   },
 
   tixianMoney: function (e) {
+      var userInfo = this.data.userInfo
+      if( userInfo.mem_type==0 ){
+          return
+      }
     wx.navigateTo({
       url: '/pages/member/fenxiao/tixian'
     })

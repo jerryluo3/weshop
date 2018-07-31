@@ -2,3 +2,8 @@
 
 .money_list{text-align:center;background:#fff;line-height:60rpx;}
 .money_row{border-bottom:1rpx solid #ddd;font-size:28rpx;}
+
+.wallet_info{background:#5cc2cf;color:#fff;height:120px;width:100%;text-align:center;}
+.wallet_info_c{padding:30px 0 0;}
+.wallet_name{text-align:center}
+.wallet_account{text-align: center;}

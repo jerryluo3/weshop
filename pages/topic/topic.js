@@ -20,17 +20,19 @@ Page({
           // circular : true //loop
           indicatorDots:false
       },
+      id:'',
       // footer:router.footerArray,
   },
     updateAD(){
         var scope = this
       var url = `${domain}qiyue/getGoodsSubject`
-      var id = 3
+      var id = scope.data.id
+      
         utils.post(url,{id},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
             console.log(res)
             var topSwiper = scope.data.topSwiper
             topSwiper.item[0].img = `${domain}${res.data.result.gs_picture}`
-            var middleAd = `${domain}${res.data.result.gs_ads}`
+          var middleAd = res.data.result.gs_ads==''?'':`${domain}${res.data.result.gs_ads}`
 
             var cat_goods_list = res.data.goods_list
             cat_goods_list.forEach(( value, index )=>{
@@ -56,9 +58,17 @@ Page({
         })
     },
 
-  onLoad: function () {
+  onLoad: function (options) {
     var scope = this
+      var id = options.id
+      if(id!= ''){
+          scope.setData({
+              id
+          })
+      }
       scope.updateAD()
+
+
 
       // router.setActive(0)
       // scope.setData({footer:router.footerArray})
