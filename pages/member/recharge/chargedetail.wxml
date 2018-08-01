@@ -1,0 +1,16 @@
+<view class="money_list">
+    <view class="weui-flex money_row">
+        <view class="weui-flex__item">时间</view>
+        <view class="weui-flex__item">类型</view>
+        <view class="weui-flex__item">金额</view>
+        <view class="weui-flex__item">状态</view>
+    </view>
+    <block wx:for="{{moneyList}}" wx:key="index">
+        <view class="weui-flex money_row erow">
+            <view class="weui-flex__item">{{item.mr_addtime}}</view>
+            <view class="weui-flex__item">{{item.mr_type == 1 ? '增加' : '减少'}}</view>
+            <view class="weui-flex__item">{{item.mr_amount}}</view>
+            <view class="weui-flex__item">{{item.mr_state == 1 ? '成功' : '失败' }}</view>
+        </view>
+    </block>
+</view>

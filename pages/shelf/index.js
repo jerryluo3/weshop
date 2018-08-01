@@ -356,7 +356,6 @@ Page({
 
     },
 
-
     //弹出需要授权层
     closeAuth: function () {
         var that = this
