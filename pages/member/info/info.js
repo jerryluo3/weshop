@@ -126,13 +126,13 @@ Page({
           wx.showToast({
             title: '修改成功',
             icon: 'success',
-            duration: 2000,
+            duration: 1500,
             success(ress) {
               setTimeout(function () {
                 wx.navigateTo({
                   url: '/pages/member/member?refresh=1'
                 })
-              }, 2000) //延迟时间
+              }, 1500) //延迟时间
             }
           })
         }

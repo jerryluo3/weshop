@@ -1,7 +1,8 @@
 // pages/member/orders/orderdetail.js
 
 var app = getApp()
-
+var domain = app.globalData.DOMAIN
+var backURL ='/pages/member/orders/orders?otype=99&fromTM=1'
 Page({
 
   /**
@@ -61,8 +62,10 @@ Page({
                 duration: 1000,
                 success(ress) {
                   setTimeout(function () {
-                    that.getMemberOrderList(that.data.toView);
-                  }, 2000) //延迟时间
+                      wx.navigateTo({
+                          url: backURL
+                      })
+                  }, 1000) //延迟时间
                 }
               })
             }
@@ -97,7 +100,11 @@ Page({
           icon: 'none',
           duration: 1000
         })
-        that.getMemberOrderList(that.data.toView);
+          setTimeout(function(){
+              wx.navigateTo({
+                  url: backURL
+              })
+          },1000)
       }
     })
   },
@@ -207,13 +214,17 @@ Page({
           'signType': 'MD5',
           'paySign': res.data.paySign,
           'success': function (res) {
-            console.log('success');
             wx.showToast({
               title: '支付成功',
               icon: 'success',
-              duration: 3000
+              duration: 1500
             });
-            that.getMemberOrderList(that.data.toView);
+            setTimeout(function(){
+                wx.navigateTo({
+                    url: backURL
+                })
+            },1500)
+
           },
           'fail': function (res) {
             console.log('fail');

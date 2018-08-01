@@ -27,7 +27,8 @@ Page({
     'popPhonehide':'hide',
 
       footer:router.footerArray,
-      fromTM:1
+      fromTM:1,
+      getGoodsBySelf:0,
   },
 
   //配送方式
@@ -662,10 +663,14 @@ Page({
         },
         method: 'POST',
         success: function (res) {
+          var getGoodsBySelf = 0
+            for(var i = 0,il = res.data.cartlist.length;i < il; i ++ ){
+                getGoodsBySelf+=Number( res.data.cartlist[i].goods_pstype )
+            }
           that.setData({
-            cartlist: res.data.cartlist
+            cartlist: res.data.cartlist,
+              getGoodsBySelf
           })
-          //console.log(res.data.cartlist)
           var allamount = 0;
           var needcost_amount = 0;
           var needcost = 0;
@@ -785,14 +790,12 @@ Page({
       router.setActive(5)
       scope.setData({footer:router.footerArray})
 
-      var fromTM = options.fromTM
       var that = this
       var uid = wx.getStorageSync("uid");
       var userInfo = wx.getStorageSync("userInfo");
       if (uid > 0) {
         that.setData({
           userAccount: parseFloat(userInfo.mem_account),
-            fromTM
         })
       }
       else {

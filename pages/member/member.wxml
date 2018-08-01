@@ -157,13 +157,13 @@
     <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
   </view>
 
-  <!--<view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/settings/settings">-->
-    <!--<view class='block_ico'><image src='/assets/member/settings.png' mode="widthFix" ></image></view>-->
-    <!--<view class='weui-flex__item block_name'>-->
-      <!--<text>基本设置</text>-->
-    <!--</view>-->
-    <!--<view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>-->
-  <!--</view>-->
+  <view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/settings/settings">
+    <view class='block_ico'><image src='/assets/member/settings.png' mode="widthFix" ></image></view>
+    <view class='weui-flex__item block_name'>
+      <text>基本设置</text>
+    </view>
+    <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
+  </view>
 
 </view>
 
@@ -187,12 +187,13 @@
     <input type="tel" class="tel weui-flex__item" placeholder="请输入手机号" bindinput="onTelInput"/>
     <button id="code" class="weui-btn mini-btn" size="mini" disabled="{{binder.code_canBeUsed}}" type="default" bindtap="buttonGetCode">{{binder.code_canBeUsed==""?binder.normalText:countdown}}</button>
   </view>
+    <view class="input-container id-container">
+      <input type="tel" class="code" placeholder="请输入验证码" bindinput="onIdInput"/>
+    </view>
     <!--<view class="input-container id-container">-->
       <!--<input type="password" class="password" placeholder="请输入密码" bindinput="onPasswordInput"/>-->
     <!--</view>-->
-  <view class="input-container id-container">
-    <input type="tel" class="code" placeholder="请输入验证码" bindinput="onIdInput"/>
-  </view>
+
   <view class="button-group weui-flex">
     <button class="weui-btn mini-btn confirm" size="mini" type="primary" bindtap="buttonBind">提交</button>
   <button class="weui-btn mini-btn cancel" size="mini" type="warn" bindtap="accountBindTipClose">取消</button>

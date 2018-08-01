@@ -597,14 +597,6 @@ Page({
           });
             return
         }
-        if( password =="" ){
-            wx.showToast({
-                title: '请输入密码',
-                icon: 'none',
-                duration: 2000
-            });
-            return
-        }
 
         var scope = this
         scope.banButtonCode()
@@ -648,9 +640,17 @@ Page({
                 icon: 'none',
                 duration: 2000
             });
-            return
+            return false
         }
-
+        // var password = scope.data.binder.password
+        // if( password =="" ){
+        //     wx.showToast({
+        //         title: '请输入密码',
+        //         icon: 'none',
+        //         duration: 2000
+        //     });
+        //     return false
+        // }
         var url = `${domain}qiyue/checkHaveAccountByPhone`
         wx.showLoading({
             title: '请稍后',
@@ -700,6 +700,7 @@ Page({
                     duration: 3000
                 });
             }
+
         })
 
     },
@@ -734,7 +735,6 @@ Page({
         });
       }
     });
-
 
     //检查是否授权过
     // wx.getSetting({

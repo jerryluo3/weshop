@@ -30,34 +30,13 @@ Page({
             }
         });
     },
-  getAccountMoneyList: function () {
-    var that = this
-    var uid = wx.getStorageSync("uid");
-    console.log(uid);
-    var url = app.util.url('qiyue/getAccountMoneyList');
-    wx.request({
-      url: url,
-      data: {
-        uid: uid
-      },
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: 'POST',
-      success: function (res) {
-        that.setData({
-          moneyList: res.data.result
-        })
-        console.log(res.data.result)
-      }
-    })
-  },
+
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getAccountMoneyList();
+    // this.getAccountMoneyList();
     var uid = wx.getStorageSync("uid");
     this.getUserInfo(uid)
   },
