@@ -155,7 +155,14 @@ Page({
       //用户加/减 产品uid
       var needUpdate = customer[ op ]( id )
         console.log(needUpdate)
-        if( !needUpdate ){ return }
+        if( !needUpdate ){
+            wx.showToast({
+                title: '库存不足',
+                icon: 'none',
+                duration: 2000
+            });
+          return
+         }
       this.setData({ customer })
       wx.setStorage({
           key:"customer",
@@ -392,7 +399,7 @@ Page({
             let goods_list = res.data['goods_list']
             let goods_length = goods_list.length
             //有数据就用拉取的数据
-            if( !!goods_length ){
+            if( goods_length!=0 ){
                 origin_productList = [...goods_list]
                 origin_productList.forEach(( value, index )=>{
                     let url = value['mp_picture']
