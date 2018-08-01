@@ -5,7 +5,7 @@
 <view wx:if="{{ cartlist != '' }}">
   <view class='weui-flex addr_tab'>
     <view class='weui-flex__item {{ posttype == 0 ? "active" : "" }}' bindtap='changePostType' data-ptype='0'>快递</view>
-    <view class='weui-flex__item {{ posttype == 1 ? "active" : "" }}' bindtap='changePostType' data-ptype='1'>自提</view>
+    <view class='weui-flex__item {{ posttype == 1 ? "active" : "" }}' bindtap='changePostType' data-ptype='1' wx:if="{{getGoodsBySelf>0}}">自提</view>
   </view>
   <view wx:if="{{ posttype == 0 }}">
     <view class='adress_list' wx:if="{{ address != '' }}">
