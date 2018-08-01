@@ -403,8 +403,15 @@ Page({
                 origin_productList = [...goods_list]
                 origin_productList.forEach(( value, index )=>{
                     let url = value['mp_picture']
-                    let s = url.split('.')
-                    origin_productList[ index ]['mp_picture'] = s[0]+'_thumb.'+s[1]
+                    if(url != ""){
+                        let s = url.split('.')
+                        origin_productList[ index ]['mp_picture'] = s[0]+'_thumb.'+s[1]
+                    }
+                    else{
+                        origin_productList[ index ]['mp_picture'] = '';
+                    }
+
+
                 })
                 wx.setStorage({
                     key:"origin_productList",
