@@ -20,8 +20,8 @@
   margin-top: 200px;
 }
 
-.cart_btn_add{font-family:Arial, Helvetica, sans-serif;border-radius:50%;font-size:48rpx;width:48rpx;height:48rpx;line-height:48rpx;color:#fff;text-align:center;}
-.cart_btn_sub{font-family:Arial, Helvetica, sans-serif;border-radius:50%;font-size:48rpx;width:48rpx;height:48rpx;line-height:48rpx;color:#666;text-align:center;background:#fff;border:1px solid #ddd;}
+.cart_btn_add{font-family:Arial, Helvetica, sans-serif;border-radius:50%;font-size:60rpx;width:60rpx;height:60rpx;line-height:60rpx;color:#fff;text-align:center;vertical-align: top;}
+.cart_btn_sub{font-family:Arial, Helvetica, sans-serif;border-radius:50%;font-size:60rpx;width:60rpx;height:60rpx;line-height:60rpx;color:#666;text-align:center;background:#fff;border:1px solid #ddd;box-sizing:border-box;vertical-align: top;}
 
 /*topSwiper*/
 .swiper-container{
@@ -125,8 +125,8 @@ margin:10rpx;
         .product-detail .stock{}
         .product-detail .prize-line{}
           .prize-line .prize{line-height:44rpx;text-align:left;text-indent:4px;}
-          .prize-line .button-group{text-align:right;}
-            .prize-line .button-group .number{line-height:48rpx;text-align:center;padding:0 16rpx;font-size:28rpx;}
+          .prize-line .button-group{text-align:right;line-height:60rpx;height:60rpx;}
+            .prize-line .button-group .number{line-height:60rpx;text-align:center;padding:0 16rpx;font-size:30rpx;vertical-align: top;}
 
   .cart-container{
     position:absolute;

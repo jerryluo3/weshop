@@ -39,6 +39,7 @@ Page({
 
       binder:{
         tel:"",//手机号
+          password:'',//密码
           code:"",//验证码
           needShowBindedTip:false,//控制提示框
           normalText:"获取验证码",//常规文字
@@ -120,20 +121,6 @@ Page({
       })
 
     }
-  },
-
-  //跳转页面
-  jumpUrl:function(e){
-    var that = this
-    var userInfo = wx.getStorageSync("userInfo");
-    if (userInfo == '') {
-      that.popAuth();
-      return false;
-    }
-    var url = e.currentTarget.dataset.url
-    wx.navigateTo({
-      url: url
-    })
   },
 
   vipOrder: function (e) {
@@ -248,29 +235,6 @@ Page({
     that.setData({ vippophide: 'hide' });
   },
 
-  //获取会员信息
-  getUserInfo:function(uid){
-    var that = this
-    var url = app.util.url('qiyue/getUserInfo/' + uid);
-    wx.request({
-      url: url,
-      data: {},
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: 'POST',
-      success: function (res) {
-        that.setData({
-          uid: res.data.user.mem_id,
-          user: res.data.user,
-          mobile: app.util.hidePhoneNumber(res.data.user.mem_mobile)
-        })
-        wx.setStorageSync("uid", res.data.user.mem_id);
-        wx.setStorageSync("userInfo", res.data.user);
-      }
-    });
-  },
-
   //获取状态订单数量信息
   getOrderStatusNums: function () {
     var that = this
@@ -315,17 +279,6 @@ Page({
 
           }
       });
-  },
-
-  //弹出需要授权层
-  popAuth: function () {
-    var that = this
-    that.setData({ pophide: '' });
-  },
-
-  closeAuth: function () {
-    var that = this
-    that.setData({ pophide: 'hide' });
   },
 
   userInfoHandler: function (e) {
@@ -431,20 +384,49 @@ Page({
     });
   },
 
-  bindGetUserInfo:function(){
-    wx.getSetting({
-      success(res) {
-        console.log(res);
-        if (!res.authSetting['scope.userInfo']) {
-          console.log('------没有授权----')
-        } else {
-          app.checkUserLogin(e.detail);
-          //console.log(e.type.detail)
-        }
-      }
-    })
-  },
-
+  /*-----------------------授权功能-----------------------*/
+    popAuth: function () {
+        var that = this
+        that.setData({ pophide: '' });
+    },
+    closeAuth: function () {
+        var that = this
+        that.setData({ pophide: 'hide' });
+    },
+    bindGetUserInfo:function(){
+        wx.getSetting({
+            success(res) {
+                console.log(res);
+                if (!res.authSetting['scope.userInfo']) {
+                    console.log('------没有授权----')
+                } else {
+                    app.checkUserLogin(e.detail);
+                    //console.log(e.type.detail)
+                }
+            }
+        })
+    },
+    getUserInfo:function(uid){
+        var that = this
+        var url = app.util.url('qiyue/getUserInfo/' + uid);
+        wx.request({
+            url: url,
+            data: {},
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            method: 'POST',
+            success: function (res) {
+                that.setData({
+                    uid: res.data.user.mem_id,
+                    user: res.data.user,
+                    mobile: app.util.hidePhoneNumber(res.data.user.mem_mobile)
+                })
+                wx.setStorageSync("uid", res.data.user.mem_id);
+                wx.setStorageSync("userInfo", res.data.user);
+            }
+        });
+    },
 
   getUserInfoF: function () {
 
@@ -504,9 +486,24 @@ Page({
       }
     })
   },
+
+  /*-----------------------导航栏扫一扫-----------------------*/
     indexScan: app.tapScan,
 
-    //绑定功能
+  /*-----------------------vip、钱包-----------------------*/
+    jumpUrl:function(e){
+        var that = this
+        var userInfo = wx.getStorageSync("userInfo");
+        if (userInfo == '') {
+            that.popAuth();
+            return false;
+        }
+        var url = e.currentTarget.dataset.url
+        wx.navigateTo({
+            url: url
+        })
+    },
+    /*-----------------------绑定功能-----------------------*/
     accountBindTip(){
         var binder = this.data.binder
         binder.needShowBindedTip = true
@@ -525,14 +522,19 @@ Page({
         this.clearCodeInterval()
         this.allowButtonCode()
     },
-    onTelinput(e){
+    onTelInput(e){
         var binder = this.data.binder
         binder.tel = e.detail.value
         this.setData({binder})
     },
-    onIdinput(e){
+    onIdInput(e){
         var binder = this.data.binder
         binder.code = e.detail.value
+        this.setData({binder})
+    },
+    onPasswordInput(e){
+        var binder = this.data.binder
+        binder.password = e.detail.value
         this.setData({binder})
     },
     //禁用"获取验证码"按钮
@@ -582,25 +584,25 @@ Page({
         }
     },
     buttonGetCode(){
-
-        var b={
-            tel:"",
-                code:"",
-                needShowBindedTip:false,
-                normalText:"获取验证码",
-                lastTime:60,
-                code_canBeUsed:"",
-                clockHandler:undefined,
-        }
       var phone = this.data.binder.tel
+      var password = this.data.binder.password
         var reg=/^[1][3,4,5,7,8][0-9]{9}$/;
       var isRight = reg.test(phone)
+
         if(!isRight){
           wx.showToast({
               title: '请输入正确的手机号',
               icon: 'none',
               duration: 2000
           });
+            return
+        }
+        if( password =="" ){
+            wx.showToast({
+                title: '请输入密码',
+                icon: 'none',
+                duration: 2000
+            });
             return
         }
 
@@ -699,6 +701,11 @@ Page({
                 });
             }
         })
+
+    },
+
+  /*-----------------------基本设置-----------------------*/
+    basicSettings(){
 
     },
   /**

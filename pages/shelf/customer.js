@@ -102,8 +102,11 @@ var utils = require('../../utils/util')
     }
     SyncProductListWithCart(){
         var cart_list = this.cart_list
+
         for( var key in cart_list ){
-            this.productObject[ key ].number = cart_list[ key ]
+            if(this.productObject.hasOwnProperty(key)){
+                this.productObject[ key ].number = cart_list[ key ]
+            }
         }
         this.updateProductArray()
     }
