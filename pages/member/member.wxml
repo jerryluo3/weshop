@@ -190,9 +190,9 @@
     <view class="input-container id-container">
       <input type="tel" class="code" placeholder="请输入验证码" bindinput="onIdInput"/>
     </view>
-    <view class="input-container id-container">
-      <input type="password" class="password" placeholder="请输入密码" bindinput="onPasswordInput"/>
-    </view>
+    <!--<view class="input-container id-container">-->
+      <!--<input type="password" class="password" placeholder="请输入密码" bindinput="onPasswordInput"/>-->
+    <!--</view>-->
 
   <view class="button-group weui-flex">
     <button class="weui-btn mini-btn confirm" size="mini" type="primary" bindtap="buttonBind">提交</button>

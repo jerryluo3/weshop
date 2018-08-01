@@ -642,20 +642,20 @@ Page({
             });
             return false
         }
-        var password = scope.data.binder.password
-        if( password =="" ){
-            wx.showToast({
-                title: '请输入密码',
-                icon: 'none',
-                duration: 2000
-            });
-            return false
-        }
+        // var password = scope.data.binder.password
+        // if( password =="" ){
+        //     wx.showToast({
+        //         title: '请输入密码',
+        //         icon: 'none',
+        //         duration: 2000
+        //     });
+        //     return false
+        // }
         var url = `${domain}qiyue/checkHaveAccountByPhone`
         wx.showLoading({
             title: '请稍后',
         });
-        utils.post(url,{uid,phone,safecode,password},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+        utils.post(url,{uid,phone,safecode},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
             console.log('上传验证码',res)
             //成功
             wx.hideLoading()
@@ -700,13 +700,7 @@ Page({
                     duration: 3000
                 });
             }
-            else if(res.data.result == -5){
-                wx.showToast({
-                    title: '密码错误',
-                    icon: 'none',
-                    duration: 3000
-                });
-            }
+
         })
 
     },
