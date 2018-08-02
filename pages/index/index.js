@@ -688,6 +688,25 @@ Page({
 
         that.getCartNums();
     },
+    updateAll2(){
+        var that = this
+        that.getIndexPopAds();
+        //获取广告
+        // that.getAdsList();
+        //获取分类
+        that.getCates();
+        //获取中间广告
+        that.getMidAdsList();
+        //获取特价列表
+        that.getTejialist();
+        //获取热售商品列表
+        that.getGoodslist();
+        //获取预告商品列表
+        that.getPreGoodslist();
+
+        that.getCartNums();
+    },
+
     onLoad: function (options) {
         //小程序码扫进来的优先
         var shopid = options['shopid']
@@ -761,7 +780,7 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
-        this.updateAll()
+        this.updateAll2()
         wx.stopPullDownRefresh();
     },
     /**

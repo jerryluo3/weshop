@@ -9,7 +9,7 @@
 </view>
 
 <view class="swiper">
-<swiper indicator-dots="true" autoplay="true" interval="3000" duration="1200" style='height:350rpx;'>
+<swiper indicator-dots="true" vertical="{{ads_list==1}}" circular='true' autoplay="true" interval="3000" duration="1200" style='height:350rpx;'>
   <block wx:for="{{ads_list}}" wx:key="{{index}}">
     <swiper-item style="background:url({{siteurl}}{{item.ads_picture}});background-repeat: no-repeat;background-size:100% 100%;height:350rpx; " bindtap='jumpUrl' data-url="{{item.ads_url}}">
     </swiper-item>
@@ -182,7 +182,7 @@
 
 <view class="cart-icon" data-url="/pages/cart/cart" bindtap="jumpUrl">
   <image src="/assets/index/image/ico-cart.png"/>
-  <span class="number" wx:if="{{cartnums>0}}">
+  <span class="number" wx:if="{{cartnums>0}}" style="background-color:#d4237a;">
     {{cartnums}}
   </span>
 </view>
