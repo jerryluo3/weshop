@@ -182,6 +182,8 @@
 
   <import src="/template/footer/footer.wxml"/>
   <template is="tempFooter" data="{{footer}}"/>
-
+  <view class="fly-point" wx:if="{{fly}}" style="left:{{fly_position.x}}px;top:{{fly_position.y}}px;transform:translateX({{animate_position.x}}px) translateY({{animate_position.y}}px);">
+    <image src="{{chosedImage}}"></image>
+  </view>
 
 </view>

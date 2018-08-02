@@ -98,7 +98,8 @@ Page({
     cart:{
       number:0,
       total:0.00,
-      opened:false
+      opened:false,
+        info:{}
     },
 
 
@@ -111,6 +112,16 @@ Page({
         showSearchList : false,
         input_value:"",
 
+        //动画相关
+        cart_vector:{x:0,y:0},
+        touch_vector:{x:0,y:0},
+        control_vector:{x:0,y:0},
+        fly:false,//购物车动画点是否显示
+        fly_position:{x:0,y:0},//动态更新
+        animate_position:{x:0,y:0},
+        QuadraticBezier:[],
+        tasks:{},
+        chosedImage:''
   },
     tapScan:app.tapScan,
     toggleCart(){
@@ -145,12 +156,77 @@ Page({
       // } )
 
   },
+    _fly(e,segements,duration){
+        var scope = this
+        var QuadraticBezier = this._createBezier(e,segements)
+        var QL = QuadraticBezier.length - 1
+        this.setData({QuadraticBezier})
+        this._setFlyPosition()
+
+        var p = 0
+        var nowTime = 0
+        var index = 0
+        var fps = 30
+        var interval = 1000 / fps
+        var animate_position
+        var fly_position
+        var handle = setInterval(function(){
+            // p = nowTime / duration
+            // index = parseInt( p * QL )
+            // animate_position = QuadraticBezier[index]
+            fly_position = QuadraticBezier[index]
+            // console.log(animate_position)
+            scope.setData({
+                // animate_position
+                fly_position
+                // animate_position
+            })
+            if(nowTime<duration){
+                index+=4
+                nowTime+=interval
+            }
+            else{
+                scope._hideFly()
+                clearInterval(handle)
+            }
+
+        },interval)
+    },
+    _createBezier(e,segements){
+        console.log(e)
+        var touch_vector = {
+            x:e.changedTouches[0].clientX,
+            y:e.changedTouches[0].clientY
+        }
+        var cart_vector = this.data.cart_vector
+
+        var control_vector = this.data.control_vector
+        control_vector = {
+            x:cart_vector.x + parseInt((touch_vector.x - cart_vector.x)/2),
+            y:touch_vector.y
+        }
+        this.setData({control_vector,touch_vector})
+        return app.createQudraticBezier([touch_vector,control_vector,cart_vector],segements)
+    },
+    _setFlyPosition(){
+        this.setData({
+            fly_position:this.data.touch_vector,
+            fly:true
+        })
+    },
+    _hideFly(){
+        this.setData({fly:false,animate_position:{x:0,y:0}})
+    },
     operate( e ){
         //操作只会更改视图列表 this.data.productList
       var target = e.target;
       var id = target.dataset['mp_id'];
       var op = target.dataset.op;
 
+      var chosedImage = domain+this.data.customer.productObject[id].mp_picture
+        this.setData({
+            chosedImage
+        })
 
       var customer = this.data.customer
 
@@ -182,6 +258,7 @@ Page({
                             list[ i ].number = 0
                         }
                         list[ i ].number+=1
+                        this._fly(e,60,60)
                     }
                     console.log(`总共${il}条数据，当前循环到第${i}条，break`)
                     break;
@@ -191,6 +268,13 @@ Page({
             this.setData({
                 searchList:list
             })
+
+        }
+        else{
+            //如果操作的是customer
+            if(op=='addOne'){
+                this._fly(e,60,500)
+            }
 
         }
 
@@ -527,13 +611,18 @@ Page({
         })
     },
 
-    _QueryCartNode(){
+    _QueryCartNode(callback){
 
+        var scope = this
         let selectorquery = wx.createSelectorQuery()
         console.log('selectorquery',selectorquery)
 
         selectorquery.select('#cart-icon').boundingClientRect(function(res){
             console.log('query1boundingClientRect',res)
+            var cart = scope.data.cart
+            cart.info = res
+            scope.setData({cart})
+            callback()
         }).selectViewport().boundingClientRect(function(res){
             console.log('query2boundingClientRect',res)
         }).exec()
@@ -590,7 +679,16 @@ Page({
       scope.setData({footer:router.footerArray})
 
 /*--------------------------获取设备信息--------------------------*/
-      this._QueryCartNode()
+        this._QueryCartNode(function(){
+            var cart = scope.data.cart
+            var cart_vector = {
+                x:cart.info.left + parseInt(cart.info.width / 2),
+                y:cart.info.top + parseInt(cart.info.height / 2)
+            }
+            scope.setData({cart_vector})
+        })
+
+
 
 
     },

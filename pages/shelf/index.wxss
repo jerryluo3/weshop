@@ -172,3 +172,6 @@ margin:10rpx;
 
 .patcher{height:200rpx;flex-shrink:0;width:100%;}
 .popAuth{top:300rpx;}
+
+.fly-point{width:60rpx;height:60rpx;border-radius:50%;position:fixed;z-index:1000;left:0;top:0;}
+.fly-point image{width:100%;height:100%;}
