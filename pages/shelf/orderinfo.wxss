@@ -56,3 +56,4 @@ padding-left:10rpx;
      filter: grayscale(100%);
      color:#ccc;
 }
+scroll-view.sort-scroll-view{height:100%;max-height:400rpx;}

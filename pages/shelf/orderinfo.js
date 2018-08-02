@@ -45,10 +45,7 @@ Page({
         //微信支付
         if( paytype==1 ){
             url = app.util.url('qiyue/payfee')
-            console.log('url',url)
-          console.log('oid',oid)
-          console.log('uid', uid)
-          console.log('ordertype',ordertype)
+
             utils.post(url,{uid,oid,ordertype},{"Content-Type": "application/x-www-form-urlencoded"})
               .then((res)=>{
                 console.log('payfee返回',res)
@@ -59,13 +56,13 @@ Page({
                 wx.showToast({
                   title: '支付成功',
                   icon: 'success',
-                  duration: 2000,
+                  duration: 1000,
                   success(res) {
                       setTimeout(function () {
                           wx.navigateTo({
                               url: '/pages/member/member'
                           })
-                      }, 2000) //延迟时间
+                      }, 1000) //延迟时间
                   }
               });
           })
@@ -86,13 +83,13 @@ Page({
                                 wx.showToast({
                                     title: '支付成功',
                                     icon: 'success',
-                                    duration: 2000,
+                                    duration: 1000,
                                     success(ress) {
                                         setTimeout(function () {
                                             wx.navigateTo({
                                                 url: '/pages/member/member'
                                             })
-                                        }, 2000) //延迟时间
+                                        }, 1000) //延迟时间
                                     }
                                 });
                             }
@@ -100,13 +97,13 @@ Page({
                                 wx.showToast({
                                     title: '支付失败',
                                     icon: 'none',
-                                    duration: 2000,
+                                    duration: 1000,
                                     success(ress) {
                                         setTimeout(function () {
                                             wx.navigateTo({
                                                 url: '/pages/member/member'
                                             })
-                                        }, 2000) //延迟时间
+                                        }, 1000) //延迟时间
                                     }
                                 });
 

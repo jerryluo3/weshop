@@ -147,27 +147,66 @@ Page({
   },
     operate( e ){
         //操作只会更改视图列表 this.data.productList
-      let target = e.target;
-      let id = target.dataset['mp_id'];
-      let op = target.dataset.op;
+      var target = e.target;
+      var id = target.dataset['mp_id'];
+      var op = target.dataset.op;
 
-      let customer = this.data.customer
+
+      var customer = this.data.customer
+
       //用户加/减 产品uid
       var needUpdate = customer[ op ]( id )
-        console.log(needUpdate)
         if( !needUpdate ){
             wx.showToast({
                 title: '库存不足',
                 icon: 'none',
                 duration: 2000
             });
-          return
-         }
+            return
+        }
+
+        //如果操作的是搜索列表,更新searchList
+        if( this.data.showSearchList == true ){
+
+            var list = this.data.searchList
+            for(var i = 0, il = list.length; i < il; i ++ ){
+                //说明搜索列表里有这个物品
+                if( list[ i ]['mp_id'] == id ){
+                    //减一个
+                    if(op=="subOne"){
+                        list[ i ].number-=1
+                    }
+                    //加一个
+                    else if(op=="addOne"){
+                        if(typeof list[ i ].number !='number'){
+                            list[ i ].number = 0
+                        }
+                        list[ i ].number+=1
+                    }
+                    console.log(`总共${il}条数据，当前循环到第${i}条，break`)
+                    break;
+                }
+            }
+
+            this.setData({
+                searchList:list
+            })
+
+        }
+
       this.setData({ customer })
       wx.setStorage({
           key:"customer",
           data:customer
       })
+
+
+
+
+
+
+
+
 
   },
 
@@ -361,12 +400,30 @@ Page({
         var that = this
         that.setData({ pophide: 'hide',needAuthorize:false });
     },
+    //把购物车的数据同步到搜索列表中
+    _SyncCartListToSearchList(searchList){
+        var scope = this
+        var customer = scope.data.customer
+        //说明购物车有添加过东西
+        console.log(Object.keys(customer.cart_list))
+        if(Object.keys(customer.cart_list).length>0){
+            var cart_list = customer.cart_list
+            searchList.forEach(function( item, index ){
+                var key = item.mp_id
+                if(cart_list.hasOwnProperty(key)){
+                    item['number'] = cart_list[ key ]
+                }
+            })
+        }
+    },
     search(){
         var scope = this
         utils.post(`${domain}qiyue/getBLZSearchGoods`,{keys:scope.data.input_value,shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
             var searchList = res.data.goods_list
             // var customer = scope.data.customer
 
+            //把购物车的操作同步到searchList中
+            scope._SyncCartListToSearchList(searchList)
             scope.setData({showSearchList:true,searchList})
 
         })
@@ -470,6 +527,20 @@ Page({
         })
     },
 
+    _QueryCartNode(){
+
+        let selectorquery = wx.createSelectorQuery()
+        console.log('selectorquery',selectorquery)
+
+        selectorquery.select('#cart-icon').boundingClientRect(function(res){
+            console.log('query1boundingClientRect',res)
+        }).selectViewport().boundingClientRect(function(res){
+            console.log('query2boundingClientRect',res)
+        }).exec()
+
+
+
+    },
     onLoad: function () {
 /*--------------------------数据请求--------------------------*/
 
@@ -483,7 +554,13 @@ Page({
 
           swiperItem.forEach(( value,index )=>{
               let name = list[ index ]['ads_picture']
-              let link = `${outUrl}?url=${list[ index ]['ads_url']}`
+              var ads_url = list[ index ]['ads_url']
+              var link
+              if(/http/g.test(ads_url)){
+                  link = `${outUrl}?url=ads_url`
+              }else{
+                  link = ads_url
+              }
               let v = {
                   img: `${domain}${name}`,
                   link,
@@ -512,19 +589,11 @@ Page({
       router.setActive(2)
       scope.setData({footer:router.footerArray})
 
-      //商品列表
-      //用户数据
-      // var customer = new Customer()
-      // // customer.productArray = origin_productList
-      // customer.init()
-      //
-      // //视图数据
-      // scope.setData({
-      //     customer : customer
-      // })
+/*--------------------------获取设备信息--------------------------*/
+      this._QueryCartNode()
 
 
-  },
+    },
     onPullDownRefresh: function () {
         this.updateProductList()
         wx.stopPullDownRefresh();

@@ -19,7 +19,7 @@ Page({
         cat_goods_list: [],  //商品列表
         cid: 0,
 
-        userInfo: {},
+        userInfo: "",
         currentTab: 0, //预设当前项的值
         scrollLeft: 0, //tab标题的滚动条位置
         showblock: 0,  //0:正在热售 1:上新预告
@@ -697,7 +697,7 @@ Page({
         if (!!shopid) {
             router.setShelf()
             wx.setStorageSync('shop_id', shopid)
-            wx.navigatorTo({
+            wx.navigateTo({
                 url:'/pages/shelf/index'
             })
         } else {
@@ -730,6 +730,8 @@ Page({
             else{
                 console.log('未授权，缺少uid，无法获取userInfo')
             }
+        }else{
+            that.setData({userInfo})
         }
 
 
