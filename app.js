@@ -7,39 +7,14 @@ var domain = "https://www.qiyue99.com/weshop/"
 App({
     
   onLaunch: function () {
-    // var haveShopid = wx.getStorageSync('shop_id')
-    // if (haveShopid){
-    //   router.setShelf()
-    // }else{
-    //   router.setScan()
-    // }
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
-          })
-        }
-      }
-    })
+      var scope = this
+      wx.getSystemInfo({
+          success:function(res){
+              scope.globalData.deviceInfo = res
+              //windowHeight
+              //windowWidth
+          }
+      })
   },
   globalData: {
     userInfo: null,
@@ -49,6 +24,7 @@ App({
     Router : Router,
     DOMAIN:domain,
     localData:false,
+      deviceInfo:{},
   },
     siteInfo: {
         'uniacid': '8', //公众号uniacid
@@ -195,7 +171,6 @@ App({
             })
         }
     },
-
     tapScan( e ){
       wx.scanCode({
         success: (res) => {
@@ -279,4 +254,15 @@ App({
         });
 
     },
+    createQudraticBezier(points,segements){
+        segements = parseInt( segements )
+        var result = []
+        for( var i = 0; i < segements; i ++ ){
+            var t = i / segements
+            var x = Math.pow((1-t),2) * points[0].x + 2 * t * ( 1 - t ) * points[1].x + Math.pow(t,2) * points[2].x
+            var y = Math.pow((1-t),2) * points[0].y + 2 * t * ( 1 - t ) * points[1].y + Math.pow(t,2) * points[2].y
+            result.push({x,y})
+        }
+        return result
+    }
 })

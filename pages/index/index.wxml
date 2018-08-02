@@ -180,7 +180,12 @@
 </view>
 </view>
 
-
+<view class="cart-icon" data-url="/pages/cart/cart" bindtap="jumpUrl">
+  <image src="/assets/index/image/ico-cart.png"/>
+  <span class="number" wx:if="{{cartnums>0}}">
+    {{cartnums}}
+  </span>
+</view>
 
 <import src="/template/footer/footer.wxml"/>
 <template is="tempFooter" data="{{footer}}"/>
