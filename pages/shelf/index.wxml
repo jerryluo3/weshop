@@ -68,11 +68,11 @@
                 <view class="theme-product-prize weui-flex__item prize">{{item.mp_price}}</view>
                 <view class="button-group weui-flex__item">
                   <!--商品减号-->
-                  <view class="cart_btn_sub common-display-ib" bindtap="operate" wx:if="{{!!item.number}}" data-mp_id="{{item.mp_id}}" data-op="subOne">-</view>
+                  <view class="cart_btn_sub common-display-ib" bindtap="operate" wx:if="{{!!item.number}}" data-mp_id="{{item.mp_id}}" data-index="{{index}}" data-op="subOne">-</view>
                   <!--商品数量-->
                   <view class="number common-display-ib" wx:if="{{!!item.number}}">{{item.number}}</view>
                   <!--商品加号-->
-                  <view class="cart_btn_add common-display-ib theme-color-cyan-background" wx:if="{{item.mp_stocks!=0}}" bindtap="operate" data-mp_id="{{item.mp_id}}" data-op="addOne">+</view>
+                  <view class="cart_btn_add common-display-ib theme-color-cyan-background" wx:if="{{item.mp_stocks!=0}}" bindtap="operate" data-index="{{index}}" data-mp_id="{{item.mp_id}}" data-op="addOne">+</view>
                 </view>
               </view>
 
@@ -97,11 +97,11 @@
                 <view class="theme-product-prize weui-flex__item prize">{{item.mp_price}}</view>
                 <view class="button-group weui-flex__item">
                   <!--商品减号-->
-                  <view class="cart_btn_sub common-display-ib" bindtap="operate" wx:if="{{!!item.number}}" data-mp_id="{{item.mp_id}}" data-op="subOne">-</view>
+                  <view class="cart_btn_sub common-display-ib" bindtap="operate" wx:if="{{!!item.number}}" data-index="{{index}}" data-mp_id="{{item.mp_id}}" data-op="subOne">-</view>
                   <!--商品数量-->
                   <view class="number common-display-ib" wx:if="{{!!item.number}}">{{item.number}}</view>
                   <!--商品加号-->
-                  <view class="cart_btn_add common-display-ib theme-color-cyan-background" bindtap="operate" data-mp_id="{{item.mp_id}}" data-op="addOne">+</view>
+                  <view class="cart_btn_add common-display-ib theme-color-cyan-background" bindtap="operate" data-index="{{index}}" data-mp_id="{{item.mp_id}}" data-op="addOne">+</view>
                 </view>
               </view>
 
@@ -120,7 +120,7 @@
   <!--shop_cart-->
   <view class='cart-container weui-flex'>
     <view class="weui-flex__item weui-flex cart-left">
-      <view class="cart-icon common-display-ib" bindtap="toggleCart">
+      <view class="cart-icon common-display-ib" id="cart-icon" bindtap="toggleCart" data-test="testquery">
         <image src="/assets/index/image/ico-cart.png"/>
         <span class="number">
           {{customer.totalNumber}}
@@ -156,11 +156,11 @@
             <view class="prize">{{item.mp_prize}}</view>
             <view class="button-group weui-flex">
               <!--商品减号-->
-              <view class="cart_btn_sub" bindtap="operate" wx:if="{{!!item.number}}" data-mp_id="{{item.mp_id}}" data-op="subOne">-</view>
+              <view class="cart_btn_sub" bindtap="operate" wx:if="{{!!item.number}}" data-mp_id="{{item.mp_id}}" data-index="{{index}}" data-op="subOne">-</view>
               <!--商品数量-->
               <view class="number" wx:if="{{!!item.number}}">{{item.number}}</view>
               <!--商品加号-->
-              <view class="cart_btn_add theme-color-cyan-background" bindtap="operate" data-mp_id="{{item.mp_id}}" data-op="addOne">+</view>
+              <view class="cart_btn_add theme-color-cyan-background" bindtap="operate" data-mp_id="{{item.mp_id}}" data-index="{{index}}" data-op="addOne">+</view>
             </view>
 
           </view>
