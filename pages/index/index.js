@@ -697,7 +697,7 @@ Page({
         if (!!shopid) {
             router.setShelf()
             wx.setStorageSync('shop_id', shopid)
-            wx.navigatorTo({
+            wx.navigateTo({
                 url:'/pages/shelf/index'
             })
         } else {
