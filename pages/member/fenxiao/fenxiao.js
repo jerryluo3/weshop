@@ -138,7 +138,7 @@ Page({
     },
   popShareHB: function () {
     var that = this
-    that.setData({ popsharehb: '' });
+    that.setData({ popshare: 'hide' });
     that.getShareHB();
   },
 

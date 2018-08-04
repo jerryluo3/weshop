@@ -49,6 +49,14 @@
 .sharebg{background-color:rgba(0, 0, 0, 0.3);width:100%;position:fixed;z-index:10;top:0;bottom:0;left:0;right:0;}
 .shareHB{width:80%;margin:4% 10%;position:fixed;z-index:10000;top:0;}
 .shareHB_c{background:#fff;}
+.shareHB_c image.avatar{width:100rpx;
+height:100rpx;
+left:50%;
+margin-left:-50rpx;
+top:155rpx;
+position:absolute;
+border-radius:50%;
+}
 .shareBtn{position:absolute;left:35%;bottom:-80rpx;width:30%;text-align:center;height:60rpx;line-height:60rpx;color:#000;font-size:32rpx;background:#fff;}
 
 .popShare{background:#fff;position:fixed;width:100%;bottom:0;z-index:10000;}
