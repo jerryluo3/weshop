@@ -4,6 +4,8 @@ var utils = require('./utils/util.js')
 var Router = require('./template/footer/footer.js')
 var router = new Router()
 var domain = "https://www.qiyue99.com/weshop/"
+import Customer from './pages/shelf/customer.js'
+
 App({
     
   onLaunch: function () {
@@ -171,34 +173,62 @@ App({
             })
         }
     },
-    tapScan( e ){
+    tapScan(callback=function(res){}){
       wx.scanCode({
         success: (res) => {
             console.log(res)
-            var isQRCode;
-            var isMiniCode;
+            var QR_CODE;
+            var WX_CODE;
+            var EAN_13;
             var url
+            var shop_id = wx.getStorageSync('shop_id');//尝试获取shop_id
 
             //二维码
-            isQRCode = res.hasOwnProperty('result')
+            QR_CODE = res.scanType == 'QR_CODE'
             //小程序码
-            isMiniCode = res.hasOwnProperty('path')
+            WX_CODE = res.scanType == 'WX_CODE'
+            //条形码
+            EAN_13 = res.scanType == 'EAN_13'
+            if( EAN_13 == true ){
+                //已经缓存过门店
+                if( ( shop_id > 0 ) == true ){
+                    //返回条形码
+                    callback(res.result)
+                    return
+                }
+                //没有缓存过门店
+                else{
+                    wx.showToast({
+                        title: '请先扫描二维码或小程序码进入便利架',
+                        icon: 'success',
+                        duration: 2000
+                    });
+                    return
+                }
+            }
 
-            var shop_id = undefined;
-            //二维码
-            if( isQRCode == true ){
+
+            //二维码，切换门店
+            if( QR_CODE == true ){
 
                 url = res.result
                 shop_id = url.match(/\/\d+.html/g)[0].match(/\d+/g)[0]
 
             }
-              //小程序码
-            if( isMiniCode == true){
+              //小程序码，切换门店
+            if( WX_CODE == true){
 
                 url = res.path
                 shop_id = url.match(/\?shopid=\d+/g)[0].match(/\d+/g)[0]
             }
 
+            var customer = new Customer()
+            var buffer_customer = wx.getStorageSync('customer')
+            if(buffer_customer){
+                Object.assign(customer,buffer_customer)
+                customer.clearCartList()
+                wx.setStorageSync('customer',customer)
+            }
             if( !!shop_id && shop_id.length!=0 ){
                 wx.setStorageSync('shop_id',shop_id)
             }

@@ -123,7 +123,56 @@ Page({
         tasks:{},
         chosedImage:''
   },
-    tapScan:app.tapScan,
+    tapScan(){
+        app.tapScan((code)=>{
+            //功能上线后去掉return
+            return
+            if( typeof code == 'string' ){
+                this._addProductToCartByEAN_13(code)
+            }
+        })
+    },
+    //根据扫描的条形码，将物品加入到购物车
+    _addProductToCartByEAN_13(ean_13){
+        let customer = this.data.customer
+        let productList = customer.productArray
+
+        let code
+        let needUpdate
+        for( let i = 0, il = productList.length; i < il; i ++ ){
+            code = productList[ i ]["ean_13"]
+            console.log(code)
+            console.log(ean_13)
+            if ( code == ean_13 ){
+                let mp_id = productList[ i ]['mp_id']
+                needUpdate = customer.addOne( mp_id )
+                console.log(`总共${il}条数据，当前循环到第${i}条`)
+                break;
+            }
+            if(i==(il-1)){
+                wx.showToast({
+                    title: '条码未录入该便利架，请手动搜索商品加入到购物车',
+                    icon: 'none',
+                    duration: 5000
+                });
+                return
+            }
+        }
+        if(!needUpdate){
+            wx.showToast({
+                title: '库存不足',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+
+        }
+
+        this.setData({
+            customer
+        })
+        wx.setStorageSync("customer",customer)
+    },
     toggleCart(){
       let cart = this.data.cart
       if( cart.opened ){
@@ -587,6 +636,7 @@ Page({
                         return
                     }
                     customer.productArray = customer.productArray.concat(origin_productList.slice(10))
+                    customer.productArray[20]['ean_13'] = '6970042901556'
                     customer.updateProductObject()
                     customer.SyncProductListWithCart()
                     scope.setData({
