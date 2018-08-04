@@ -192,11 +192,11 @@ Page({
     //点击分类标签
     sort( e ){
 
-    let scope = this;
-    this.setData({
-        sorter : e.target.dataset.cat_id,
-        showSearchList:false
-    })
+        let scope = this;
+        this.setData({
+            sorter : e.target.dataset.cat_id,
+            showSearchList:false
+        })
       //重新进行分类列表
       // api.getProductionList( function( res ){
       //     scope.setData({
@@ -590,6 +590,8 @@ Page({
             //原始数据备份
             let goods_list = res.data['goods_list']
             let goods_length = goods_list.length
+            let sorters = {}
+            let sortTags = scope.data.sortTags
             //有数据就用拉取的数据
             if( goods_length!=0 ){
                 origin_productList = [...goods_list]
@@ -603,8 +605,16 @@ Page({
                         origin_productList[ index ]['mp_picture'] = '';
                     }
 
+                    sorters[value['mp_cid']] = 1
 
                 })
+                for(let [index,value] of sortTags.entries()){
+                    let haveSort = sorters.hasOwnProperty(value.cat_id)
+                    console.log(haveSort)
+                    if(!haveSort&&(value.cat_id!=defaultType)){
+                        sortTags.splice(index,1)
+                    }
+                }
                 wx.setStorage({
                     key:"origin_productList",
                     data:origin_productList
@@ -627,7 +637,8 @@ Page({
 
                 //视图更新
                 scope.setData({
-                    customer : customer
+                    customer,
+                    sortTags
                 })
 
                 var t = setTimeout(function(){

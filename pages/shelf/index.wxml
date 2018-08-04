@@ -22,7 +22,7 @@
   <view class="weui-flex list-container">
     <scroll-view class="sort-scroll-view" scroll-y="{{leftScroll.scrollY}}">
       <view class="sort-list">
-        <view wx:for="{{sortTags}}" data-cat_id="{{item.cat_id}}" wx:key="item.cat_id" class="sorter {{ sorter == item.cat_id ? 'active' : ''}}"  bindtap="sort">
+        <view wx:for="{{sortTags}}"  data-cat_id="{{item.cat_id}}" wx:key="item.cat_id" class="sorter {{ sorter == item.cat_id ? 'active' : ''}}"  bindtap="sort">
           {{item.cat_name}}
         </view>
       </view>
@@ -109,7 +109,6 @@
             </view>
           </view>
         </scroll-view>
-
 
       </view>
 
