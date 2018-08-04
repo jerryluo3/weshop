@@ -105,6 +105,7 @@
 .sharebg{background-color:rgba(0, 0, 0, 0.3);width:100%;position:fixed;z-index:10;top:0;bottom:0;left:0;right:0;}
 .shareHB{width:80%;margin:4% 10%;position:fixed;z-index:10000;top:0;}
 .shareHB_c{background:#fff;}
+.shareHB_c image.avatar{width:130rpx;height:130rpx;left:50%;margin-left:-65rpx;top:46rpx;position:absolute;border-radius:50%;}
 .shareBtn{position:absolute;left:35%;bottom:-80rpx;width:30%;text-align:center;height:60rpx;line-height:60rpx;color:#000;font-size:32rpx;background:#fff;}
 
 
@@ -116,3 +117,5 @@
 .popShareC_btn{background:#fff;border:1rpx solid #ccc;width:200rpx;text-align:center;font-size:28rpx;font-weight:bold;margin:20rpx auto;height:60rpx;line-height:60rpx;border-radius:8rpx;}
 .popShare_tips{font-size:28rpx;padding:20rpx 30rpx;background:#f2f2f2;color:#e40064;}
 .popShareClose{width:100%;height:100rpx;line-height:100rpx;text-align:center;font-size:32rpx;}
+
+.show_more_comments{text-align:center;}
