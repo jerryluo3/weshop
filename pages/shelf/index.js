@@ -613,7 +613,6 @@ Page({
                 })
                 for(let [index,value] of sortTags.entries()){
                     let haveSort = sorters.hasOwnProperty(value.cat_id)
-                    console.log(haveSort)
                     if(!haveSort&&(value.cat_id!=defaultType)){
                         sortTags.splice(index,1)
                     }
@@ -627,7 +626,6 @@ Page({
                 var customer = new Customer()
                 var buffer_customer = wx.getStorageSync('customer')
                 if( buffer_customer ){
-                    console.log(customer)
                     for(var key in buffer_customer){
                         customer[ key ] = buffer_customer[ key ]
                     }
@@ -682,16 +680,13 @@ Page({
 
         var scope = this
         let selectorquery = wx.createSelectorQuery()
-        console.log('selectorquery',selectorquery)
 
         selectorquery.select('#cart-icon').boundingClientRect(function(res){
-            console.log('query1boundingClientRect',res)
             var cart = scope.data.cart
             cart.info = res
             scope.setData({cart})
             callback()
         }).selectViewport().boundingClientRect(function(res){
-            console.log('query2boundingClientRect',res)
         }).exec()
 
 
