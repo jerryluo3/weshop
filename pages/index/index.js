@@ -714,19 +714,10 @@ Page({
 
         //如果是扫小程序码进的,直接设置导航栏的"扫一扫"
         if (!!shopid) {
-            router.setShelf()
             wx.setStorageSync('shop_id', shopid)
             wx.navigateTo({
                 url:'/pages/shelf/index'
             })
-        } else {
-            //如果不是扫码进来的，进一步判断缓存中是否有
-            if (storage_shopid) {
-                router.setShelf()
-            }
-            else {
-                router.setScan()
-            }
         }
 
         //处理导航条

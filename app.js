@@ -233,7 +233,6 @@ App({
                 wx.setStorageSync('shop_id',shop_id)
             }
             console.log(shop_id)
-            router.setShelf()
             wx.navigateTo({
                 url: '/pages/shelf/index'
             })

@@ -175,3 +175,14 @@ margin:10rpx;
 
 .fly-point{width:60rpx;height:60rpx;border-radius:50%;position:fixed;z-index:1000;left:0;top:0;}
 .fly-point image{width:100%;height:100%;}
+
+
+.enter_sao_block{background:#5cc2cf;width:160rpx;height:160rpx;border-radius:50%;padding:40rpx;text-align:center;color:#fff;position:relative;margin:40rpx auto 0;}
+.enter_sao_block image{width:100rpx;height:100rpx;margin:0 auto;}
+
+.enter_tips{padding:20rpx 0;text-align:center;font-size:36rpx;}
+.enter_img{width:690rpx;padding:0rpx 60rpx;}
+.enter_img image{width:100%;}
+
+.enter_footer{text-align:center;}
+.enter_footer_btn{background:#5cc2cf;color:#fff;width:400rpx;height:80rpx;line-height:80rpx;display:block;border-radius:60rpx;margin:20rpx auto;}
