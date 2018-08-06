@@ -60,7 +60,7 @@ Page({
                   success(res) {
                       setTimeout(function () {
                           wx.navigateTo({
-                              url: '/pages/member/member'
+                              url: '/pages/member/member?fromBLZ=1'
                           })
                       }, 1000) //延迟时间
                   }
@@ -87,7 +87,7 @@ Page({
                                     success(ress) {
                                         setTimeout(function () {
                                             wx.navigateTo({
-                                                url: '/pages/member/member'
+                                                url: '/pages/member/member?fromBLZ=1'
                                             })
                                         }, 1000) //延迟时间
                                     }
@@ -101,7 +101,7 @@ Page({
                                     success(ress) {
                                         setTimeout(function () {
                                             wx.navigateTo({
-                                                url: '/pages/member/member'
+                                                url: '/pages/member/member?fromBLZ=1'
                                             })
                                         }, 1000) //延迟时间
                                     }

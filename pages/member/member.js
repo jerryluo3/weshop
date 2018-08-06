@@ -714,6 +714,13 @@ Page({
    */
   onLoad: function (options) {
 
+      let fromBLZ = options.fromBLZ
+      if(fromBLZ == 1){
+          this.setData({
+              activeIndex:1
+          })
+      }
+
     /*footer*/
     let footer = this.data.footer
     router.setActive(4)
