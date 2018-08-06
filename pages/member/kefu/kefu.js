@@ -31,11 +31,7 @@ Page({
 
           WxParse.wxParse('content', 'html', res.data.cnxh, that, 5)
           WxParse.wxParse('tcontent', 'html', res.data.thhlc, that, 5)
-        // that.setData({
-        //   content: WxParse.wxParse('content', 'html', res.data.cnxh, that, 5),
-        //   tcontent: WxParse.wxParse('tcontent', 'html', res.data.thhlc, that, 5),
-        // })
-        
+
       }
     });
   },
