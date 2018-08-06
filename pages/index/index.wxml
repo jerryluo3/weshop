@@ -32,16 +32,18 @@
 </view>
 
 <view class="tggp" wx:if="{{ cid == 0 }}">
-<view class="tggp_title" bindtap='jumpUrl' data-url="/pages/vip/vip"><image src="/asset/images/king.png"></image>VIP限时尝鲜<view class='tggp_more'>更多<image src='/asset/images/tggp_more.png'></image></view></view>
+<view class="tggp_title" bindtap='jumpUrl' data-url="/pages/vip/vip">
+  <image src="/asset/images/king.png"></image>VIP限时尝鲜<view class='tggp_more'>更多<image src='/asset/images/tggp_more.png'></image></view>
+</view>
 <scroll-view scroll-x="true" class="tggp_list" scroll-left="{{scrollLeft}}">
   <block wx:for="{{tejia_list}}" wx:key="">
     <view class="tggp_block" bindtap='getGoodsInfo' data-id="{{item.goods_id}}">
-      <view class='dtime' wx:if="{{ dataList[index][4] != '' }}">{{ dataList[index][4] }}</view>
-      <view class='ltime' wx:else><text>{{ tejiadataList[index][0] }}天</text><text>{{ tejiadataList[index][1] }}时</text><text>{{ tejiadataList[index][2] }}分</text><text>{{ tejiadataList[index][3] }}秒</text></view>
+      <!--<view class='dtime' wx:if="{{ dataList[index][4] != '' }}">{{ dataList[index][4] }}</view>-->
+      <!--<view class='ltime' wx:else><text>{{ tejiadataList[index][0] }}天</text><text>{{ tejiadataList[index][1] }}时</text><text>{{ tejiadataList[index][2] }}分</text><text>{{ tejiadataList[index][3] }}秒</text></view>-->
       <image src='{{siteurl}}{{item.goods_picture}}'></image>
       <view class='tggp_block_footer weui-flex'>
         <view class='weui-flex__item tggp_tname'>{{item.goods_hb_title}}</view>
-        <view class='sy'>剩余{{item.goods_stocks}}件</view>
+        <!--<view class='sy'>剩余{{item.goods_stocks}}件</view>-->
       </view>
     </view>
   </block>
@@ -49,68 +51,44 @@
 </scroll-view>
 </view>
 
+
 <view class="main_block" wx:if="{{ cid == 0 }}">
-<view class="topblank">
-  <view class='main_block_title {{ midfixed }}'>
-    <view class='weui-flex'>
-      <view class="weui-flex__item" bindtap='chooseblock' data-id="0"><text class="{{ showblock == 0 ? 'main_block_title_item' : ''}}">正在热售</text></view>
-      <view class="weui-flex__item" bindtap='chooseblock' data-id="1"><text class="{{ showblock == 1 ? 'main_block_title_item' : ''}}">上新预告</text></view>
-    </view>
+  <!--<view class="topblank">-->
+    <!--<view class='main_block_title {{ midfixed }}'>-->
+      <!--<view class='weui-flex'>-->
+        <!--<view class="weui-flex__item" bindtap='chooseblock' data-id="0"><text class="{{ showblock == 0 ? 'main_block_title_item' : ''}}">正在热售</text></view>-->
+        <!--<view class="weui-flex__item" bindtap='chooseblock' data-id="1"><text class="{{ showblock == 1 ? 'main_block_title_item' : ''}}">上新预告</text></view>-->
+      <!--</view>-->
+    <!--</view>-->
+  <!--</view>-->
+  <view class="tggp_title" bindtap='jumpUrl' data-url="/pages/vip/vip">
+    正在热售
   </view>
-</view>
-<view class="goods_list" wx:if="{{ showblock == 0 }}">
-  <block wx:for="{{goods_list}}" wx:for-item="item" wx:key="id">
-    <view class='goods_list_row' bindtap='getGoodsInfo' data-id="{{item.goods_id}}">
-      <view class="goods_img">
-        <view class='dtime' wx:if="{{ dataList[index][4] != '' }}">{{ dataList[index][4] }}</view>
-        <view class='ltime' wx:else><text>{{ dataList[index][0] }}天</text><text>{{ dataList[index][1] }}时</text><text>{{ dataList[index][2] }}分</text><text>{{ dataList[index][3] }}秒</text></view>
-        <image src='{{siteurl}}{{item.goods_commend_picture}}'></image>
-      </view>
-      <view class="goods_footer">
-        <view class='weui-flex'>
-          <view class="weui-flex__item">
-            <view class='goods_info'>
-              <view class='goods_title'>{{item.goods_title}}</view>
-              <view class='goods_tips'>零售价:<text class='goods_price'>￥{{item.goods_price}}</text>　<text class="fontred">VIP价:</text><text class='goods_vipprice'>￥{{item.goods_vipprice}}</text></view>
+  <!--正在热售-->
+  <view class="goods_list">
+    <block wx:for="{{goods_list}}" wx:for-item="item" wx:key="id">
+      <view class='goods_list_row' bindtap='getGoodsInfo' data-id="{{item.goods_id}}">
+        <view class="goods_img">
+          <view class='dtime' wx:if="{{ dataList[index][4] != '' }}">{{ dataList[index][4] }}</view>
+          <view class='ltime' wx:else><text>{{ dataList[index][0] }}天</text><text>{{ dataList[index][1] }}时</text><text>{{ dataList[index][2] }}分</text><text>{{ dataList[index][3] }}秒</text></view>
+          <image src='{{siteurl}}{{item.goods_commend_picture}}'></image>
+        </view>
+        <view class="goods_footer">
+          <view class='weui-flex'>
+            <view class="weui-flex__item">
+              <view class='goods_info'>
+                <view class='goods_title'>{{item.goods_title}}</view>
+                <view class='goods_tips'>零售价:<text class='goods_price'>￥{{item.goods_price}}</text>　<text class="fontred">VIP价:</text><text class='goods_vipprice'>￥{{item.goods_vipprice}}</text></view>
+              </view>
             </view>
-          </view>
-          <view>
-            <button type="default" class="goods_btn" style='background:#e40064;color:#fff;padding:0rpx 30rpx;height:80rpx;line-height:80rpx;margin:30rpx 20rpx 0 0;' bindtap="primary">马上抢</button>
+            <view>
+              <button type="default" class="goods_btn" style='background:#e40064;color:#fff;padding:0rpx 30rpx;height:80rpx;line-height:80rpx;margin:30rpx 20rpx 0 0;' bindtap="primary">马上抢</button>
+            </view>
           </view>
         </view>
       </view>
-    </view>
-  </block>
-</view>
-<view class="goods_list" wx:if="{{ showblock == 1 }}">
-  <block wx:for="{{pre_goods_list}}" wx:key="">
-    <view class='goods_list_row'>
-      <view class="goods_img" bindtap='getGoodsInfo' data-id="{{item.goods_id}}">
-        <view class='dtime' wx:if="{{ predataList[index][4] != '' }}">{{ predataList[index][4] }}</view>
-        <view class='ltime' wx:else><text>{{ predataList[index][0] }}天</text><text>{{ predataList[index][1] }}时</text><text>{{ predataList[index][2] }}分</text><text>{{ predataList[index][3] }}秒</text></view>
-        <image src='{{siteurl}}{{item.goods_commend_picture}}'></image>
-      </view>
-      <view class="goods_footer">
-        <view class='weui-flex'>
-          <view class="weui-flex__item">
-            <view class='goods_info'>
-              <view class='goods_title'>{{item.goods_title}}</view>
-              <view class='goods_tips'>零售价:<text class='goods_price'>￥{{item.goods_price}}</text>　<text class="fontred">VIP价:</text><text class='goods_vipprice'>￥{{item.goods_vipprice}}</text></view>
-            </view>
-          </view>
-          <view wx:if="{{ item.tixing == 1 }}">
-            <button formType="submit" class="goods_btn" style='background:#fafafa;color:#999;padding:0rpx 30rpx;height:80rpx;line-height:80rpx;margin:30rpx 20rpx 0 0;'>已预约</button>
-          </view>
-          <view wx:else>
-            <form bindsubmit="tixing" data-id='{{ item.goods_id }}' data-index='{{ index }}' report-submit="true">
-              <button formType="submit" class="goods_btn" style='background:#e40064;color:#fff;padding:0rpx 30rpx;height:80rpx;line-height:80rpx;margin:30rpx 20rpx 0 0;'>提醒我</button>
-            </form>
-          </view>
-        </view>
-      </view>
-    </view>
-  </block>
-</view>
+    </block>
+  </view>
 </view>
 
 

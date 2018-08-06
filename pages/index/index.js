@@ -26,7 +26,6 @@ Page({
         tejia_list: [],
         goods_list: [],      //正在热售
         dataList: [],
-        pre_goods_list: [],    //上新预告
         predataList: [],
         tejiadataList: [],
         lastX: 0,          //滑动开始x轴位置
@@ -683,8 +682,7 @@ Page({
         that.getTejialist();
         //获取热售商品列表
         that.getGoodslist();
-        //获取预告商品列表
-        that.getPreGoodslist();
+
 
         that.getCartNums();
     },
@@ -757,8 +755,8 @@ Page({
 
 
         //that.nowTime();
-        var ntimer = setInterval(that.nowTime, 1000);
-        var tjtimer = setInterval(that.tejianowTime, 1000);
+        // var ntimer = setInterval(that.nowTime, 1000);
+        // var tjtimer = setInterval(that.tejianowTime, 1000);
 
     },
     /**
