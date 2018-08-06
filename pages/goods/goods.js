@@ -29,7 +29,7 @@ Page({
     'guige_fencheng':0,       //分成
     'limitnums':0,             //商品限购，大于0表示限购
     'nums':1,            //购买数量
-    'limit_comments':3,  //限制显示评论的数量
+    'limit_comments':2,  //限制显示评论的数量
   },
   show_more_comments(){
     this.setData({
