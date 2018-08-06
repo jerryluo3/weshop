@@ -11,7 +11,7 @@
   <view class='ty_vip_share'>分享5个微信群即可获得(还差{{ 5-shareNums }}次哦)</view>
 </view>-->
 
-<view class='vip_title'>会员专属尝鲜区</view>
+<view class='vip_title'>VIP限时尝鲜</view>
 
 <view class='vip_goods_list'>
   <block wx:for="{{tejia_list}}" wx:key="">
@@ -35,6 +35,38 @@
   </block>
 </view>
 
+
+<!--上新预告-->
+<view class='vip_title'>上新预告</view>
+  <view class="goods_list">
+    <block wx:for="{{pre_goods_list}}" wx:key="">
+      <view class='goods_list_row'>
+        <view class="goods_img" bindtap='getGoodsInfo' data-id="{{item.goods_id}}">
+          <view class='dtime' wx:if="{{ predataList[index][4] != '' }}">{{ predataList[index][4] }}</view>
+          <view class='ltime' wx:else><text>{{ predataList[index][0] }}天</text><text>{{ predataList[index][1] }}时</text><text>{{ predataList[index][2] }}分</text><text>{{ predataList[index][3] }}秒</text></view>
+          <image src='{{siteurl}}{{item.goods_commend_picture}}'></image>
+        </view>
+        <view class="goods_footer">
+          <view class='weui-flex'>
+            <view class="weui-flex__item">
+              <view class='goods_info'>
+                <view class='goods_title'>{{item.goods_title}}</view>
+                <view class='goods_tips'>零售价:<text class='goods_price'>￥{{item.goods_price}}</text>　<text class="fontred">VIP价:</text><text class='goods_vipprice'>￥{{item.goods_vipprice}}</text></view>
+              </view>
+            </view>
+            <view wx:if="{{ item.tixing == 1 }}">
+              <button formType="submit" class="goods_btn" style='background:#fafafa;color:#999;padding:0rpx 30rpx;height:80rpx;line-height:80rpx;margin:30rpx 20rpx 0 0;'>已预约</button>
+            </view>
+            <view wx:else>
+              <form bindsubmit="tixing" data-id='{{ item.goods_id }}' data-index='{{ index }}' report-submit="true">
+                <button formType="submit" class="goods_btn" style='background:#e40064;color:#fff;padding:0rpx 30rpx;height:80rpx;line-height:80rpx;margin:30rpx 20rpx 0 0;'>提醒我</button>
+              </form>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
 
 <import src="/template/footer/footer.wxml"/>
 <template is="tempFooter" data="{{footer}}"/>

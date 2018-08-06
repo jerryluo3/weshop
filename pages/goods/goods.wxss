@@ -4,7 +4,6 @@
 .goods_img{width:100%;}
 .goods_img image{width:100%;height:700rpx;display:block}
 
-
 .goods_price_block{padding:10px 20rpx 0;background:#fff;}
 .goods_price{display:block;}
 .goods_price_item{display:inline-block;font-size:28rpx;margin-right:10rpx;}

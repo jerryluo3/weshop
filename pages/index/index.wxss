@@ -25,13 +25,13 @@
 .tggp_title .tggp_more{right:10rpx;padding:15rpx 0;font-size:24rpx;font-weight:normal;position:absolute;top:26rpx;}
 .tggp_title .tggp_more image{width:30rpx;height:30rpx;display:inline-block; vertical-align: middle;}
 
-.tggp_list{width:100%;box-sizing: border-box;overflow: hidden;line-height: 80rpx;background: #fff; white-space: nowrap;height:480rpx;}
+.tggp_list{width:100%;box-sizing: border-box;overflow: hidden;line-height: 80rpx;background: #fff; white-space: nowrap;height:350rpx;}
 .tggp_block{position:relative;margin:10rpx;border-radius:6rpx;display:inline-block;height:440rpx;}
-.tggp_block,.tggp_block image{width:360rpx;height:360rpx;}
+.tggp_block,.tggp_block image{width:232rpx;height:232rpx;}
 .tggp_block_ico{position:absolute;top:0;left:0;}
 .tggp_block_ico image{width:120rpx;height:107rpx;}
 .tggp_block image{border-radius:6rpx;}
-.tggp_block .tggp_block_footer{position:absolute;left:0;bottom:-80rpx;height:80rpx;line-height:80rpx;text-align:center;background:#a5dee5;color:#000;width:100%;font-size:28rpx; border-bottom-left-radius:6rpx;border-bottom-right-radius:6rpx;}
+.tggp_block .tggp_block_footer{position:absolute;left:0;bottom:-80rpx;height:80rpx;line-height:80rpx;text-align:center;background:#a5dee5;color:#000;width:100%;font-size:24rpx; border-bottom-left-radius:6rpx;border-bottom-right-radius:6rpx;}
 .tggp_block .tggp_block_footer text{margin:0 5rpx;padding:10rpx;font-size:28rpx;font-weight:bold;}
 .tggp_block .tggp_block_footer .tggp_tname{padding-left:20rpx;text-align:left;font-weight:bold;}
 .tggp_block .tggp_block_footer .sy{padding-right:20rpx;font-size:20rpx;}

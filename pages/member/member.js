@@ -31,7 +31,7 @@ Page({
     uid:'',
 
     /*切换标签*/
-    tabs: ["特卖订单", "便利站订单"],
+    tabs: ["商城订单", "便利站订单"],
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
@@ -713,6 +713,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+      let fromBLZ = options.fromBLZ
+      if(fromBLZ == 1){
+          this.setData({
+              activeIndex:1
+          })
+      }
 
     /*footer*/
     let footer = this.data.footer

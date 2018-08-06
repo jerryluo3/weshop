@@ -31,7 +31,7 @@
 </view>
 
 <view class='goods_desc weui-flex' bindtap='popGoodsDesc'>
-  <view class="weui-flex__item">商品说明</view>
+  <view class="weui-flex__item">售后说明</view>
   <view class='goods_desc_more'><image src='/asset/images/more.png'></image></view>
 </view>
 
@@ -138,7 +138,7 @@
 <view class='popSanbao {{popgoodsdesc}}'>
   <view class='sanbao_title'>
     <view class='sanbao_title_bg'><image src='/asset/images/sanbao_title_bg.png'></image></view>
-    <view class='sanbao_title_w'>商品说明</view>
+    <view class='sanbao_title_w'>售后说明</view>
   </view>
   <view class='sanbao_row'>
     {{ goods.cat_desc }}
