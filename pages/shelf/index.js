@@ -42,8 +42,8 @@ Page({
     /*-------------------------顶部swiper配置-------------------------*/
     topSwiper:{
       item:[
-        { img: `${staticUrl}1531127496.jpg`, link: '../outurl/outurl?url=http://www.baidu.com',key:0 },
-        { img: `${staticUrl}1531133357.gif`, link: '../outurl/outurl?url=http://www.baidu.com',key:1 },
+        { img:''/*`${staticUrl}1531127496.jpg`*/, link: '../outurl/outurl?url=http://www.baidu.com',key:0 },
+        { img: '', link: '../outurl/outurl?url=http://www.baidu.com',key:1 },
       ],
       autoplay : true,
       interval : 3000, 
@@ -121,7 +121,9 @@ Page({
         animate_position:{x:0,y:0},
         QuadraticBezier:[],
         tasks:{},
-        chosedImage:''
+        chosedImage:'',
+
+        shop_id:0,
   },
     tapScan(){
         app.tapScan((code)=>{
@@ -573,6 +575,7 @@ Page({
     updateTagList(){
         //拉取分类标签
         utils.post(`${domain}qiyue/getBLZIndexCats`,{shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+            console.log(res)
             let a = res.data['cat_list']
             let md_company = a[0].md_company
             a.push({ cat_name: '全部', cat_id:defaultType,md_company:md_company},)
@@ -695,11 +698,21 @@ Page({
 
     },
     onLoad: function () {
-/*--------------------------数据请求--------------------------*/
+        var scope = this
+        /*--------------------------视图处理--------------------------*/
+        //处理导航条
+        router.setActive(2)
+        scope.setData({footer:router.footerArray})
 
+        var shop_id = wx.getStorageSync('shop_id')
+        scope.setData({shop_id})
+        if(!(shop_id>0)){
+            return
+        }
+/*--------------------------数据请求--------------------------*/
       /*拉取swiper*/
       utils.get(`${domain}qiyue/getBLZIndexAds`).then((res)=>{
-
+console.log(res)
           let list = res.data.ads_list
           let list_len = list.length
 
@@ -708,6 +721,7 @@ Page({
           swiperItem.forEach(( value,index )=>{
               let name = list[ index ]['ads_picture']
               var ads_url = list[ index ]['ads_url']
+              var ads_type = list[ index ]['ads_type']
               var link
               if(/http/g.test(ads_url)){
                   link = `${outUrl}?url=ads_url`
@@ -717,7 +731,8 @@ Page({
               let v = {
                   img: `${domain}${name}`,
                   link,
-                  key:index
+                  key:index,
+                  ads_type
               }
               swiperItem[ index ] = v
           })
@@ -730,17 +745,14 @@ Page({
       })
       /*拉取商品列表*/
 
-      var scope = this
+
       scope.updateTagList()
       scope.updateProductList(function(customer){
           console.log(customer)
       })
 
 
-/*--------------------------视图处理--------------------------*/
-      //处理导航条
-      router.setActive(2)
-      scope.setData({footer:router.footerArray})
+
 
 /*--------------------------获取设备信息--------------------------*/
         this._QueryCartNode(function(){

@@ -38,20 +38,19 @@ class Router {
                 "pagePath": "/pages/article/article",
                 "text": "发现",
                 "iconPath": "/assets/tarbar/view.png",
-
                 "selectedIconPath": "/assets/tarbar/viewselect.png",
                 "active": false,
                 index: 1,
                 navigator: true,
             },
             {
-                "pagePath": "",
-                "text": "",
-                "iconPath": "",
-                "selectedIconPath": "",
+                "pagePath": "/pages/shelf/index",
+                "text": "便利站",
+                "iconPath": "/assets/tarbar/tab_shop.png",
+                "selectedIconPath": "/assets/tarbar/tab_shop_hover.png",
                 "active": false,
                 index: 2,
-                navigator: false,
+                navigator: true,
             },
             {
                 "pagePath": "/pages/member/kefu/kefu",
@@ -95,16 +94,6 @@ class Router {
         }
         if (this.footerObject[index]) this.footerObject[index].active = true
         this._updateFooterArray()
-    }
-
-    setShelf() {
-        this.footerArray[2] = SHELF_CONFIG
-        this.updateFooterObject()
-    }
-
-    setScan() {
-        this.footerArray[2] = SCAN_CONFIG
-        this.updateFooterObject()
     }
 
     _updateFooterArray() {

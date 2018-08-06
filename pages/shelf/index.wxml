@@ -1,16 +1,22 @@
 <!--index.wxml-->
-<view class="container" style="display:flex;">
+
+<view class="container" style="display:flex;" wx:if="{{shop_id>0}}">
 
   <!--swiper-->
   <view class="swiper-container">
     <swiper autoplay="{{topSwiper.autoplay}}" interval="{{topSwiper.interval}}" circular="{{topSwiper.circular}}">
       <block wx:for="{{topSwiper.item}}" wx:key="item.key">
-        <swiper-item>
+        <swiper-item wx:if="{{item.ads_type==3}}">
+          <ad unit-id="{{item.link}}"></ad>
+        </swiper-item>
+        <swiper-item wx:else>
           <navigator url="{{item.link}}">
             <image src="{{item.img}}"></image>
           </navigator>
         </swiper-item>
+
       </block>
+
     </swiper>
     <view class="text-container" hidden="{{!md_company}}">
       <image src="/assets/index/image/ico_addr.png"/>
@@ -178,11 +184,37 @@
       <image src='/assets/images/pop_close1.png'></image>
     </view>
   </view>
-
-  <import src="/template/footer/footer.wxml"/>
-  <template is="tempFooter" data="{{footer}}"/>
   <view class="fly-point" wx:if="{{fly}}" style="left:{{fly_position.x}}px;top:{{fly_position.y}}px;transform:translateX({{animate_position.x}}px) translateY({{animate_position.y}}px);">
     <image src="{{chosedImage}}"></image>
   </view>
 
+  <import src="/template/footer/footer.wxml"/>
+  <template is="tempFooter" data="{{footer}}"/>
 </view>
+
+<view class="container" wx:else>
+  <view class="enter_sao_block" bindtap="tapScan">
+    <image src="/assets/shelf/scan.png"/>
+    <view>扫一扫</view>
+  </view>
+
+  <view class="enter_tips">
+    <view>请扫便利站上的二维码购物</view>
+    <view style="font-size:14px;">试点城市：浙江.嘉兴</view>
+  </view>
+
+  <view class="enter_img">
+    <image src="http://www.qiyue99.com/weshop/data/asset/images/cart/enter_img.png" mode="widthFix"/>
+  </view>
+
+  <view class="enter_footer">
+    <view>公司还没有装便利站？</view>
+    <navigator url="/pages/outurl/outurl?url=http://www.qiyue99.com/weshop/zt/share/share.html">
+      <button class="enter_footer_btn" >立即免费领取</button>
+    </navigator>
+  </view>
+
+  <import src="/template/footer/footer.wxml"/>
+  <template is="tempFooter" data="{{footer}}"/>
+</view>
+
