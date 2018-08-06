@@ -2,11 +2,11 @@
 
 <view class='scroll_block' wx:if="{{fromTM==1}}">
   <scroll-view scroll-y bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-x="true" scroll-left="{{scrollLeft}}">
-    <view class="scroll-view-item {{ toView == 99 ? 'item_in' : ''}}" catchtap='orderList' data-type='99'>全部</view>
-    <view class="scroll-view-item {{ toView == 0 ? 'item_in' : ''}}" catchtap='orderList' data-type='0'>待付款</view>
-    <view class="scroll-view-item {{ toView == 1 ? 'item_in' : ''}}" catchtap='orderList' data-type='1'>待发货</view>
-    <view class="scroll-view-item {{ toView == 2 ? 'item_in' : ''}}" catchtap='orderList' data-type='2'>待收货</view>
-    <view class="scroll-view-item {{ toView == 3 ? 'item_in' : ''}}" catchtap='orderList' data-type='3'>待评论</view>
+    <view class="scroll-view-item {{ toView == 99 ? 'item_in' : ''}}" bindtap='orderList' data-type='99'>全部</view>
+    <view class="scroll-view-item {{ toView == 0 ? 'item_in' : ''}}" bindtap='orderList' data-type='0'>待付款</view>
+    <view class="scroll-view-item {{ toView == 1 ? 'item_in' : ''}}" bindtap='orderList' data-type='1'>待发货</view>
+    <view class="scroll-view-item {{ toView == 2 ? 'item_in' : ''}}" bindtap='orderList' data-type='2'>待收货</view>
+    <view class="scroll-view-item {{ toView == 3 ? 'item_in' : ''}}" bindtap='orderList' data-type='3'>待评论</view>
   </scroll-view>
 </view>
 
@@ -28,7 +28,9 @@
         <view class='order_status'>{{item.status == 0 ? '待付款' : ( item.status == 1 ? '待发货' : ( item.status == 2 ? '待收货' : ( item.status == 3 ? '待评论' : ( item.status == -1 ? '取消中' : ( item.status == -2 ? '已取消' : '售后' )) ) ) ) }}</view>
       </view>
       <view class="weui-flex order_info">
-        <view class='order_img'><image src='{{siteurl}}{{item.goods_thumb ? item.goods_thumb : item.goods_picture}}'></image></view>
+        <view class='order_img'>
+          <image src='{{siteurl}}{{item.goods_thumb ? item.goods_thumb : item.goods_picture}}'></image>
+        </view>
         <view class="weui-flex__item">
           <view class="cart_title">
             {{item.title}}
