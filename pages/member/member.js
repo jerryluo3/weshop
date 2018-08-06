@@ -31,7 +31,7 @@ Page({
     uid:'',
 
     /*切换标签*/
-    tabs: ["特卖订单", "便利站订单"],
+    tabs: ["商城订单", "便利站订单"],
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
