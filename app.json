@@ -17,6 +17,7 @@
     "pages/member/recharge/addcharge/addcharge",
     "pages/member/address/address",
     "pages/member/address/modaddress",
+    "pages/member/company/company",
     "pages/member/orders/orders",
     "pages/member/orders/orderdetail",
     "pages/member/fenxiao/fenxiao",
