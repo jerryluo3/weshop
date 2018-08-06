@@ -42,8 +42,8 @@ Page({
     /*-------------------------顶部swiper配置-------------------------*/
     topSwiper:{
       item:[
-        { img: `${staticUrl}1531127496.jpg`, link: '../outurl/outurl?url=http://www.baidu.com',key:0 },
-        { img: `${staticUrl}1531133357.gif`, link: '../outurl/outurl?url=http://www.baidu.com',key:1 },
+        { img:''/*`${staticUrl}1531127496.jpg`*/, link: '../outurl/outurl?url=http://www.baidu.com',key:0 },
+        { img: '', link: '../outurl/outurl?url=http://www.baidu.com',key:1 },
       ],
       autoplay : true,
       interval : 3000, 
@@ -121,9 +121,60 @@ Page({
         animate_position:{x:0,y:0},
         QuadraticBezier:[],
         tasks:{},
-        chosedImage:''
+        chosedImage:'',
+
+        shop_id:0,
   },
-    tapScan:app.tapScan,
+    tapScan(){
+        app.tapScan((code)=>{
+            //功能上线后去掉return
+            return
+            if( typeof code == 'string' ){
+                this._addProductToCartByEAN_13(code)
+            }
+        })
+    },
+    //根据扫描的条形码，将物品加入到购物车
+    _addProductToCartByEAN_13(ean_13){
+        let customer = this.data.customer
+        let productList = customer.productArray
+
+        let code
+        let needUpdate
+        for( let i = 0, il = productList.length; i < il; i ++ ){
+            code = productList[ i ]["ean_13"]
+            console.log(code)
+            console.log(ean_13)
+            if ( code == ean_13 ){
+                let mp_id = productList[ i ]['mp_id']
+                needUpdate = customer.addOne( mp_id )
+                console.log(`总共${il}条数据，当前循环到第${i}条`)
+                break;
+            }
+            if(i==(il-1)){
+                wx.showToast({
+                    title: '条码未录入该便利架，请手动搜索商品加入到购物车',
+                    icon: 'none',
+                    duration: 5000
+                });
+                return
+            }
+        }
+        if(!needUpdate){
+            wx.showToast({
+                title: '库存不足',
+                icon: 'none',
+                duration: 2000
+            });
+            return
+
+        }
+
+        this.setData({
+            customer
+        })
+        wx.setStorageSync("customer",customer)
+    },
     toggleCart(){
       let cart = this.data.cart
       if( cart.opened ){
@@ -143,11 +194,11 @@ Page({
     //点击分类标签
     sort( e ){
 
-    let scope = this;
-    this.setData({
-        sorter : e.target.dataset.cat_id,
-        showSearchList:false
-    })
+        let scope = this;
+        this.setData({
+            sorter : e.target.dataset.cat_id,
+            showSearchList:false
+        })
       //重新进行分类列表
       // api.getProductionList( function( res ){
       //     scope.setData({
@@ -156,33 +207,30 @@ Page({
       // } )
 
   },
-    _fly(e,segements,duration){
+    _fly(e,segements,duration,id){
         var scope = this
-        var QuadraticBezier = this._createBezier(e,segements)
+        var QuadraticBezier = this._createBezier(e,segements,id)
         var QL = QuadraticBezier.length - 1
-        this.setData({QuadraticBezier})
-        this._setFlyPosition()
+        // this.setData({QuadraticBezier})
 
-        var p = 0
-        var nowTime = 0
+        var p = 0//进度
+        var nowTime = 0//时间
         var index = 0
         var fps = 30
         var interval = 1000 / fps
         var animate_position
         var fly_position
         var handle = setInterval(function(){
-            // p = nowTime / duration
-            // index = parseInt( p * QL )
-            // animate_position = QuadraticBezier[index]
-            fly_position = QuadraticBezier[index]
+            p = nowTime / duration
+            index = parseInt( p * QL )
+            animate_position = QuadraticBezier[index]
+            // fly_position = QuadraticBezier[index]
             // console.log(animate_position)
             scope.setData({
-                // animate_position
-                fly_position
-                // animate_position
+                animate_position
+                // fly_position
             })
-            if(nowTime<duration){
-                index+=4
+            if((nowTime+interval)<duration){
                 nowTime+=interval
             }
             else{
@@ -192,25 +240,36 @@ Page({
 
         },interval)
     },
-    _createBezier(e,segements){
-        console.log(e)
+    _createBezier(e,segements,id){
+        //固定
+        var cart_vector = this.data.cart_vector
+        //实时产生
         var touch_vector = {
             x:e.changedTouches[0].clientX,
             y:e.changedTouches[0].clientY
         }
-        var cart_vector = this.data.cart_vector
-
-        var control_vector = this.data.control_vector
-        control_vector = {
-            x:cart_vector.x + parseInt((touch_vector.x - cart_vector.x)/2),
-            y:touch_vector.y
+        // var control_vector = {
+        //     x:cart_vector.x + parseInt((touch_vector.x - cart_vector.x)/2),
+        //     y:touch_vector.y
+        // }
+        var startPos = {x:0,y:0}
+        var endPos = {x:cart_vector.x-touch_vector.x,y:cart_vector.y-touch_vector.y}
+        var control_vector = {
+            x:endPos.x + parseInt((startPos.x - endPos.x)/2),
+            y:0
         }
-        this.setData({control_vector,touch_vector})
-        return app.createQudraticBezier([touch_vector,control_vector,cart_vector],segements)
+        this._setFlyPosition( touch_vector,id )
+        // var control_vector = this.data.control_vector
+        // this.setData({control_vector,touch_vector})
+
+        return app.createQudraticBezier([startPos,control_vector,endPos],segements)
     },
-    _setFlyPosition(){
+    _setFlyPosition(position,id){
+        var chosedImage = domain+this.data.customer.productObject[id].mp_picture
+
         this.setData({
-            fly_position:this.data.touch_vector,
+            chosedImage,
+            fly_position:position,
             fly:true
         })
     },
@@ -222,11 +281,6 @@ Page({
       var target = e.target;
       var id = target.dataset['mp_id'];
       var op = target.dataset.op;
-
-      var chosedImage = domain+this.data.customer.productObject[id].mp_picture
-        this.setData({
-            chosedImage
-        })
 
       var customer = this.data.customer
 
@@ -258,7 +312,7 @@ Page({
                             list[ i ].number = 0
                         }
                         list[ i ].number+=1
-                        this._fly(e,60,60)
+                        this._fly(e,60,60,id)
                     }
                     console.log(`总共${il}条数据，当前循环到第${i}条，break`)
                     break;
@@ -273,7 +327,7 @@ Page({
         else{
             //如果操作的是customer
             if(op=='addOne'){
-                this._fly(e,60,500)
+                this._fly(e,60,500,id)
             }
 
         }
@@ -521,6 +575,7 @@ Page({
     updateTagList(){
         //拉取分类标签
         utils.post(`${domain}qiyue/getBLZIndexCats`,{shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+            console.log(res)
             let a = res.data['cat_list']
             let md_company = a[0].md_company
             a.push({ cat_name: '全部', cat_id:defaultType,md_company:md_company},)
@@ -538,6 +593,8 @@ Page({
             //原始数据备份
             let goods_list = res.data['goods_list']
             let goods_length = goods_list.length
+            let sorters = {}
+            let sortTags = scope.data.sortTags
             //有数据就用拉取的数据
             if( goods_length!=0 ){
                 origin_productList = [...goods_list]
@@ -551,8 +608,15 @@ Page({
                         origin_productList[ index ]['mp_picture'] = '';
                     }
 
+                    sorters[value['mp_cid']] = 1
 
                 })
+                for(let [index,value] of sortTags.entries()){
+                    let haveSort = sorters.hasOwnProperty(value.cat_id)
+                    if(!haveSort&&(value.cat_id!=defaultType)){
+                        sortTags.splice(index,1)
+                    }
+                }
                 wx.setStorage({
                     key:"origin_productList",
                     data:origin_productList
@@ -562,7 +626,6 @@ Page({
                 var customer = new Customer()
                 var buffer_customer = wx.getStorageSync('customer')
                 if( buffer_customer ){
-                    console.log(customer)
                     for(var key in buffer_customer){
                         customer[ key ] = buffer_customer[ key ]
                     }
@@ -575,7 +638,8 @@ Page({
 
                 //视图更新
                 scope.setData({
-                    customer : customer
+                    customer,
+                    sortTags
                 })
 
                 var t = setTimeout(function(){
@@ -584,6 +648,7 @@ Page({
                         return
                     }
                     customer.productArray = customer.productArray.concat(origin_productList.slice(10))
+                    customer.productArray[20]['ean_13'] = '6970042901556'
                     customer.updateProductObject()
                     customer.SyncProductListWithCart()
                     scope.setData({
@@ -615,27 +680,34 @@ Page({
 
         var scope = this
         let selectorquery = wx.createSelectorQuery()
-        console.log('selectorquery',selectorquery)
 
         selectorquery.select('#cart-icon').boundingClientRect(function(res){
-            console.log('query1boundingClientRect',res)
             var cart = scope.data.cart
             cart.info = res
             scope.setData({cart})
             callback()
         }).selectViewport().boundingClientRect(function(res){
-            console.log('query2boundingClientRect',res)
         }).exec()
 
 
 
     },
     onLoad: function () {
-/*--------------------------数据请求--------------------------*/
+        var scope = this
+        /*--------------------------视图处理--------------------------*/
+        //处理导航条
+        router.setActive(2)
+        scope.setData({footer:router.footerArray})
 
+        var shop_id = wx.getStorageSync('shop_id')
+        scope.setData({shop_id})
+        if(!(shop_id>0)){
+            return
+        }
+/*--------------------------数据请求--------------------------*/
       /*拉取swiper*/
       utils.get(`${domain}qiyue/getBLZIndexAds`).then((res)=>{
-
+console.log(res)
           let list = res.data.ads_list
           let list_len = list.length
 
@@ -644,6 +716,7 @@ Page({
           swiperItem.forEach(( value,index )=>{
               let name = list[ index ]['ads_picture']
               var ads_url = list[ index ]['ads_url']
+              var ads_type = list[ index ]['ads_type']
               var link
               if(/http/g.test(ads_url)){
                   link = `${outUrl}?url=ads_url`
@@ -653,7 +726,8 @@ Page({
               let v = {
                   img: `${domain}${name}`,
                   link,
-                  key:index
+                  key:index,
+                  ads_type
               }
               swiperItem[ index ] = v
           })
@@ -666,17 +740,14 @@ Page({
       })
       /*拉取商品列表*/
 
-      var scope = this
+
       scope.updateTagList()
       scope.updateProductList(function(customer){
           console.log(customer)
       })
 
 
-/*--------------------------视图处理--------------------------*/
-      //处理导航条
-      router.setActive(2)
-      scope.setData({footer:router.footerArray})
+
 
 /*--------------------------获取设备信息--------------------------*/
         this._QueryCartNode(function(){

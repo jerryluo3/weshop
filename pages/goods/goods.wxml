@@ -49,7 +49,7 @@
   </view>
   <view class="goods_comment_content">
       <block wx:for="{{comment_list}}" wx:key="item">
-      <view class="goods_comment_row">
+      <view class="goods_comment_row" wx:if="{{index<limit_comments}}">
         <view class="comment_info weui-flex">
           <view class='weui-flex__item comment_user'><image wx:if="{{item.mem_avatar}}" src='{{item.mem_avatar}}'></image>{{item.mem_nickname}}</view>
           <view class='comment_time'>{{item.c_addtime}}</view>
@@ -64,6 +64,7 @@
         </view>
       </view>
       </block>
+      <view wx:if="{{limit_comments<comment_list.length}}" class="show_more_comments" bindtap="show_more_comments">显示更多</view>
   </view>
 </view>
 
@@ -178,6 +179,7 @@
 <view class='popbg {{popsharehb}}' bindtap='closeSharehb'></view>
 <view class='shareHB {{popsharehb}}'>
   <view class='shareHB_c'>
+    <image src="{{userInfo.mem_avatar}}" class="avatar"></image>
     <image wx:if="{{shareImg}}" src='{{siteurl}}{{shareImg}}' style='width:100%;height:950rpx;display:block'></image>
   </view>
   <view class='shareBtn' bindtap='save'>保存图片</view>

@@ -28,7 +28,14 @@ Page({
     'guige_price':0,         //选中规格的价格
     'guige_fencheng':0,       //分成
     'limitnums':0,             //商品限购，大于0表示限购
-    'nums':1            //购买数量
+    'nums':1,            //购买数量
+    'limit_comments':3,  //限制显示评论的数量
+  },
+  show_more_comments(){
+    this.setData({
+      limit_comments: this.data.comment_list.length
+    })
+    
   },
 
   popGoodsDesc() {

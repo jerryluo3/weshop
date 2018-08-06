@@ -20,7 +20,7 @@
 
 <view class="sanbao" wx:if="{{ cid == 0 }}">
 <view class="sanbao_block">
-  售后三包:<image class="sanbao_ico" src="/asset/images/sanbao.png" ></image>运输损坏 / <image class="sanbao_ico" src="/asset/images/sanbao.png" ></image>坏果问题 / <image class="sanbao_ico" src="/asset/images/sanbao.png" ></image>分量不足
+  售后三包:<image class="sanbao_ico" src="/asset/images/sanbao.png" ></image>运输损坏 / <image class="sanbao_ico" src="/asset/images/sanbao.png" ></image>质量问题 / <image class="sanbao_ico" src="/asset/images/sanbao.png" ></image>分量不足
   <view class="sanbao_detail" bindtap='popSanbao'>详情</view>
 </view>
 </view>
@@ -154,7 +154,7 @@
 </view>
 <view class='sanbao_row'>
   <image src='/asset/images/sanbao.png'></image>
-  <text class='saobao_name'>坏果问题：</text>
+  <text class='saobao_name'>质量问题：</text>
   收货时如遇商品质量问题，出现鲜果损坏、其他商品破损、漏气情况，商品按损坏比例赔偿
 </view>
 <view class='sanbao_row'>

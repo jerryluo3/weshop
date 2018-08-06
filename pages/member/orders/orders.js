@@ -18,7 +18,12 @@ Page({
     pics:[],
     toView: 0,
     scrollLop: 0,
-    orderList: [],
+    orderList: [
+    //     {
+    //   oid:123456789,//订单号
+    //     status:0,//0待付款，1待发货，2待收货，3待评论，-1取消中，-2已取消
+    // },
+    ],
     orderqr: '',
     peisong:[],
     fromTM:0,//0表示特卖订单,1表示便利架订单
@@ -99,6 +104,7 @@ Page({
     this.getMemberOrderList(fromTM,otype);
   },
 
+    //拉取订单列表
   getMemberOrderList: function (fromTM,otype) {
     var that = this;
     var uid = wx.getStorageSync("uid");
@@ -110,7 +116,6 @@ Page({
     }else{
         url = app.util.url('qiyue/getBLZMemberOrderList')
     }
-    console.log(url)
     if (uid > 0) {
         wx.showToast({
             title: '加载中',
@@ -129,11 +134,9 @@ Page({
         },
         method: 'POST',
         success: function (res) {
-          console.log("orderlist",res)
           that.setData({
             orderList: res.data.result
           })
-
         }
       })
 
@@ -547,34 +550,6 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function (options) {
@@ -585,17 +560,4 @@ Page({
     wx.stopPullDownRefresh();
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
