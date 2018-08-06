@@ -65,7 +65,7 @@
               <view class='status_list_li'>
                 <view class='order_nums_tip' wx:if="{{ unfinish_nums > 0 }}">{{ unfinish_nums }}</view>
                 <image src='/assets/member/order_finish.png' mode="widthFix" ></image>
-                <text>已完成</text>
+                <text>待评论</text>
               </view>
             </view>
           </view>
