@@ -32,7 +32,7 @@
 </view>
 
 <view class="tggp" wx:if="{{ cid == 0 }}">
-<view class="tggp_title" bindtap='jumpUrl' data-url="/pages/vip/vip"><image src="/asset/images/king.png"></image>会员专属尝鲜区<view class='tggp_more'>更多<image src='/asset/images/tggp_more.png'></image></view></view>
+<view class="tggp_title" bindtap='jumpUrl' data-url="/pages/vip/vip"><image src="/asset/images/king.png"></image>VIP限时尝鲜<view class='tggp_more'>更多<image src='/asset/images/tggp_more.png'></image></view></view>
 <scroll-view scroll-x="true" class="tggp_list" scroll-left="{{scrollLeft}}">
   <block wx:for="{{tejia_list}}" wx:key="">
     <view class="tggp_block" bindtap='getGoodsInfo' data-id="{{item.goods_id}}">
