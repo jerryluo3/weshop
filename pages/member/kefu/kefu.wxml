@@ -34,6 +34,13 @@
 
 </view>
 
+<!--<view class="">-->
+    <!--<button open-type="contact" bindcontact="CustomerService" data-name="xq" type="primary" session-from='xiaoqi'>小栖</button>-->
+    <!--<button open-type="contact" bindcontact="CustomerService" data-name="xq" type="primary" session-from='xiaoguo'>小果</button>-->
+    <!--<button open-type="contact" bindcontact="CustomerService" data-name="xq" type="primary" session-from='xiaoyue'>小约</button>-->
+    <!--<button open-type="contact" bindcontact="CustomerService" data-name="xq" type="primary" session-from='xiaoa'>小A</button>-->
+<!--</view>-->
+
 
 <import src="/template/footer/footer.wxml"/>
 <template is="tempFooter" data="{{footer}}"/>
