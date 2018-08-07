@@ -22,7 +22,6 @@ Page({
         userInfo: "",
         currentTab: 0, //预设当前项的值
         scrollLeft: 0, //tab标题的滚动条位置
-        showblock: 0,  //0:正在热售 1:上新预告
         tejia_list: [],
         goods_list: [],      //正在热售
         dataList: [],
@@ -327,27 +326,6 @@ Page({
                 //console.log(res.data.midadds_list)
             }
         });
-    },
-
-    //选择显示块， 0：正在热售 1：上新预告
-    chooseblock: function (e) {
-        var that = this
-        var showblock = e.currentTarget.dataset.id
-        that.setData({showblock: showblock})
-
-        if (that.data.showblock == 0) {
-            //that.nowTime();
-            clearInterval(ntimer);
-            var ntimer = setInterval(that.nowTime, 1000);
-            clearInterval(pretimer);
-
-        } else {
-
-            //that.prenowTime();
-            clearInterval(pretimer);
-            var pretimer = setInterval(that.prenowTime, 1000);
-            clearInterval(ntimer);
-        }
     },
 
     tejianowTime: function () {//时间函数
@@ -761,7 +739,7 @@ Page({
 
 
         //that.nowTime();
-        // var ntimer = setInterval(that.nowTime, 1000);
+        var ntimer = setInterval(that.nowTime, 1000);
         // var tjtimer = setInterval(that.tejianowTime, 1000);
 
     },
