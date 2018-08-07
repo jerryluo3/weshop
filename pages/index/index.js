@@ -709,6 +709,12 @@ Page({
         //小程序码扫进来的优先
         var shopid = options['shopid']
         var storage_shopid = wx.getStorageSync('shop_id')
+        //如果是不同的小程序码，把前面的购物车缓存清理掉
+        if(shopid != storage_shopid){
+            if(wx.getStorageSync('customer') !=""){
+                wx.removeStorageSync('customer')
+            }
+        }
 
         //如果是扫小程序码进的,直接设置导航栏的"扫一扫"
         if (!!shopid) {
