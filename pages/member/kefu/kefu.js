@@ -35,7 +35,11 @@ Page({
       }
     });
   },
+    CustomerService( e ){
+      console.log(e)
+        var name = e.currentTarget.dataset['name']
 
+    },
   /**
    * 生命周期函数--监听页面加载
    */

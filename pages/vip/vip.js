@@ -18,6 +18,7 @@ Page({
         userInfo: [],
         footer: router.footerArray,
         pre_goods_list: [],    //上新预告
+        showblock: 0,  //0:vip限时尝鲜 1:上新预告
     },
 
     //获取头部广告
@@ -266,6 +267,18 @@ Page({
         that.getPreGoodslist();
     },
 
+    //选择显示块， 0：正在热售 1：上新预告
+    chooseblock: function (e) {
+        var that = this
+        var showblock = e.currentTarget.dataset.id
+        that.setData({showblock: showblock})
+
+        if (that.data.showblock == 0) {
+            //vip限时尝鲜
+        } else {
+            //
+        }
+    },
 
     /**
      * 生命周期函数--监听页面加载

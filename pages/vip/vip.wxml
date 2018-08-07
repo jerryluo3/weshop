@@ -11,9 +11,16 @@
   <view class='ty_vip_share'>分享5个微信群即可获得(还差{{ 5-shareNums }}次哦)</view>
 </view>-->
 
-<view class='vip_title'>VIP限时尝鲜</view>
+<view class="topblank">
+  <view class='main_block_title {{ midfixed }}'>
+    <view class='weui-flex'>
+      <view class="weui-flex__item" bindtap='chooseblock' data-id="0"><text class="{{ showblock == 0 ? 'main_block_title_item' : ''}}">VIP限时尝鲜</text></view>
+      <view class="weui-flex__item" bindtap='chooseblock' data-id="1"><text class="{{ showblock == 1 ? 'main_block_title_item' : ''}}">上新预告</text></view>
+    </view>
+  </view>
+</view>
 
-<view class='vip_goods_list'>
+<view class='vip_goods_list' wx:if="{{showblock == 0}}">
   <block wx:for="{{tejia_list}}" wx:key="">
   <view class='weui-flex vip_goods_list_row' bindtap='jumpUrl' data-url="/pages/goods/goods?id={{item.goods_id}}">
     <view class='vip_goods_img'><image src='{{siteurl}}{{item.goods_picture}}'></image></view>
@@ -34,11 +41,7 @@
   </view>
   </block>
 </view>
-
-
-<!--上新预告-->
-<view class='vip_title'>上新预告</view>
-  <view class="goods_list">
+<view class="goods_list" wx:if="{{showblock == 1}}">
     <block wx:for="{{pre_goods_list}}" wx:key="">
       <view class='goods_list_row'>
         <view class="goods_img" bindtap='getGoodsInfo' data-id="{{item.goods_id}}">

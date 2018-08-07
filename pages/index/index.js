@@ -22,7 +22,6 @@ Page({
         userInfo: "",
         currentTab: 0, //预设当前项的值
         scrollLeft: 0, //tab标题的滚动条位置
-        showblock: 0,  //0:正在热售 1:上新预告
         tejia_list: [],
         goods_list: [],      //正在热售
         dataList: [],
@@ -327,27 +326,6 @@ Page({
                 //console.log(res.data.midadds_list)
             }
         });
-    },
-
-    //选择显示块， 0：正在热售 1：上新预告
-    chooseblock: function (e) {
-        var that = this
-        var showblock = e.currentTarget.dataset.id
-        that.setData({showblock: showblock})
-
-        if (that.data.showblock == 0) {
-            //that.nowTime();
-            clearInterval(ntimer);
-            var ntimer = setInterval(that.nowTime, 1000);
-            clearInterval(pretimer);
-
-        } else {
-
-            //that.prenowTime();
-            clearInterval(pretimer);
-            var pretimer = setInterval(that.prenowTime, 1000);
-            clearInterval(ntimer);
-        }
     },
 
     tejianowTime: function () {//时间函数
@@ -709,6 +687,12 @@ Page({
         //小程序码扫进来的优先
         var shopid = options['shopid']
         var storage_shopid = wx.getStorageSync('shop_id')
+        //如果是不同的小程序码，把前面的购物车缓存清理掉
+        if(shopid != storage_shopid){
+            if(wx.getStorageSync('customer') !=""){
+                wx.removeStorageSync('customer')
+            }
+        }
 
         //如果是扫小程序码进的,直接设置导航栏的"扫一扫"
         if (!!shopid) {
@@ -755,7 +739,7 @@ Page({
 
 
         //that.nowTime();
-        // var ntimer = setInterval(that.nowTime, 1000);
+        var ntimer = setInterval(that.nowTime, 1000);
         // var tjtimer = setInterval(that.tejianowTime, 1000);
 
     },
