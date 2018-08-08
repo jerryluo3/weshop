@@ -1,0 +1,28 @@
+<view class="container page-check">
+    <view class="productlist-container">
+        <scroll-view class="product-scroll-view" scroll-y="{{rightScroll.scrollY}}">
+            <view class="product-item weui-flex" wx:for="{{productList}}" wx:key="item.mp_id">
+                <view class="thumbnail">
+                    <image src="{{domain}}{{item.mp_picture}}"/>
+                </view>
+                <view class="weui-flex__item product-detail">
+                    <view class="product-name theme-product-name title">
+                        {{item.mp_title}}
+                    </view>
+                    <view class="theme-product-stock stock">
+                        数量:{{item.mp_stocks}}
+                    </view>
+                </view>
+                <view class="input-container weui-flex">
+                    <input type="tel" class="number-input {{item.disabled!=''?'disabled':''}}" data-pid="{{item.mp_pid}}" bindinput="oninput" disabled="{{item.disabled}}" value="{{((item.mp_pid == 393)||(item.mp_pid == 394)||(item.mp_pid == 395))?item.mp_stocks:''}}"/>
+                </view>
+            </view>
+        </scroll-view>
+        <view class="patch"></view>
+    </view>
+    <view class="button-container">
+        <view class="button" bindtap="submit">
+            提交库存信息
+        </view>
+    </view>
+</view>

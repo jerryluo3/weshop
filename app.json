@@ -30,6 +30,7 @@
     "pages/member/settings/settings",
     "pages/member/company/company",
     "pages/member/tools/tools",
+    "pages/member/tools/check",
     "pages/category/category",
     "pages/vip/vip",
     "pages/vip/vipdetail",
