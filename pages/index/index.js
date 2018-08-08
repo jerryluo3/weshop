@@ -680,6 +680,7 @@ Page({
     },
 
     onLoad: function (options) {
+      console.log(options)
         //小程序码扫进来的优先
         var shopid = options['shopid']
         var storage_shopid = wx.getStorageSync('shop_id')

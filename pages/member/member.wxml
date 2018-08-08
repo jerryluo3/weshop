@@ -7,7 +7,7 @@
       <view class='member_mobile' wx:if="{{ !user.mem_mobile}}">手机号未受权  <view class='scope_mobile' style='position:relative'><button open-type="getPhoneNumber" style='position:absolute;top:0;left:0;right:0;bottom:0;z-index:100;opacity:0;' bindgetphonenumber="getPhoneNumber">123</button>立即授权</view></view>
       <view class='member_mobile' wx:else>{{ user.mem_mobile }}</view>
     </view>
-    <view class='info_more' bindtap='jumpUrl' data-url="/pages/member/info/info"><image src='/assets/images/more.png'></image></view>
+    <view class='info_more' bindtap='jumpUrl'  data-url="/pages/member/settings/settings"><image src='/assets/images/more.png'></image></view>
   </view>
   <view class="weui-flex member_info" wx:else>
     <view class='member_avatar'><image src="/assets/member/avatar.png"></image></view>
@@ -150,10 +150,10 @@
     <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
   </view>
 
-  <view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/settings/settings">
-    <view class='block_ico'><image src='/assets/member/settings.png' mode="widthFix" ></image></view>
+  <view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/tools/tools">
+    <view class='block_ico'><image src='/assets/member/ico_tools.png' mode="widthFix" ></image></view>
     <view class='weui-flex__item block_name'>
-      <text>基本设置</text>
+      <text>工具</text>
     </view>
     <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
   </view>
