@@ -109,13 +109,6 @@
     </view>
     <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
   </view>
-  <!--<view class='weui-flex tools_row' bindtap='vipPOP' wx:else>-->
-    <!--<view class='block_ico'><image src='/assets/member/ico_vip.png' mode="widthFix" ></image></view>-->
-    <!--<view class='weui-flex__item block_name redfont'>-->
-      <!--<text>马上成为VIP <text class="vipprice">(<text class="del">原:￥{{ year_price }}/年</text> 现:￥{{ year_vipprice }}/年)</text></text>-->
-    <!--</view>-->
-    <!--<view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>-->
-  <!--</view>-->
 
   <view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/recharge/recharge">
     <view class='block_ico'><image src='/assets/member/ico_money.png' mode="widthFix" ></image></view>
@@ -132,13 +125,13 @@
     <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
   </view>
 
-  <!--<view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/company/company">-->
-    <!--<view class='block_ico'><image src='/assets/member/ico_company.png' mode="widthFix" ></image></view>-->
-    <!--<view class='weui-flex__item block_name'>-->
-      <!--<text>我的公司</text>-->
-    <!--</view>-->
-    <!--<view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>-->
-  <!--</view>-->
+  <view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/company/company">
+    <view class='block_ico'><image src='/assets/member/ico_company.png' mode="widthFix" ></image></view>
+    <view class='weui-flex__item block_name'>
+      <text>我的公司</text>
+    </view>
+    <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
+  </view>
 
 
   <view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/kefu/kefu">

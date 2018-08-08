@@ -4,7 +4,7 @@
 
 .tab-h{height: 80rpx;width: 100%; box-sizing: border-box;overflow: hidden;line-height: 80rpx;background: #fff; font-size: 16px; white-space: nowrap;}
 .tab-item{color:#595757;}
-.tab-item.active{color: #e40064;position: relative;}
+.tab-item.active .weui-grid__label{color: #e40064;}
 /* .tab-item.active:after{ content: "";display: block;height: 4rpx;width: 100%;background: #e40064;position: absolute; bottom: 0;left: 0rpx;} */
 .weui-grids{background-color:white;}
 .weui-grid{padding:10rpx 0;border:none;width:25%;}
