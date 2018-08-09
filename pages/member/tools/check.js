@@ -10,7 +10,15 @@ Page({
         ],
         result:{
 
-        }
+        },
+        step1Completed:false,
+        step2Completed:false,
+        step3Completed:false,
+        picturesInfoStep1:{
+            //0:{path:string,size:number}
+        },
+        picturesUrlsStep1:[],
+
     },
     //拉取商品列表
     updateProductList( callback = function(){} ){
@@ -93,15 +101,18 @@ Page({
             wx.showLoading({
                 title: '正在上传数据',
             })
-            setTimeout(function(){
+            let url = `${domain}/qiyue/mendianProductStoreSave`
+            let uid = wx.getStorageSync('uid')
+            let shop_id = wx.getStorageSync('shop_id')
+            utils.post(url,{form:result,uid,shop_id},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+                console.log(res)
                 wx.hideLoading()
                 wx.showToast({
                     title: '已提交',
                     icon: 'success',
                     duration: 2000
                 })
-            },3000)
-
+            })
         }else{
             wx.showToast({
                 title: '请完整填写库存信息再提交',
@@ -110,6 +121,95 @@ Page({
             })
         }
 
+
+    },
+    toStep2(){
+        var scope = this
+        wx.showModal({
+            title: '提示',
+            content: '是否上传照片',
+            success: function(res) {
+                if (res.confirm) {
+                    scope.uploadPicturesStep1()
+                    scope.setData({
+                        step1Completed : true
+                    })
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
+            }
+        })
+
+    },
+    addOnePictrueStep1(){
+        let scope = this
+        let picturesInfoStep1 = scope.data.picturesInfoStep1
+        let picturesUrlsStep1 = scope.data.picturesUrlsStep1
+        wx.chooseImage({
+            count:2,
+            success: function(res) {
+                var tempFilePaths = res['tempFilePaths']//array[string]
+                var tempFiles = res['tempFiles']//array[object]
+                console.log(res)
+                let len =Object.keys( picturesInfoStep1 ).length
+                picturesInfoStep1[ len ] = tempFiles[ 0 ]
+                picturesUrlsStep1.push( tempFilePaths[ 0 ] )
+                wx.getImageInfo({
+                    src: tempFilePaths[ 0 ],
+                    success: function (res) {
+                        picturesInfoStep1[ len ]['width'] = res.width
+                        picturesInfoStep1[ len ]['height'] = res.height
+                        scope.setData({
+                            picturesInfoStep1,
+                            picturesUrlsStep1
+                        })
+                    }
+                })
+
+                // wx.uploadFile({
+                //     url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
+                //     filePath: tempFilePaths[0],
+                //     name: 'file',
+                //     formData:{
+                //         'user': 'test'
+                //     },
+                //     success: function(res){
+                //         var data = res.data
+                //         //do something
+                //         if( now == need ){
+                //
+                //         }else{
+                //             need++
+                //             loop()
+                //         }
+                //     }
+                // })
+            }
+        })
+    },
+    previewAllPicturesStep1(){
+        let scope = this
+        let picturesInfoStep1 = scope.data.picturesInfoStep1
+        let picturesUrlsStep1 = scope.data.picturesUrlsStep1
+
+        let currentIndex = 0
+        wx.previewImage({
+            current: picturesUrlsStep1[ currentIndex ], // 当前显示图片的http链接
+            urls: picturesUrlsStep1 // 需要预览的图片http链接列表
+        })
+    },
+    previewAllPicturesStep2(){
+
+    },
+    uploadPicturesStep1(){
+        for( let [ index, value ] of this.data.picturesUrlsStep1 ){
+
+        }
+    },
+    uploadPicturesStep2(){
+
+    },
+    previewOnePictures( index = 0, pictrues = {} ){
 
     },
     /*-----------------------生命周期-----------------------*/
