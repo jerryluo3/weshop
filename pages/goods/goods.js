@@ -470,6 +470,9 @@ Page({
 
   //弹出
   popCart:function(){
+    if(this.data.goods.goods_state == 0){
+      return
+    }
     var that = this
     var userInfo = wx.getStorageSync("userInfo");
     var goods = that.data.goods

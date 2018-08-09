@@ -99,7 +99,8 @@
     <view class="addtocart unused">即将开售</view>
   </view>
   <view class="weui-flex__item" bindtap='popCart' wx:else>
-    <view class="addtocart">立即购买</view>
+    <view class="addtocart" wx:if="{{goods.goods_state == 1}}">立即购买</view>
+    <view class="addtocart grey" wx:if="{{goods.goods_state == 0}}">商品已下架</view>
   </view>
 </view>
 
