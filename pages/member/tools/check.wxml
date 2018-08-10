@@ -1,45 +1,91 @@
 <view class="container page-check">
-    <view class="step1-container" wx:if="{{!step1Completed}}">
-        <button class="upload-button" bindtap="addOnePictrueStep1" type="primary">点击上传一张图片</button>
-        <button class="preview-button" type="primary" bindtap="previewAllPicturesStep1">预览所有图片</button>
-        <button class="submit-button" type="primary" bindtap="toStep2">提交</button>
-        <!--gallery-->
-        <view class="gallery-container">
-            <view class="picture" wx:for="{{picturesUrlsStep1}}" wx:key="*this">
-                <image src="{{item}}" mode="widthFix"></image>
-            </view>
-        </view>
-    </view>
-    <view class="step2-container" wx:if="{{step1Completed&&!step2Completed}}">
-        <view class="productlist-container">
-            <scroll-view class="product-scroll-view" scroll-y="{{rightScroll.scrollY}}">
-                <view class="product-item weui-flex" wx:for="{{productList}}" wx:key="item.mp_id">
-                    <view class="thumbnail">
-                        <image src="{{domain}}{{item.mp_picture}}"/>
-                    </view>
-                    <view class="weui-flex__item product-detail">
-                        <view class="product-name theme-product-name title">
-                            {{item.mp_title}}
+    <!--顶部导航-->
+    <view class="page">
+        <view class="page__bd">
+            <view class="weui-tab">
+                <view class="weui-navbar">
+                    <block wx:for="{{tabs}}" wx:key="*this">
+                        <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+                            <view class="weui-navbar__title">{{item}}</view>
                         </view>
-                        <view class="theme-product-stock stock">
-                            数量:{{item.mp_stocks}}
+                    </block>
+                    <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+                </view>
+                <view class="weui-tab__panel">
+                    <!--第一步-->
+                    <view class="weui-tab__content" hidden="{{view != 'step1'}}">
+                        <view class="step1-container">
+                            <button class="upload-button" bindtap="addOnePictrue" type="primary" wx:if="{{!uploadTask['step1'].completed}}">点击上传一张图片</button>
+                            <button class="preview-button" type="primary" bindtap="previewAllPictures">预览所有图片</button>
+                            <button class="submit-button" type="primary" bindtap="buttonSubmitStep1" wx:if="{{!uploadTask['step1'].completed}}">提交</button>
+                            <!--gallery-->
+                            <view class="gallery-container">
+                                <view class="picture" wx:for="{{uploadTask['step1'].picturesUrls}}" wx:key="*this">
+                                    <image src="{{item}}" mode="widthFix"></image>
+                                </view>
+                            </view>
                         </view>
                     </view>
-                    <view class="input-container weui-flex">
-                        <input type="tel" class="number-input {{item.disabled!=''?'disabled':''}}" data-pid="{{item.mp_pid}}" bindinput="oninput" disabled="{{item.disabled}}" value="{{((item.mp_pid == 393)||(item.mp_pid == 394)||(item.mp_pid == 395))?item.mp_stocks:''}}"/>
+                    <!--第二步-->
+                    <view class="weui-tab__content" hidden="{{view != 'step2'}}">
+                        <!--wx:if="{{uploadTask['step1'].completed&&!uploadTask['step2'].completed}}"-->
+                        <view class="step2-container">
+                        <view class="productlist-container">
+                            <scroll-view class="product-scroll-view" scroll-y="{{rightScroll.scrollY}}">
+                                <view class="product-item weui-flex" wx:for="{{productList}}" wx:key="item.mp_id">
+                                    <view class="thumbnail">
+                                        <!--<image src="{{domain}}{{item.mp_picture}}"/>-->
+                                    </view>
+                                    <view class="weui-flex__item product-detail">
+                                        <view class="product-name theme-product-name title">
+                                            {{item.mp_title}}
+                                        </view>
+                                        <view class="theme-product-stock stock">
+                                            数量:{{item.mp_stocks}}
+                                        </view>
+                                    </view>
+                                    <view class="input-container weui-flex">
+                                        <input type="tel" class="number-input {{item.disabled!=''?'disabled':''}}" data-pid="{{item.mp_pid}}" bindinput="oninput" disabled="{{item.disabled}}" value="{{((item.mp_pid == 393)||(item.mp_pid == 394)||(item.mp_pid == 395))?item.mp_stocks:''}}"/>
+                                    </view>
+                                </view>
+                            </scroll-view>
+                            <view class="patch"></view>
+                        </view>
+                        <view class="button-container">
+                            <view class="button" bindtap="buttonSubmitStep2">
+                                提交库存信息
+                            </view>
+                        </view>
+                    </view>
+                    </view>
+                    <!--第三步-->
+                    <view class="weui-tab__content" hidden="{{view != 'step3'}}">
+                        <!--wx:if="{{uploadTask['step1'].completed&&uploadTask['step2'].completed}}"-->
+                        <view class="step3-container">
+                            <button class="upload-button" bindtap="addOnePictrue" type="primary">点击上传一张图片</button>
+                            <button class="preview-button" type="primary" bindtap="previewAllPicturesStep3">预览所有图片</button>
+                            <button class="submit-button" type="primary" bindtap="buttonSubmitStep3">提交</button>
+                            <!--gallery-->
+                            <view class="gallery-container">
+                                <view class="picture" wx:for="{uploadTask['step3'].picturesUrls}}" wx:key="*this">
+                                    <image src="{{item}}" mode="widthFix"></image>
+                                </view>
+                            </view>
+                        </view>
                     </view>
                 </view>
-            </scroll-view>
-            <view class="patch"></view>
-        </view>
-        <view class="button-container">
-            <view class="button" bindtap="submit">
-                提交库存信息
             </view>
         </view>
     </view>
-    <view class="step3-container" wx:if="{{step1Completed&&step2Completed}}">
 
-    </view>
+
+
+
+
+    <!--<view class="group-group option-group{{index}}" wx:for="{{questList}}" wx:for-item="question" wx:if="{{nowIndex==index}}" wx:key="*this">-->
+        <!--<view class="option {{question.userChose==0?'blue':''}} {{(((question.userChose!=0)&&(option.uid==question.answer))?'correct':'')||(((question.userChose!=0)&&(option.uid!=question.answer))?'wrong':'')}}" wx:if="{{(question.userChose==0)||(question.userChose!=0&&(question.answer==option.uid))||(question.userChose==option.uid)}}" wx:for="{{question.options}}" wx:for-item="option" wx:for-index='optionIndex' bindtap="chose" data-uid="{{option.uid}}" wx:key="*this">{{option.text}}</view>-->
+
+        <!--<view class="next" bindtap="next" wx:if="{{nowIndex<(questList.length-1)}}">下一题</view>-->
+    <!--</view>-->
 
 </view>

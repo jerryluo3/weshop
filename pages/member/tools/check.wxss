@@ -27,3 +27,9 @@ page{height:auto;background-color:white;}
             .disabled{color:#666;}
 
     .step3-container{}
+
+    .blue{background-color:blue}
+    .correct{background-color:green}
+    .wrong{background-color:red}
+
+     .weui-navbar__slider{width:192rpx;}
