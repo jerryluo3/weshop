@@ -1,0 +1,24 @@
+.main{}
+    .block{position:relative;}
+    .block1{width:750rpx;height:950rpx;}
+        .block1 image.bg{width:750rpx;height:950rpx;position:absolute;z-index:-1;}
+        .block1 .top-container{width:750rpx;height:490rpx;}
+            .top-container .display{color:white;position:absolute;text-align:center;}
+                .display .strong{font-size:50rpx;font-weight:bold;}
+                .display .nickname{}
+            .top-container .fitst{width:180rpx;height:235rpx;left:287rpx;bottom:250rpx;}
+            .top-container .second{width:180rpx;height:235rpx;left:46rpx;bottom:164rpx;}
+            .top-container .third{width:180rpx;height:235rpx;right:34rpx;bottom:150rpx;}
+                .fitst .avart{}
+                .second .avart{}
+                .third .avart{}
+
+                .fitst .title{}
+                .second .title{}
+                .third .title{}
+
+                .fitst .strong{}
+                .second .strong{}
+                .third .strong{}
+
+    .block2{}

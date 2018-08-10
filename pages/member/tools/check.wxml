@@ -34,7 +34,7 @@
                             <scroll-view class="product-scroll-view" scroll-y="{{rightScroll.scrollY}}">
                                 <view class="product-item weui-flex" wx:for="{{productList}}" wx:key="item.mp_id">
                                     <view class="thumbnail">
-                                        <!--<image src="{{domain}}{{item.mp_picture}}"/>-->
+                                        <image src="{{domain}}{{item.mp_picture}}"/>
                                     </view>
                                     <view class="weui-flex__item product-detail">
                                         <view class="product-name theme-product-name title">

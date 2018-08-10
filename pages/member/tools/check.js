@@ -6,13 +6,22 @@ const domain = app.globalData.DOMAIN
 Page({
     data: {
         domain,
+        /*--------------------盘货必要字段--------------------*/
+        uid:0,
+        shop_id:0,
+        mpd_id:0,
+        // before_pics:[],
+        // after_pics:[],
+        // formData:{},
+        formHiddenData:{},//应该有的结果
+        /*--------------------盘货必要字段--------------------*/
         productList:[
 
         ],
         result:{
 
         },//盘货师傅填写结果
-        formHiddenData:{},//应该有的结果
+
         uploadTask:{
             step1:{
                 picturesInfo:{
@@ -26,9 +35,8 @@ Page({
                 list:[],//服务器图片地址
             },
             step2:{
-
                 completed:false,
-
+                formData:{},//盘货师傅填写结果
             },
             step3:{
                 picturesInfo:{
@@ -134,14 +142,17 @@ if(questList[ nowIndex ].userChose != 0){
 
     },
     oninput(e){
-        console.log(e)
         let target = e.currentTarget
         let pid = target.dataset['pid']
-        let result = this.data.result
-        result[pid] = e.detail.value
+
+        let uploadTask = this.data.uploadTask
+
+        let formData = uploadTask['step2'].formData
+        formData[ pid ] = e.detail.value
         this.setData({
-            result
+            uploadTask
         })
+        wx.setStorageSync( 'uploadTask', uploadTask )
     },
 
     //提交按钮   确认提交
@@ -188,8 +199,27 @@ if(questList[ nowIndex ].userChose != 0){
             let url = `${domain}qiyue/xxx`
             let shop_id = wx.getStorageSync('shop_id')
             let uid = wx.getStorageSync('uid')
+
             //假请求,完成后
-            setTimeout(function () {
+            // setTimeout(function () {
+            //     wx.hideLoading()
+            //     wx.showToast({
+            //         title: '图片上传成功',
+            //         icon: 'success',
+            //         duration: 1000
+            //     })
+            //     uploadTask[ step ].completed = true
+            //     uploadTask['step'] = 'step2'
+            //     wx.setStorageSync('uploadTask',uploadTask)
+            //     scope.setData({
+            //         uploadTask,
+            //     })
+            //     setTimeout(()=>{
+            //         scope._slideTo(1)
+            //     },1000)//视图切换到第二步
+            // },1000)
+            //真请求
+            scope._savePanhuoInfo(function(){
                 wx.hideLoading()
                 wx.showToast({
                     title: '图片上传成功',
@@ -205,10 +235,9 @@ if(questList[ nowIndex ].userChose != 0){
                 setTimeout(()=>{
                     scope._slideTo(1)
                 },1000)//视图切换到第二步
-            },1000)
+            })
 
-
-            //  //真请求
+            //
             // utils.post(url,{shop_id,step:number,uid,list},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
             //     console.log(res)
             //     wx.hideLoading()
@@ -247,10 +276,11 @@ if(questList[ nowIndex ].userChose != 0){
         })
     },
     confirmStep2(){
+        let scope = this
         wx.showLoading({
             title: '正在上传数据',
         })
-        this._uploadList(function(){
+        scope._uploadList(function(){
             //更新视图，去第三步
             wx.hideLoading()
             wx.showToast({
@@ -259,14 +289,17 @@ if(questList[ nowIndex ].userChose != 0){
                 duration: 1000
             })
             //导航去第三步
+            let uploadTask = scope.data.uploadTask
+            let step = uploadTask['step']
+            uploadTask[ step ].completed = true
+            uploadTask['step'] = 'step3'
+            scope.setData({
+                uploadTask,
+            })
+            wx.setStorageSync('uploadTask',uploadTask)
+
             setTimeout(()=>{
-                uploadTask[ step ].completed = true
-                uploadTask['step'] = 'step2'
-                wx.setStorageSync('uploadTask',uploadTask)
-                scope.setData({
-                    uploadTask,
-                })
-                scope._slideTo(1)
+                scope._slideTo(2)
             },1000)
         })
     },
@@ -322,7 +355,7 @@ console.log(res)
                     }
                 })
             }else{
-                callback&&callback()
+                callback()
             }
         }
 
@@ -332,33 +365,16 @@ console.log(res)
     },
     _uploadList( callback ){
 
-        let completed = false
-
-        let formData = this.data.result
-        let productList = this.data.productList
-        let formHiddenData = this.data.formHiddenData
-
-        let fill_len = Object.keys( formData ).length
-        let total_len = productList.length
-
-
-        for( let [value,index] of productList ){
-            console.log( value )
-            console.log( index )
-        }
-
-        wx.showLoading({
-            title: '正在上传数据',
+        this._savePanhuoInfo(function( res ){
+            //盘货信息表保存成功
+            callback()
         })
-        let url = `${domain}/qiyue/mendianProductStoreSave`
-        let uid = wx.getStorageSync('uid')
-        let shop_id = wx.getStorageSync('shop_id')
 
         //假上传
-        setTimeout(function(){
-            //上传成功
-            callback()
-        },1000)
+        // setTimeout(function(){
+        //     //上传成功
+        //     callback()
+        // },1000)
 
 
 //真上传
@@ -374,6 +390,7 @@ console.log(res)
 
 
     },
+
 
     addOnePictrue(){
         let scope = this
@@ -441,26 +458,43 @@ console.log(res)
 
     },
 
+    _getLocalStorage(){
+        let uid = wx.getStorageSync('uid')
+        let shop_id = wx.getStorageSync('shop_id')
+        this.setData({
+            uid,
+            shop_id
+        })
+    },
     //拉取商品列表
     _updateProductList(callback = function(){} ){
         var scope = this;
-        utils.post(`${domain}qiyue/getBLZGoodsList`,{shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+        utils.post(`${domain}qiyue/getShopProducts `,{ shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+            console.log(res)
             let productList = scope.data.productList
             //原始数据备份
-            let goods_list = res.data['goods_list']
+            let goods_list = res.data['product_list']
             let goods_length = goods_list.length
             //有数据就用拉取的数据
             if( goods_length!=0 ){
-                productList = [...goods_list]
-                let result = scope.data.result
+                productList = [ ...goods_list ]
+                let uploadTask = scope.data.uploadTask
+                let formHiddenData = scope.data.formHiddenData
+                let formData = uploadTask['step2'].formData
                 productList.forEach(( value, index )=>{
                     var disabled = ''
-                    let pid = value.mp_pid
+                    let pid = value[ 'mp_pid' ]
+                    formHiddenData[ pid ] = value['mp_stocks']
+
                     if( pid == 393 || pid == 394 || pid == 395 ){
                         disabled = 'true'
-                        result[pid] = value['mp_stocks']
+                        formData[ pid ] = value['mp_stocks']
+                    }
+                    else{
+                        formData[ pid ] = 0
                     }
                     let url = value['mp_picture']
+                    //处理缩略图
                     if(url != ""){
                         let s = url.split('.')
                         productList[ index ]['mp_picture'] = s[0]+'_thumb.'+s[1]
@@ -474,7 +508,8 @@ console.log(res)
                 //视图更新
                 scope.setData({
                     productList,
-                    result
+                    formHiddenData,
+                    uploadTask
                 })
             }else{
                 console.log('获取不到数据')
@@ -492,26 +527,98 @@ console.log(res)
             callback( res )
         })
     },
+    //保存盘货信息,可能会执行多次
+    _savePanhuoInfo( callback ){
+        let uploadTask = this.data.uploadTask
+        let step = uploadTask['step']
+        let step_number = parseInt( step.charAt(4) )
+
+        let url = `${domain}qiyue/savePanhuoInfo`
+
+        let uid = this.data.uid
+        let shop_id = this.data.shop_id
+
+        let mpd_id = this.data.mpd_id
+        let before_pics = uploadTask['step1']['list']
+        let formData = uploadTask['step2']['formData']
+        let after_pics = uploadTask['step3']['list']
+        let formHiddenData = this.data.formHiddenData
+console.log(mpd_id)
+        let data = {
+            uid,
+            shop_id
+        }
+        if( step_number == 1 ){
+            Object.assign( data, {
+                before_pics,
+                step:step_number
+            } )
+        }
+        else if( step_number == 2 ){
+            Object.assign( data, {
+                mpd_id,
+                formData,
+                formHiddenData,
+                step:step_number
+            } )
+        }
+        else if( step_number == 3 ){
+            Object.assign( data, {
+                mpd_id,
+                after_pics,
+                step:step_number
+            } )
+        }
+console.log(step)
+console.log(step_number)
+console.log(data)
+        utils.post( url, data, {"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+            console.log(res)//res.data.result == null
+            callback( res )
+        })
+    },
     /*-----------------------生命周期-----------------------*/
     onLoad: function (options) {
+        let scope = this
+
         wx.setNavigationBarTitle({
             title: '嘉兴日报自提门店 - 实时库存'
-        })
+        })//设置title
+        this._getLocalStorage()//更新shop_id和uid
+
+        //缓存的盘货操作
+        let uploadTask = wx.getStorageSync('uploadTask')
+        if(!uploadTask){
+            uploadTask = scope.data.uploadTask
+        }
+
         this._getPanhuoInfo(function( res ){
+            console.log(res)
+            let mpd_id = scope.data['mpd_id']
             if( res.data.result == null ){
                 //当天还没进行过任何提交,也许有缓存操作
-                //尝试拉取本地缓存的盘货操作
-                let uploadTask = wx.getStorageSync('uploadTask')
-                if(!!uploadTask){
-                    this.setData({
-                        uploadTask
-                    })
+                uploadTask['step'] == 'step1'
+            }//如果没提交过盘货信息
+            else{
+                mpd_id = res.data.result['mpd_id']
+                if(res.data.result.after_pics!=null){
+                    uploadTask['step'] = 'completed'
+                }
+                else if(res.data.result.mpd_real_stocks!=''&&res.data.result.mpd_stocks!=''){
+                    uploadTask['step'] = 'step3'
+                }else if(res.data.result.mpd_before_pics!=null){
+                    uploadTask['step'] = 'step2'
                 }
             }
-        })//先拉取看看盘货信息
-        this._updateProductList()
+            scope.setData({
+                mpd_id,
+                uploadTask,
+            })
+            wx.setStorageSync('uploadTask',uploadTask)
 
+        })//先拉取盘货信息，更新本地的uploadTask
 
+        this._updateProductList()//拉取货物信息
 
         var that = this;
          // 需要设置slider的宽度，用于计算中间位置,rpx

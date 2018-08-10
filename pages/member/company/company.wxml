@@ -1,3 +1,39 @@
 <view class="container">
-    <view class=""></view>
+
+
+    <view class="main">
+        <view class="block block1">
+            <!--背景-->
+            <image src="/assets/member/company_bg.jpg" class="bg"></image>
+
+            <view class="top-container">
+                <view class="fitst display">
+                    <view class="title"><text class="strong">1</text>st</view>
+                    <view class="avart">
+
+                    </view>
+                    <view class="nickname"></view>
+                </view>
+                <view class="second display">
+                    <view class="title"><text class="strong">2</text>nd</view>
+                    <view class="avart">
+
+                    </view>
+                    <view class="nickname"></view>
+                </view>
+                <view class="third display">
+                    <view class="title"><text class="strong">3</text>rd</view>
+                    <view class="avart">
+
+                    </view>
+                    <view class="nickname"></view>
+                </view>
+            </view>
+
+        </view>
+        <view class="block block2">
+
+        </view>
+    </view>
+
 </view>
