@@ -4,7 +4,11 @@ const domain = app.globalData.DOMAIN
 // var router= app.globalData.router
 Page({
     data: {
-
+        top:[
+            { avatar:'/assets/member/avart.jpg',qyb:1234},
+            { avatar:'/assets/member/avart.jpg',qyb:2345},
+            { avatar:'/assets/member/avart.jpg',qyb:6789},
+        ],
     },
     /*-----------------------生命周期-----------------------*/
     onLoad: function (options) {

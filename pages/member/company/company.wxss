@@ -4,21 +4,19 @@
         .block1 image.bg{width:750rpx;height:950rpx;position:absolute;z-index:-1;}
         .block1 .top-container{width:750rpx;height:490rpx;}
             .top-container .display{color:white;position:absolute;text-align:center;}
-                .display .strong{font-size:50rpx;font-weight:bold;}
-                .display .nickname{}
-            .top-container .fitst{width:180rpx;height:235rpx;left:287rpx;bottom:250rpx;}
+                .display .strong{font-size:46rpx;font-weight:bold;}
+                .display .nickname{ text-align: center;line-height:50rpx; }
+            .top-container .first{width:180rpx;height:235rpx;left:287rpx;bottom:250rpx;}
             .top-container .second{width:180rpx;height:235rpx;left:46rpx;bottom:164rpx;}
-            .top-container .third{width:180rpx;height:235rpx;right:34rpx;bottom:150rpx;}
-                .fitst .avart{}
-                .second .avart{}
-                .third .avart{}
-
-                .fitst .title{}
-                .second .title{}
-                .third .title{}
-
-                .fitst .strong{}
-                .second .strong{}
-                .third .strong{}
+            .top-container .third{width:180rpx;height:235rpx;right:44rpx;bottom:150rpx;}
+                 .avart{ margin:0 auto;border-radius:50%; }
+                .first .avart{ width:170rpx;height:170rpx;border:solid 8rpx #f1d15d; }
+                .second .avart{ width:130rpx;height:130rpx;border:solid 8rpx #e6e6e8; }
+                .third .avart{ width:124rpx;height:124rpx;border:solid 8rpx #cfa964; }
+                    .avart image{ width:100%; height:100%;border-radius:50%; }
+                .display .title{ height:30rpx;line-height:30rpx;position:relative;top:-15rpx; }
+                .first .value{ text-align: center;margin-top:92rpx; }
+                .second .value{ text-align: center; margin-top:92rpx;}
+                .third .value{ text-align: center; margin-top:88rpx;}
 
     .block2{}
