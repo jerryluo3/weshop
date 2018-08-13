@@ -288,7 +288,19 @@ Page({
     var uid = wx.getStorageSync("uid");
     //调用支付
       if(this.data.fromTM == 1){
-          that.weixinPay(oid, uid);
+          wx.showActionSheet({
+              itemList: ['微信支付', '余额支付'],
+              success: function(res) {
+                  if( res.tapIndex == 0 ){
+                     that.weixinPay(oid, uid);
+                  }//微信支付
+                  else if( res.tapIndex == 1 ){
+                      that.walletPay( oid, uid )
+                  }//余额支付
+
+              }
+          });
+
       }else{
           wx.navigateTo({
               url: '/pages/shelf/orderinfo?oid='+oid
@@ -492,6 +504,57 @@ Page({
    * i是文件路径数组的指标
    * length是文件路径数组的长度
    */
+  walletPay( oid, uid ){
+
+      wx.showModal({
+          title: '提示',
+          content: '是否使用余额支付',
+          success: function(res) {
+              if ( res.confirm ) {
+                  let url = app.util.url('qiyue/walletPay')
+                  let ordertype = 0;//订单类型，便利架订单为1
+                  utils.post(url,{ uid, oid, ordertype },{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+                      if( res.data.status == 200 ){
+                          wx.showToast({
+                              title: '支付成功',
+                              icon: 'success',
+                              duration: 1000,
+                              success(ress) {
+                                  setTimeout(function () {
+                                      wx.navigateTo({
+                                          url: '/pages/member/member?fromBLZ=1'
+                                      })
+                                  }, 1000) //延迟时间
+                              }
+                          });
+                      }
+                      if (res.data.status == 1){
+                          wx.showToast({
+                              title: '支付失败',
+                              icon: 'none',
+                              duration: 1000,
+                              success(ress) {
+                                  setTimeout(function () {
+                                      wx.navigateTo({
+                                          url: '/pages/member/member?fromBLZ=1'
+                                      })
+                                  }, 1000) //延迟时间
+                              }
+                          });
+
+                      }
+
+                  })
+              }
+              else if (res.cancel) {
+
+              }
+          }
+      })
+
+
+
+  },
   uploadDIY(filePaths, successUp, failUp, i, length) {
     var that = this
     var url = app.util.url('qiyue/uploadFile');
