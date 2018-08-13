@@ -132,3 +132,5 @@ margin-left:-290rpx;
 .popkefu{position:fixed;bottom:300rpx;right:0;background-color:rgba(0, 0, 0, 0.7);padding:10rpx;}
 .popkefu image{width:60rpx;height:60rpx;display:block}
 .popkefu_btn{position:absolute;z-index:1000;left:0;top:0;right:0;bottom:0;}
+
+.flex-column{flex-direction:column;}

@@ -25,7 +25,7 @@ Page({
         uploadTask:{
             step1:{
                 picturesInfo:{
-                    //0:{path:string,size:number}
+                    //0:{path:string,size:number,percent:0}
                 },
                 picturesUrls:[],//临时url
                 completed:false,
@@ -46,7 +46,8 @@ Page({
                 completed:false,
                 index:0,//当前index,当前传完会++
                 total:0,//总数，比index多1
-                percent:0,//百分比
+                now_percent:0,//百分比
+                list:[],//服务器图片地址
             },
 
             step:'step1',//实际操作
@@ -87,6 +88,17 @@ Page({
     },
     tabClick: function (e) {
         let activeIndex = e.currentTarget.id
+        let step = this.data.uploadTask['step']
+        let step_number = step.charAt(4)
+
+        if( (activeIndex + 1) > step_number ){
+            wx.showToast({
+                title: '请完成当前步骤并提交再进行下一步',
+                icon: 'none',
+                duration: 1500
+            })
+            return
+        }
         this._slideTo( activeIndex )
     },
     _slideTo( index ){
@@ -169,7 +181,7 @@ if(questList[ nowIndex ].userChose != 0){
         }
         wx.showModal({
             title: '提示',
-            content: '是否上传照片',
+            content: '确定要上传全部照片吗？',
             success: function(res) {
                 if (res.confirm) {
                     scope.confirmStep1()
@@ -305,19 +317,78 @@ if(questList[ nowIndex ].userChose != 0){
     },
     buttonSubmitStep3(){
         var scope = this
+        let uploadTask = scope.data.uploadTask
+        if( uploadTask['step3'].picturesUrls.length == 0 ){
+            wx.showToast({
+                title: '请至少上传一张图片',
+                icon: 'none',
+                duration: 2000
+            })
+            return
+        }
         wx.showModal({
             title: '提示',
-            content: '是否提交库存信息',
+            content: '是否上传照片',
             success: function(res) {
                 if (res.confirm) {
-                    scope.uploadData()
+                    scope.confirmStep3()
                 } else if (res.cancel) {
                     console.log('用户点击取消')
                 }
             }
         })
     },
-    confirmStep3(){},
+    confirmStep3(){
+        let scope = this
+        wx.showLoading({
+            title: '正在上传图片',
+        })
+        //上传图片，完成后全部提交完成
+        scope._uploadPictures(function(){
+
+            let uploadTask = scope.data.uploadTask
+            let step = uploadTask['step']
+            wx.setStorageSync('uploadTask',uploadTask)
+            scope.setData({
+                uploadTask
+            })
+
+                       //假请求,完成后
+            // setTimeout(function () {
+            //     wx.hideLoading()
+            //     wx.showToast({
+            //         title: '图片上传成功',
+            //         icon: 'success',
+            //         duration: 1000
+            //     })
+            //     uploadTask[ step ].completed = true
+            //     uploadTask['step'] = 'step2'
+            //     wx.setStorageSync('uploadTask',uploadTask)
+            //     scope.setData({
+            //         uploadTask,
+            //     })
+            //     setTimeout(()=>{
+            //         scope._slideTo(1)
+            //     },1000)//视图切换到第二步
+            // },1000)
+            //真请求
+            scope._savePanhuoInfo(function(){
+                wx.hideLoading()
+                wx.showToast({
+                    title: '图片上传成功,完成今日盘货',
+                    icon: 'success',
+                    duration: 1000
+                })
+                uploadTask[ step ].completed = true
+                uploadTask['step'] = 'completed'
+                wx.setStorageSync('uploadTask',uploadTask)
+                scope.setData({
+                    uploadTask,
+                })
+            })
+
+        })
+    },
 
     //上传数据
     _uploadPictures( callback ){
@@ -325,19 +396,19 @@ if(questList[ nowIndex ].userChose != 0){
         let uploadTask = scope.data.uploadTask
         let step = uploadTask.step
 
-        let entries = scope.data.uploadTask['step1'].picturesUrls.entries()
+        let entries = scope.data.uploadTask[ step ].picturesUrls.entries()
         let uid = wx.getStorageSync('uid');
         let url = `${domain}qiyue/uploadFile`
         let loop = function( item ){
             if( !item.done ){
-                wx.uploadFile({
+              var u =  wx.uploadFile({
                     url: url, //仅为示例，非真实的接口地址
                     filePath: item.value[1],
                     name: 'fileData',
                     formData:{
                     },
                     success: function(res){
-console.log(res)
+                        console.log(res)
                         if ( res.statusCode == 200 ){
                             uploadTask[ step ].index++
                             uploadTask[ step ].list.push(JSON.parse( res.data)['up_file'])
@@ -354,6 +425,17 @@ console.log(res)
                         loop( next )
                     }
                 })
+                console.log('wxUploadFile返回值',u)
+                u.onProgressUpdate((res) => {
+                    console.log('上传进度', res.progress)
+                    uploadTask[ step ].picturesInfo[ item.value[0] ].percent = res.progress
+                    scope.setData({
+                        uploadTask
+                    })
+                    console.log('已经上传的数据长度', res.totalBytesSent)
+                    console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
+                })
+                // u.abort()//取消
             }else{
                 callback()
             }
@@ -390,6 +472,36 @@ console.log(res)
 
 
     },
+    buttonDeletePic(e){
+        //删除照片
+        let target = e.currentTarget
+        let index = target.dataset.index
+
+        let uploadTask = this.data.uploadTask
+        let step = uploadTask['step']
+        //删除一张图片
+        uploadTask[ step ].picturesUrls.splice( index, 1 )
+
+        //更新图片总数
+        uploadTask[ step ].total = uploadTask[ step ].picturesUrls.length
+
+        //更新类数组obj
+        let picturesInfo = {}
+        for( let [ index, value ] of uploadTask[ step ].picturesUrls.entries()){
+            let obj = {
+                path:value,
+                size:0,
+                percent:0
+            }
+
+            picturesInfo[ index ] = obj
+        }
+        uploadTask[ step ].picturesInfo = picturesInfo
+
+        this.setData({
+            uploadTask
+        })
+    },
 
 
     addOnePictrue(){
@@ -417,6 +529,8 @@ console.log(res)
                     success: function (res) {
                         picturesInfo[ key ]['width'] = res.width
                         picturesInfo[ key ]['height'] = res.height
+                        picturesInfo[ key ]['percent'] = 0
+                        picturesInfo[ key ]['size'] = res.size
                         scope.setData({
                             uploadTask
                         })
@@ -470,7 +584,7 @@ console.log(res)
     _updateProductList(callback = function(){} ){
         var scope = this;
         utils.post(`${domain}qiyue/getShopProducts `,{ shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
-            console.log(res)
+            console.log('_updateProductList',res)
             let productList = scope.data.productList
             //原始数据备份
             let goods_list = res.data['product_list']
@@ -523,7 +637,7 @@ console.log(res)
         let uid = wx.getStorageSync('uid')
         let shop_id = wx.getStorageSync('shop_id')
         utils.post(`${domain}qiyue/getPanhuoInfo`,{uid,shop_id},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
-            console.log(res)//res.data.result == null
+            console.log('_getPanhuoInfo',res)//res.data.result == null
             callback( res )
         })
     },
@@ -540,9 +654,9 @@ console.log(res)
 
         let mpd_id = this.data.mpd_id
         let before_pics = uploadTask['step1']['list']
-        let formData = uploadTask['step2']['formData']
+        let formData = JSON.stringify( uploadTask['step2']['formData'] )
         let after_pics = uploadTask['step3']['list']
-        let formHiddenData = this.data.formHiddenData
+        let formHiddenData = JSON.stringify( this.data.formHiddenData )
 console.log(mpd_id)
         let data = {
             uid,
@@ -573,12 +687,12 @@ console.log(step)
 console.log(step_number)
 console.log(data)
         utils.post( url, data, {"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
-            console.log(res)//res.data.result == null
+            console.log('_savePanhuoInfo',res)//res.data.result == null
             callback( res )
         })
     },
     /*-----------------------生命周期-----------------------*/
-    onLoad: function (options) {
+    onLoad: function ( options ) {
         let scope = this
 
         wx.setNavigationBarTitle({
@@ -593,7 +707,6 @@ console.log(data)
         }
 
         this._getPanhuoInfo(function( res ){
-            console.log(res)
             let mpd_id = scope.data['mpd_id']
             if( res.data.result == null ){
                 //当天还没进行过任何提交,也许有缓存操作
@@ -601,12 +714,21 @@ console.log(data)
             }//如果没提交过盘货信息
             else{
                 mpd_id = res.data.result['mpd_id']
-                if(res.data.result.after_pics!=null){
+                if(res.data.result.mpd_after_pics!=''){
                     uploadTask['step'] = 'completed'
+                    uploadTask['step1'].completed = true
+                    uploadTask['step2'].completed = true
+                    uploadTask['step3'].completed = true
                 }
                 else if(res.data.result.mpd_real_stocks!=''&&res.data.result.mpd_stocks!=''){
                     uploadTask['step'] = 'step3'
-                }else if(res.data.result.mpd_before_pics!=null){
+                    uploadTask['step1'].completed = true
+                    uploadTask['step2'].completed = true
+                    uploadTask['step3'].completed = false
+                }else if(res.data.result.mpd_before_pics!=''){
+                    uploadTask['step1'].completed = true
+                    uploadTask['step2'].completed = false
+                    uploadTask['step3'].completed = false
                     uploadTask['step'] = 'step2'
                 }
             }

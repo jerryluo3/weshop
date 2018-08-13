@@ -1,7 +1,4 @@
 <!--pages/cart/cart.wxml-->
-
-
-
 <view wx:if="{{ cartlist != '' }}">
   <view class='weui-flex addr_tab'>
     <view class='weui-flex__item {{ posttype == 0 ? "active" : "" }}' bindtap='changePostType' data-ptype='0'>快递</view>
@@ -127,6 +124,5 @@
 </view>
 
 
-
 <import src="/template/footer/footer.wxml"/>
-<template is="tempFooter" data="{{footer}}"/>
+<template is="tempFo>ter" data="{{footer}}"/>
