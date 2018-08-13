@@ -234,7 +234,7 @@ if(questList[ nowIndex ].userChose != 0){
             //     },1000)//视图切换到第二步
             // },1000)
             //真请求
-            scope._savePanhuoInfo(function(){
+            scope._savePanhuoInfo(function( res ){
                 wx.hideLoading()
                 wx.showToast({
                     title: '图片上传成功',
@@ -249,7 +249,8 @@ if(questList[ nowIndex ].userChose != 0){
                 })
                 setTimeout(()=>{
                     scope.setData({
-                        isUploading:false
+                        isUploading:false,
+                        mpd_id:res.data.panhuo['mpd_id']
                     })
                     scope._slideTo(1)
                 },1000)//视图切换到第二步
@@ -731,6 +732,21 @@ console.log(data)
             }//如果没提交过盘货信息
             else{
                 mpd_id = res.data.result['mpd_id']
+                uploadTask['step1'].picturesUrls = JSON.parse( res.data.result.mpd_before_pics )
+                uploadTask['step3'].picturesUrls = JSON.parse( res.data.result.mpd_after_pics )
+                for( let [ index,value ] of uploadTask['step1'].picturesUrls.entries() ){
+
+                    let url = domain + value
+                    uploadTask['step1'].picturesUrls[ index ] = url
+                    uploadTask['step1'].picturesInfo[ index ] = { url:url, percent:100 }
+                }
+                for( let [ index,value ] of uploadTask['step3'].picturesUrls.entries() ){
+
+                    let url = domain + value
+                    uploadTask['step3'].picturesUrls[ index ] = url
+                    uploadTask['step3'].picturesInfo[ index ] = { url:url, percent:100 }
+
+                }
                 if(res.data.result.mpd_after_pics!=''){
                     uploadTask['step'] = 'completed'
                     uploadTask['step1'].completed = true
