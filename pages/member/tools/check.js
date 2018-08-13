@@ -77,7 +77,7 @@ Page({
             },//第二题
         ],
         nowIndex:0,//当前第0题
-
+        isUploading:false,//
         //tabs
         tabs: ["上传盘货前图片", "上传盘货信息","上传盘货后图片"],
         activeIndex:0,//当前激活的tab
@@ -193,6 +193,9 @@ if(questList[ nowIndex ].userChose != 0){
     },
     confirmStep1(){
         let scope = this
+        this.setData({
+            isUploading:true
+        })
         wx.showLoading({
             title: '正在上传图片',
         })
@@ -245,6 +248,9 @@ if(questList[ nowIndex ].userChose != 0){
                     uploadTask,
                 })
                 setTimeout(()=>{
+                    scope.setData({
+                        isUploading:false
+                    })
                     scope._slideTo(1)
                 },1000)//视图切换到第二步
             })
@@ -289,6 +295,9 @@ if(questList[ nowIndex ].userChose != 0){
     },
     confirmStep2(){
         let scope = this
+        this.setData({
+            isUploading:true
+        })
         wx.showLoading({
             title: '正在上传数据',
         })
@@ -311,6 +320,9 @@ if(questList[ nowIndex ].userChose != 0){
             wx.setStorageSync('uploadTask',uploadTask)
 
             setTimeout(()=>{
+                scope.setData({
+                    isUploading:false
+                })
                 scope._slideTo(2)
             },1000)
         })
@@ -340,6 +352,9 @@ if(questList[ nowIndex ].userChose != 0){
     },
     confirmStep3(){
         let scope = this
+        this.setData({
+            isUploading:true
+        })
         wx.showLoading({
             title: '正在上传图片',
         })
@@ -350,7 +365,7 @@ if(questList[ nowIndex ].userChose != 0){
             let step = uploadTask['step']
             wx.setStorageSync('uploadTask',uploadTask)
             scope.setData({
-                uploadTask
+                uploadTask,
             })
 
                        //假请求,完成后
@@ -381,9 +396,11 @@ if(questList[ nowIndex ].userChose != 0){
                 })
                 uploadTask[ step ].completed = true
                 uploadTask['step'] = 'completed'
-                wx.setStorageSync('uploadTask',uploadTask)
+                // wx.setStorageSync('uploadTask',uploadTask)
+                wx.removeStorageSync('uploadTask')
                 scope.setData({
                     uploadTask,
+                    isUploading:false
                 })
             })
 
@@ -730,6 +747,11 @@ console.log(data)
                     uploadTask['step2'].completed = false
                     uploadTask['step3'].completed = false
                     uploadTask['step'] = 'step2'
+                }else{
+                    uploadTask['step1'].completed = false
+                    uploadTask['step2'].completed = false
+                    uploadTask['step3'].completed = false
+                    uploadTask['step'] = 'step1'
                 }
             }
             scope.setData({

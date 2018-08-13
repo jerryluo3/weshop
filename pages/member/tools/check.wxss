@@ -2,7 +2,8 @@ page{height:auto;background-color:white;}
 .container{display:block}
 .page-check{background-color:white;}
     .step1-container{}
-        .step1-container button{margin:0 auto;}
+        .step1-container button{width:100%;}
+        .step1-container button.submit-button{position:fixed;bottom:0;z-index:5;}
         .gallery-container{width:100%;display:flex;flex-direction: column;}
             .gallery-container .picture{}
                 .picture .item-content{align-items: center;}

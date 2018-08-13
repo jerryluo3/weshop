@@ -7,7 +7,7 @@
     z-index:99;
 }
     .footer-container .icon-container{text-align:center;display:flex;}
-        .icon-container navigator{width:100%;height:100rpx;box-sizing:border-box;padding:10rpx 0;display:flex;flex-direction:column;justify-content:center;}
-        .icon-container image.icon{width:40rpx;height:40rpx;margin:0 auto;}
+        .icon-container navigator{width:100%;height:100rpx;box-sizing:border-box;padding:10rpx 0;display:flex;flex-direction:column;justify-content:center;align-items: center;}
+        .icon-container image.icon{width:40rpx;height:40rpx;}
         .icon-container .text{font-size:24rpx;}
         .icon-container.active{color:black}
