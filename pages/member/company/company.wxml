@@ -1,1 +1,59 @@
-<view class="container"></view>
+<view class="container">
+
+
+    <view class="main">
+        <view class="block block1">
+            <!--背景-->
+            <image src="/assets/member/company_bg.jpg" class="bg"></image>
+
+            <view class="top-container">
+                <view class="first display">
+                    <view class="title"><text class="strong">1</text>st</view>
+                    <view class="avart">
+                        <image src="{{top[0].avatar}}"></image>
+                    </view>
+                    <view class="nickname">
+                        名字1
+                    </view>
+                    <view class="value">
+                        {{top[0].qyb}}
+                    </view>
+                </view>
+                <view class="second display">
+                    <view class="title"><text class="strong">2</text>nd</view>
+                    <view class="avart">
+                        <image src="{{top[1].avatar}}"></image>
+                    </view>
+                    <view class="nickname">
+                        名字2
+                    </view>
+                    <view class="value">
+                        {{top[1].qyb}}
+                    </view>
+                </view>
+                <view class="third display">
+                    <view class="title"><text class="strong">3</text>rd</view>
+                    <view class="avart">
+                        <image src="{{top[2].avatar}}"></image>
+                    </view>
+                    <view class="nickname">
+                        名字3
+                    </view>
+                    <view class="value">
+                        {{top[2].qyb}}
+                    </view>
+                </view>
+            </view>
+
+        </view>
+        <view class="block block2">
+            <view class="tab-bar weui-flex">
+                <view class="tab tab1 weui-flex__item">栖金榜</view>
+                <view class="tab tab2 weui-flex__item">栖金规则</view>
+                <view class="tab tab3 weui-flex__item tab-active">我的栖金</view>
+            </view>
+            <view class="line-shadow"></view>
+        </view>
+    </view>
+
+</view>

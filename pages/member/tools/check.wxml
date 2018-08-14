@@ -1,0 +1,295 @@
+<view class="container page-check">
+    <!--顶部导航-->
+    <!--<view class="page">-->
+        <!--<view class="page__bd">-->
+            <!--<view class="weui-tab">-->
+                <!--<view class="weui-navbar">-->
+                    <!--<block wx:for="{{tabs}}" wx:key="*this">-->
+                        <!--<view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">-->
+                            <!--<view class="weui-navbar__title">{{item}}</view>-->
+                        <!--</view>-->
+                    <!--</block>-->
+                    <!--<view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>-->
+                <!--</view>-->
+                <!--<view class="weui-tab__panel">-->
+                    <!--&lt;!&ndash;第一步&ndash;&gt;-->
+                    <!--<view class="weui-tab__content" hidden="{{view != 'step1'}}">-->
+                        <!--<view class="step1-container">-->
+                            <!--<button class="upload-button" bindtap="addOnePictrue" type="primary" wx:if="{{!uploadTask['step1'].completed}}">点击上传一张图片</button>-->
+                            <!--&lt;!&ndash;<button class="preview-button" type="primary" bindtap="previewAllPictures">预览所有图片</button>&ndash;&gt;-->
+                            <!--<button class="submit-button" type="primary" bindtap="buttonSubmitStep1" wx:if="{{!uploadTask['step1'].completed&&!isUploading}}">提交</button>-->
+                            <!--&lt;!&ndash;gallery&ndash;&gt;-->
+                            <!--<view class="gallery-container">-->
+                                <!--<view class="weui-panel weui-panel_access">-->
+                                    <!--&lt;!&ndash;标题&ndash;&gt;-->
+                                    <!--<view class="weui-panel__hd">图片列表</view>-->
+                                    <!--&lt;!&ndash;每一行的内容&ndash;&gt;-->
+                                    <!--<view class="weui-panel__bd">-->
+                                        <!--<view class="picture weui-media-box weui-media-box_appmsg flex-column" wx:for="{{uploadTask['step1'].picturesUrls}}" wx:key="*this">-->
+                                            <!--&lt;!&ndash;缩略图加文字&ndash;&gt;-->
+                                            <!--<view class="item-content weui-flex flex-column">-->
+                                                <!--<view class="weui-media-box__hd weui-media-box__hd_in-appmsg thumb-container">-->
+                                                    <!--<image class='thumb' src="{{item}}" mode="widthFix"></image>-->
+                                                <!--</view>-->
+                                                <!--<view class="weui-media-box__bd weui-media-box__bd_in-appmsg">-->
+                                                    <!--<view class="weui-media-box__title">标题一</view>-->
+                                                    <!--<view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>-->
+                                                <!--</view>-->
+                                            <!--</view>-->
+                                            <!--&lt;!&ndash;进度条&ndash;&gt;-->
+                                            <!--<view class="weui-progress progress-container">-->
+                                                <!--<view class="weui-progress__bar" wx:if="{{true}}">-->
+                                                    <!--<progress percent="{{uploadTask['step1'].picturesInfo[index].percent}}" stroke-width="3" />-->
+                                                <!--</view>-->
+                                                <!--<view class="weui-progress__opr" wx:if="{{uploadTask['step1'].picturesInfo[ index ].percent==0}}" bindtap="buttonDeletePic" data-index="{{index}}">-->
+                                                    <!--<icon type="cancel" size="22"></icon>-->
+                                                <!--</view>-->
+                                            <!--</view>-->
+                                        <!--</view>-->
+                                    <!--</view>-->
+                                    <!--&lt;!&ndash;查看更多&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<view class="weui-panel__ft">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<view class="weui-cell weui-cell_access weui-cell_link">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<view class="weui-cell__bd">查看更多</view>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<view class="weui-cell__ft weui-cell__ft_in-access"></view>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</view>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</view>&ndash;&gt;-->
+                                <!--</view>-->
+
+                            <!--</view>-->
+                        <!--</view>-->
+                    <!--</view>-->
+                    <!--&lt;!&ndash;第二步&ndash;&gt;-->
+                    <!--<view class="weui-tab__content" hidden="{{view != 'step2'}}">-->
+                        <!--&lt;!&ndash;wx:if="{{uploadTask['step1'].completed&&!uploadTask['step2'].completed}}"&ndash;&gt;-->
+                        <!--<view class="step2-container">-->
+                        <!--<view class="productlist-container">-->
+                            <!--<scroll-view class="product-scroll-view" scroll-y="{{rightScroll.scrollY}}">-->
+                                <!--<view class="product-item weui-flex" wx:for="{{productList}}" wx:key="item.mp_id">-->
+                                    <!--<view class="thumbnail">-->
+                                        <!--<image src="{{domain}}{{item.mp_picture}}"/>-->
+                                    <!--</view>-->
+                                    <!--<view class="weui-flex__item product-detail">-->
+                                        <!--<view class="product-name theme-product-name title">-->
+                                            <!--{{item.mp_title}}-->
+                                        <!--</view>-->
+                                        <!--<view class="theme-product-stock stock">-->
+                                            <!--数量:{{item.mp_stocks}}-->
+                                        <!--</view>-->
+                                    <!--</view>-->
+                                    <!--<view class="input-container weui-flex">-->
+                                        <!--<input type="tel" class="number-input {{item.disabled!=''?'disabled':''}}" data-pid="{{item.mp_pid}}" bindinput="oninput" disabled="{{item.disabled}}" value="{{((item.mp_pid == 393)||(item.mp_pid == 394)||(item.mp_pid == 395))?item.mp_stocks:''}}"/>-->
+                                    <!--</view>-->
+                                <!--</view>-->
+                            <!--</scroll-view>-->
+                            <!--<view class="patch"></view>-->
+                        <!--</view>-->
+                        <!--<view class="button-container" wx:if="{{uploadTask['step']=='step2'}}">-->
+                            <!--<view class="button" bindtap="buttonSubmitStep2" wx:if="{{!isUploading}}">-->
+                                <!--提交库存信息-->
+                            <!--</view>-->
+                        <!--</view>-->
+                    <!--</view>-->
+                    <!--</view>-->
+                    <!--&lt;!&ndash;第三步&ndash;&gt;-->
+                    <!--<view class="weui-tab__content" hidden="{{view != 'step3'}}">-->
+                        <!--&lt;!&ndash;wx:if="{{uploadTask['step1'].completed&&uploadTask['step2'].completed}}"&ndash;&gt;-->
+                        <!--<view class="step3-container">-->
+                            <!--<button class="upload-button" bindtap="addOnePictrue" type="primary" wx:if="{{!uploadTask['step3'].completed}}">点击上传一张图片</button>-->
+                            <!--&lt;!&ndash;<button class="preview-button" type="primary" bindtap="previewAllPictures">预览所有图片</button>&ndash;&gt;-->
+                            <!--<button class="submit-button" type="primary" bindtap="buttonSubmitStep3" wx:if="{{!uploadTask['step3'].completed&&!isUploading}}">提交</button>-->
+                            <!--&lt;!&ndash;gallery&ndash;&gt;-->
+                            <!--<view class="gallery-container">-->
+                                <!--<view class="weui-panel weui-panel_access">-->
+                                    <!--&lt;!&ndash;标题&ndash;&gt;-->
+                                    <!--<view class="weui-panel__hd">图片列表</view>-->
+                                    <!--&lt;!&ndash;每一行的内容&ndash;&gt;-->
+                                    <!--<view class="weui-panel__bd">-->
+                                        <!--<view class="picture weui-media-box weui-media-box_appmsg flex-column" wx:for="{{uploadTask['step3'].picturesUrls}}" wx:key="*this">-->
+                                            <!--&lt;!&ndash;缩略图加文字&ndash;&gt;-->
+                                            <!--<view class="item-content weui-flex flex-column">-->
+                                                <!--<view class="weui-media-box__hd weui-media-box__hd_in-appmsg thumb-container">-->
+                                                    <!--<image class='thumb' src="{{item}}" mode="widthFix"></image>-->
+                                                <!--</view>-->
+                                                <!--<view class="weui-media-box__bd weui-media-box__bd_in-appmsg">-->
+                                                    <!--<view class="weui-media-box__title">标题一</view>-->
+                                                    <!--<view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>-->
+                                                <!--</view>-->
+                                            <!--</view>-->
+                                            <!--&lt;!&ndash;进度条&ndash;&gt;-->
+                                            <!--<view class="weui-progress progress-container">-->
+                                                <!--<view class="weui-progress__bar" wx:if="{{true}}">-->
+                                                    <!--<progress percent="{{uploadTask['step3'].picturesInfo[index].percent}}" stroke-width="3" />-->
+                                                <!--</view>-->
+                                                <!--<view class="weui-progress__opr" wx:if="{{uploadTask['step3'].picturesInfo[ index ].percent==0}}" bindtap="buttonDeletePic" data-index="{{index}}">-->
+                                                    <!--<icon type="cancel" size="22"></icon>-->
+                                                <!--</view>-->
+                                            <!--</view>-->
+                                        <!--</view>-->
+                                    <!--</view>-->
+                                    <!--&lt;!&ndash;查看更多&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<view class="weui-panel__ft">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<view class="weui-cell weui-cell_access weui-cell_link">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<view class="weui-cell__bd">查看更多</view>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<view class="weui-cell__ft weui-cell__ft_in-access"></view>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</view>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</view>&ndash;&gt;-->
+                                <!--</view>-->
+                            <!--</view>-->
+                        <!--</view>-->
+                    <!--</view>-->
+                <!--</view>-->
+            <!--</view>-->
+        <!--</view>-->
+    <!--</view>-->
+    <!--<view class="delete button" bindtap="debugDelete">删除当天盘货信息</view>-->
+
+
+
+    <view class="step-container" hidden="{{openForm}}">
+        <view class="block step-block1">
+            <view class="hd theme-color-cyan-background weui-flex">
+                <view class="number ft30 bold">1</view>
+                <view class="v-line-short"></view>
+                <view class="des weui-flex__item">
+                    <view class="up ft20">(第一步操作)</view>
+                    <view class="down ft14">上传盘货图片</view>
+                </view>
+
+            </view>
+            <view class="bd">
+                <view class="rect-list weui-flex">
+                    <!--<view class="picture weui-media-box weui-media-box_appmsg flex-column" >-->
+                        <!--&lt;!&ndash;缩略图加文字&ndash;&gt;-->
+                        <!--<view class="item-content weui-flex flex-column">-->
+                            <!--<view class="weui-media-box__hd weui-media-box__hd_in-appmsg thumb-container">-->
+                                <!--<image class='thumb' src="{{item}}" mode="widthFix"></image>-->
+                            <!--</view>-->
+                            <!--<view class="weui-media-box__bd weui-media-box__bd_in-appmsg">-->
+                                <!--<view class="weui-media-box__title">标题一</view>-->
+                                <!--<view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>-->
+                            <!--</view>-->
+                        <!--</view>-->
+                        <!--&lt;!&ndash;进度条&ndash;&gt;-->
+                        <!--<view class="weui-progress progress-container">-->
+                            <!--<view class="weui-progress__bar" wx:if="{{true}}">-->
+                                <!--<progress percent="{{uploadTask['step1'].picturesInfo[index].percent}}" stroke-width="3" />-->
+                            <!--</view>-->
+                            <!--<view class="weui-progress__opr" wx:if="{{uploadTask['step1'].picturesInfo[ index ].percent==0}}" bindtap="buttonDeletePic" data-index="{{index}}">-->
+                                <!--<icon type="cancel" size="22"></icon>-->
+                            <!--</view>-->
+                        <!--</view>-->
+                    <!--</view>-->
+                    <view class="thumb" wx:for="{{uploadTask['step1'].picturesUrls}}" wx:key="*this">
+                        <view class="xx" bindtap="buttonDeletePic" data-index="{{index}}" wx:if="{{!isUploading&&!uploadTask['step1'].completed}}">X</view>
+                        <image class='thumb' src="{{item}}" mode="widthFix"></image>
+                    </view>
+                    <view class="rect add-button ft26" bindtap="addOnePictrue" wx:if="{{!uploadTask['step1'].completed}}">
+                        +
+                    </view>
+                </view>
+
+                <view class="submit">
+                    <button class="theme-color-cyan-background" bindtap="buttonSubmitStep1" wx:if="{{!uploadTask['step1'].completed&&!isUploading}}">确定提交</button>
+                </view>
+            </view>
+        </view>
+        <view class="block step-block2 {{!uploadTask['step1'].completed?'disabled-step':''}}">
+            <view class="hd theme-color-cyan-background weui-flex">
+                <view class="number bold">2</view>
+                <view class="v-line-short"></view>
+                <view class="des weui-flex__item">
+                    <view class="up ft20">(第二步操作)</view>
+                    <view class="down ft14">上传盘货信息</view>
+                </view>
+
+            </view>
+            <view class="bd">
+                <view class="tips">
+                    <text wx:if="{{!uploadTask['step2'].completed}}">需上传</text>
+                    <view wx:else>
+                        <icon size="20" type="success" style='margin-right:15rpx;'></icon><text style='font-size:30rpx;'>已上传</text>
+                    </view>
+                </view>
+
+                <view class="submit">
+                    <button class="theme-color-cyan-background" bindtap="goStep2" wx:if="{{(!uploadTask['step2'].completed)&&(uploadTask['step']=='step2')}}">去填写</button>
+                </view>
+            </view>
+        </view>
+        <view class="block step-block3 {{!uploadTask['step2'].completed?'disabled-step':''}}">
+            <view class="hd theme-color-cyan-background weui-flex">
+                <view class="number ft30 bold">3</view>
+                <view class="v-line-short"></view>
+                <view class="des weui-flex__item">
+                    <view class="up ft20">(第三步操作)</view>
+                    <view class="down ft14">上传盘货图片</view>
+                </view>
+
+            </view>
+            <view class="bd">
+                <view class="rect-list weui-flex">
+
+                    <view class="thumb" wx:for="{{uploadTask['step3'].picturesUrls}}" wx:key="*this">
+                        <view class="xx" bindtap="buttonDeletePic" wx:if="{{!isUploading&&!uploadTask['step3'].completed}}" data-index="{{index}}">X</view>
+                        <image class='thumb' src="{{item}}" mode="widthFix"></image>
+                    </view>
+                    <view class="rect add-button ft26" bindtap="addOnePictrue" wx:if="{{uploadTask['step']=='step3'}}">
+                        +
+                    </view>
+                </view>
+
+                <view class="submit">
+                    <button class="theme-color-cyan-background" bindtap="buttonSubmitStep3" wx:if="{{!uploadTask['step3'].completed&&!isUploading}}">确定提交</button></view>
+            </view>
+        </view>
+    </view>
+
+    <view class="weui-tab__content" hidden="{{!openForm}}">
+        <view class="step2-container">
+            <view class="productlist-container">
+                <scroll-view class="product-scroll-view" scroll-y="{{rightScroll.scrollY}}">
+                    <view class="product-item weui-flex" wx:for="{{productList}}" wx:key="item.mp_id">
+                        <view class="thumbnail">
+                            <image src="{{domain}}{{item.mp_picture}}"/>
+                        </view>
+                        <view class="weui-flex__item product-detail">
+                            <view class="product-name theme-product-name title">
+                                {{item.mp_title}}
+                            </view>
+                            <view class="theme-product-stock stock">
+                                数量:{{item.mp_stocks}}
+                            </view>
+                        </view>
+                        <view class="input-container weui-flex">
+                            <input type="tel" class="number-input {{item.disabled!=''?'disabled':''}}" data-pid="{{item.mp_pid}}" bindinput="oninput" disabled="{{item.disabled}}" value="{{((item.mp_pid == 393)||(item.mp_pid == 394)||(item.mp_pid == 395))?item.mp_stocks:''}}"/>
+                        </view>
+                    </view>
+                </scroll-view>
+                <view class="patch"></view>
+            </view>
+            <view class="button-container" wx:if="{{uploadTask['step']=='step2'}}">
+                <view class="button" bindtap="buttonSubmitStep2" wx:if="{{!isUploading}}">
+                    提交库存信息
+                </view>
+            </view>
+        </view>
+    </view>
+
+</view>
+
+<!--<style>-->
+    <!--step-container{ width:500rpx;}-->
+        <!--.step-container .step-block1{ height:320rpx;border-radius:10rpx;overflow:hidden;}-->
+            <!--.step-block1 .hd{  padding:20rpx 40rpx;align-items:center;}-->
+                <!--.hd .number{ margin-right:10rpx;}-->
+                <!--.hd .des{ margin-left:10rpx; }-->
+                    <!--.des .up{}-->
+                    <!--.des .down{}-->
+
+            <!--.step-block1 .bd{ height:190rpx;background-color:#e6f3f4;padding:18rpx 30rpx;}-->
+                <!--.rect-list{  }-->
+                    <!--.rect-list .add-button{ width:72rpx;height:72rpx;}-->
+                    <!--.bd .submit{ text-align:right; }-->
+            <!--.bd .add-button{}-->
+<!--</style>-->

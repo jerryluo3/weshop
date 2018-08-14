@@ -171,8 +171,8 @@ Page({
     // 点击标题切换当前页时改变样式
     swichNav: function (e) {
         var that = this;
-        var cur = e.target.dataset.current;
-        var cid = e.target.dataset.cid;
+        var cur = e.currentTarget.dataset.current;
+        var cid = e.currentTarget.dataset.cid;
         if (this.data.currentTaB == cur) {
             return false;
         }
@@ -183,9 +183,6 @@ Page({
             that.setData({cid: cid})
             that.getCategoryGoods(cid)
         }
-        //console.log(that.data.cat_goods_list);
-        //console.log(that.data.goods_list);
-
     },
 
     //获取分类商品
@@ -210,7 +207,6 @@ Page({
             success: function (res) {
                 that.setData({cat_goods_list: res.data.goods_list})
                 console.log(res.data.goods_list)
-                console.log(res.data.sql)
             }
         });
     },
@@ -684,19 +680,48 @@ Page({
     },
 
     onLoad: function (options) {
-        //小程序码扫进来的优先
+
+        //小程序码扫进来的
         var shopid = options['shopid']
-        var storage_shopid = wx.getStorageSync('shop_id')
-        //如果是不同的小程序码，把前面的购物车缓存清理掉
-        if(shopid != storage_shopid){
-            if(wx.getStorageSync('customer') !=""){
-                wx.removeStorageSync('customer')
+
+        let shop_idq = undefined
+        //二维码扫进来的
+        if( options.hasOwnProperty('q')){
+            let temp = options['q'].match(/(%2F)\d+/g)
+            if( temp == null ){
+                temp = options['q'].match(/(%2F)\d+.html/g)
             }
+            shop_idq = temp[0].match(/\d+/g)[1]
         }
 
-        //如果是扫小程序码进的,直接设置导航栏的"扫一扫"
+        //缓存的shopid
+        var storage_shopid = wx.getStorageSync('shop_id')
+
+        //如果是扫小程序码进的,直接跳转到便利架
         if (!!shopid) {
+          //如果换门店了，清理购物车缓存
+            if(shopid != storage_shopid){
+                if(wx.getStorageSync('customer') !=""){
+                    wx.removeStorageSync('customer')
+                }
+            }
+
+            //更新一下缓存，并且跳页
             wx.setStorageSync('shop_id', shopid)
+            wx.navigateTo({
+                url:'/pages/shelf/index'
+            })
+        }
+        //如果是扫二维码进来的
+        else if( !!shop_idq ){
+            if(shop_idq != storage_shopid){
+                if(wx.getStorageSync('customer') !=""){
+                    wx.removeStorageSync('customer')
+                }
+            }
+
+            //更新一下缓存，并且跳页
+            wx.setStorageSync('shop_id', shop_idq)
             wx.navigateTo({
                 url:'/pages/shelf/index'
             })

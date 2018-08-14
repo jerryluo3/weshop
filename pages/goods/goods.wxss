@@ -118,3 +118,12 @@
 .popShareClose{width:100%;height:100rpx;line-height:100rpx;text-align:center;font-size:32rpx;}
 
 .show_more_comments{text-align:center;}
+
+.grey{
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    color:#ccc;
+}

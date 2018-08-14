@@ -45,7 +45,7 @@
         <view class="delbtn" catchtap='delcart' data-id="{{item.cart_id}}">
           <view class="paybtn" catchtap='orderDetail' data-oid="{{item.oid}}" data-id="{{item.id}}">订单详情</view>
           <view wx:if="{{ item.status == 0 }}" class="paybtn" bindtap='delOrder' data-oid="{{item.oid}}">删除订单</view>
-          <view wx:if="{{ item.status == 0 }}" class="paybtn" bindtap='wepay' data-oid="{{item.oid}}">去支付</view>
+          <view wx:if="{{ item.status == 0 }}" class="paybtn" bindtap='wepay' data-oid="{{item.oid}}">支付</view>
           <view wx:if="{{ item.status == 1 }}" class="paybtn" bindtap='cancelOrder' data-oid="{{item.oid}}">取消订单</view>
           <view wx:if="{{ item.status == 2 || item.status == 3 }}" class="infobtn" bindtap='peisong' data-oid="{{item.oid}}">配送信息</view>
           <view wx:if="{{ item.status == 2 }}" class="paybtn" bindtap='shouhuo' data-oid="{{item.oid}}">确定收货</view>
