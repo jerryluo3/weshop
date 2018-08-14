@@ -139,7 +139,10 @@ margin-left:-290rpx;
 .ft30{ font-size:30rpx; }
 .ft28{ font-size:28rpx; }
 .ft26{ font-size:26rpx; }
+.ft20{ font-size:20rpx; }
+.ft14{ font-size:14rpx; }
 .white{ color:white; }
 .red{ color:red; }
 .green{ color:green; }
 .blue{ color:blue; }
+.bold{ font-weight:bold; }

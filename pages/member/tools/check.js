@@ -85,6 +85,8 @@ Page({
         sliderLeft: 0,//left
         sliderWidth:192,//rpx
         segmentWidth:0,//段宽
+
+        openForm:false,//打开表单，让师傅填写
     },
     tabClick: function (e) {
         let activeIndex = e.currentTarget.id
@@ -252,7 +254,7 @@ if(questList[ nowIndex ].userChose != 0){
                         isUploading:false,
                         mpd_id:res.data.panhuo['mpd_id']
                     })
-                    scope._slideTo(1)
+                    // scope._slideTo(1)
                 },1000)//视图切换到第二步
             })
 
@@ -317,18 +319,21 @@ if(questList[ nowIndex ].userChose != 0){
             uploadTask['step'] = 'step3'
             scope.setData({
                 uploadTask,
+                openForm:false,
+                isUploading:false
             })
             wx.setStorageSync('uploadTask',uploadTask)
-
-            setTimeout(()=>{
-                scope.setData({
-                    isUploading:false
-                })
-                scope._slideTo(2)
-            },1000)
         })
     },
     buttonSubmitStep3(){
+        if( !this.data.uploadTask['step2'].completed ){
+            wx.showToast({
+                title: '请先完成第2步',
+                icon: 'none',
+                duration: 1000
+            })
+            return
+        }
         var scope = this
         let uploadTask = scope.data.uploadTask
         if( uploadTask['step3'].picturesUrls.length == 0 ){
@@ -352,6 +357,7 @@ if(questList[ nowIndex ].userChose != 0){
         })
     },
     confirmStep3(){
+
         let scope = this
         this.setData({
             isUploading:true
@@ -556,6 +562,11 @@ if(questList[ nowIndex ].userChose != 0){
                     }
                 })
             }
+        })
+    },
+    goStep2(){
+        this.setData({
+            openForm : true
         })
     },
     previewAllPictures(){
