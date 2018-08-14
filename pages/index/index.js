@@ -684,15 +684,17 @@ Page({
         //小程序码扫进来的优先
         var shopid = options['shopid']
         var storage_shopid = wx.getStorageSync('shop_id')
-        //如果是不同的小程序码，把前面的购物车缓存清理掉
-        if(shopid != storage_shopid){
-            if(wx.getStorageSync('customer') !=""){
-                wx.removeStorageSync('customer')
-            }
-        }
 
-        //如果是扫小程序码进的,直接设置导航栏的"扫一扫"
+        //如果是扫小程序码进的,直接跳转到便利架
         if (!!shopid) {
+          //如果换门店了，清理购物车缓存
+            if(shopid != storage_shopid){
+                if(wx.getStorageSync('customer') !=""){
+                    wx.removeStorageSync('customer')
+                }
+            }
+
+            //更新一下缓存，并且跳页
             wx.setStorageSync('shop_id', shopid)
             wx.navigateTo({
                 url:'/pages/shelf/index'
