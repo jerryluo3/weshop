@@ -729,8 +729,9 @@ console.log(data)
         this._getPanhuoInfo(function( res ){
             let mpd_id = scope.data['mpd_id']
             if( res.data.result == null ){
+                uploadTask = scope.data.uploadTask
                 //当天还没进行过任何提交,也许有缓存操作
-                uploadTask['step'] == 'step1'
+                uploadTask['step'] = 'step1'
             }//如果没提交过盘货信息
             else{
                 mpd_id = res.data.result['mpd_id']
@@ -813,7 +814,7 @@ console.log(data)
                 if (res.confirm) {
                     let uid = 3217
                     let shop_id = 362
-                    utils.post(`${domain}qiyue/deletePanhuo`,{ uid,shop_id },{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+                    utils.post(`${domain}qiyue/delPanhuoInfo`,{ uid,shop_id },{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
                         console.log('deletePanhuo',res)//res.data.result == null
                         //status == 200是删除成功，1是删除错误
                     })
