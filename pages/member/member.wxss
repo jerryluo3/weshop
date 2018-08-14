@@ -36,6 +36,7 @@ padding:8rpx;
 position:absolute;
 right:0;
 }
+.blz.order_nums_tip{ width:10rpx;height:10rpx;}
 
 .block_ico{width:100rpx;height:100rpx;text-align:center;}
 .block_ico image{width:50rpx;height:50rpx;margin:25rpx 0 0;display:inline-block;}

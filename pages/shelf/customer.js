@@ -69,12 +69,11 @@ var utils = require('../../utils/util')
             return
         }
         this.productObject[ mp_id ].number -= 1
+        //加到购物车列表
+        this.cart_list[ mp_id ] = this.productObject[ mp_id ].number
         if(this.productObject[ mp_id ].number == 0){
             delete this.cart_list[mp_id]
         }
-        //加到购物车列表
-        this.cart_list[ mp_id ] = this.productObject[ mp_id ].number
-
 
 
         this.updateProductArray()
