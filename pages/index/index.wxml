@@ -1,13 +1,4 @@
 <!--index.wxml-->
-<view class="topblank">
-  <scroll-view scroll-x="true" class="tab-h fixed" scroll-left="{{scrollLeft}}">
-    <view class="tab-item {{currentTab == 0 ?'active':''}}"  data-current="0" bindtap="swichNav" data-cid="0" >每日优选</view>
-    <block wx:for="{{navs}}" wx:key="">
-      <view class="tab-item {{currentTab == index+1 ?'active':''}}"  data-current="{{index+1}}" bindtap="swichNav" data-cid="{{item.cat_id}}" >{{item.cat_name}}</view>
-    </block>
-  </scroll-view>
-</view>
-
 <view class="swiper">
 <swiper indicator-dots="true" vertical="{{ads_list==1}}" circular='true' autoplay="true" interval="3000" duration="1200" style='height:350rpx;'>
   <block wx:for="{{ads_list}}" wx:key="{{index}}">
@@ -17,6 +8,26 @@
 </swiper>
 </view>
 
+<view class="topblank">
+<!--<scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">-->
+  <!--<view class="tab-item {{currentTab == 0 ?'active':''}}"  data-current="0" bindtap="swichNav" data-cid="0" >每日优选</view>-->
+  <!--<block wx:for="{{navs}}" wx:key="">-->
+    <!--<view class="tab-item {{currentTab == index+1 ?'active':''}}"  data-current="{{index+1}}" bindtap="swichNav" data-cid="{{item.cat_id}}" >{{item.cat_name}}</view>-->
+  <!--</block>-->
+<!--</scroll-view>-->
+  <view class="weui-grids">
+    <view  class="tab-item weui-grid {{currentTab == 0 ?'active':''}}" data-current="0"  bindtap="swichNav" data-cid="0">
+      <image class="weui-grid__icon" src="https://www.qiyue99.com/weshop/data/wxapp/ico/mryx.png" />
+      <view class="weui-grid__label">每日优选</view>
+    </view>
+    <block wx:for="{{navs}}" wx:key="">
+      <view  class="tab-item weui-grid {{currentTab == index+1 ?'active':''}}" data-current="{{index+1}}"  bindtap="swichNav" data-cid="{{item.cat_id}}">
+        <image class="weui-grid__icon" src="{{siteurl}}{{item.cat_img}}" />
+        <view class="weui-grid__label">{{item.cat_name}}</view>
+      </view>
+    </block>
+  </view>
+</view>
 
 <view class="sanbao" wx:if="{{ cid == 0 }}">
 <view class="sanbao_block">

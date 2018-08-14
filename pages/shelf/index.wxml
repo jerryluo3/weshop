@@ -209,7 +209,7 @@
 
   <view class="enter_footer">
     <view>公司还没有装便利站？</view>
-    <navigator url="/pages/outurl/outurl?url=http://www.qiyue99.com/weshop/zt/share/share.html">
+    <navigator url="/pages/outurl/outurl?url=https://www.qiyue99.com/weshop/zt/share/share.html">
       <button class="enter_footer_btn" >立即免费领取</button>
     </navigator>
   </view>

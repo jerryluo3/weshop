@@ -1,0 +1,31 @@
+.main{}
+    .block{position:relative;}
+    .block1{width:750rpx;height:950rpx;}
+        .block1 image.bg{width:750rpx;height:950rpx;position:absolute;z-index:-1;}
+        .block1 .top-container{width:750rpx;height:490rpx;}
+            .top-container .display{color:white;position:absolute;text-align:center;}
+                .display .strong{font-size:46rpx;font-weight:bold;}
+                .display .nickname{ text-align: center;line-height:50rpx; }
+            .top-container .first{width:180rpx;height:235rpx;left:287rpx;bottom:250rpx;}
+            .top-container .second{width:180rpx;height:235rpx;left:46rpx;bottom:164rpx;}
+            .top-container .third{width:180rpx;height:235rpx;right:44rpx;bottom:150rpx;}
+                 .avart{ margin:0 auto;border-radius:50%; }
+                .first .avart{ width:170rpx;height:170rpx;border:solid 8rpx #f1d15d; }
+                .second .avart{ width:130rpx;height:130rpx;border:solid 8rpx #e6e6e8; }
+                .third .avart{ width:124rpx;height:124rpx;border:solid 8rpx #cfa964; }
+                    .avart image{ width:100%; height:100%;border-radius:50%; }
+                .display .title{ height:30rpx;line-height:30rpx;position:relative;top:-15rpx; }
+                .first .value{ text-align: center;margin-top:92rpx; }
+                .second .value{ text-align: center; margin-top:92rpx;}
+                .third .value{ text-align: center; margin-top:88rpx;}
+
+    .block2{ padding-top:40rpx;}
+        .block2 .tab-bar{ width:720rpx;margin:0 auto;height:70rpx;line-height:70rpx; }
+            .tab-bar .tab{ text-align:center; background-color:#ccc; }
+            .tab-bar .tab1{ border-top-left-radius:10rpx; }
+            .tab-bar .tab3{ border-top-right-radius:10rpx; }
+
+
+
+    .line-shadow{ width:100%;height:70rpx;background:linear-gradient(rgba(0,0,0,0), rgba(150,150,150,0.2)); position:relative;z-index:2;bottom:70rpx; }
+    .tab.tab-active{ background:linear-gradient(17deg, rgba(92,146,211,1), rgba(116,185,198,1));}

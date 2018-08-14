@@ -577,7 +577,7 @@ Page({
         })
     },
     //拉取商品列表
-    updateProductList( callback = function(){} ){
+    _updateProductList(callback = function(){} ){
         var scope = this;
         utils.post(`${domain}qiyue/getBLZGoodsList`,{shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
 
@@ -733,7 +733,7 @@ console.log(res)
 
 
       scope.updateTagList()
-      scope.updateProductList(function(customer){
+      scope._updateProductList(function(customer){
           console.log(customer)
       })
 
@@ -755,7 +755,7 @@ console.log(res)
 
     },
     onPullDownRefresh: function () {
-        this.updateProductList()
+        this._updateProductList()
         wx.stopPullDownRefresh();
     },
 })

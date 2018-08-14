@@ -48,7 +48,7 @@ padding-left:10rpx;
 }
 .total_price{font-size:36rpx;font-weight:bold;margin-left:10rpx;}
 .cart_counts{display:flex;}
-.gray{
+.grey{
      -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
     -ms-filter: grayscale(100%);
