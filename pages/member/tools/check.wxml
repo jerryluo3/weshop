@@ -142,15 +142,7 @@
             </view>
         </view>
     </view>
-<view class="delete button" bindtap="debugDelete">删除当天盘货信息</view>
+    <view class="delete button" bindtap="debugDelete">删除当天盘货信息</view>
 
-
-
-
-    <!--<view class="group-group option-group{{index}}" wx:for="{{questList}}" wx:for-item="question" wx:if="{{nowIndex==index}}" wx:key="*this">-->
-        <!--<view class="option {{question.userChose==0?'blue':''}} {{(((question.userChose!=0)&&(option.uid==question.answer))?'correct':'')||(((question.userChose!=0)&&(option.uid!=question.answer))?'wrong':'')}}" wx:if="{{(question.userChose==0)||(question.userChose!=0&&(question.answer==option.uid))||(question.userChose==option.uid)}}" wx:for="{{question.options}}" wx:for-item="option" wx:for-index='optionIndex' bindtap="chose" data-uid="{{option.uid}}" wx:key="*this">{{option.text}}</view>-->
-
-        <!--<view class="next" bindtap="next" wx:if="{{nowIndex<(questList.length-1)}}">下一题</view>-->
-    <!--</view>-->
 
 </view>
