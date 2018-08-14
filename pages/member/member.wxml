@@ -150,7 +150,9 @@
     <view class="block_more"><image src='/assets/member/more.png' mode="widthFix" ></image></view>
   </view>
 
-  <view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/tools/tools">
+
+  <view class='weui-flex tools_row' bindtap='jumpUrl' data-url="/pages/member/tools/tools" wx:if="{{userInfo.mem_panhuo==1}}">
+
     <view class='block_ico'><image src='/assets/member/ico_tools.png' mode="widthFix" ></image></view>
     <view class='weui-flex__item block_name'>
       <text>工具</text>
