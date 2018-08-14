@@ -601,7 +601,9 @@ if(questList[ nowIndex ].userChose != 0){
     //拉取商品列表
     _updateProductList(callback = function(){} ){
         var scope = this;
-        utils.post(`${domain}qiyue/getShopProducts `,{ shop_id:wx.getStorageSync('shop_id')},{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+        // let shop_id = wx.getStorageSync('shop_id')
+        let shop_id = 362//测试拉取362
+        utils.post(`${domain}qiyue/getShopProducts `,{ shop_id },{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
             console.log('_updateProductList',res)
             let productList = scope.data.productList
             //原始数据备份
@@ -733,7 +735,12 @@ console.log(data)
             else{
                 mpd_id = res.data.result['mpd_id']
                 uploadTask['step1'].picturesUrls = JSON.parse( res.data.result.mpd_before_pics )
-                uploadTask['step3'].picturesUrls = JSON.parse( res.data.result.mpd_after_pics )
+                try{
+                    uploadTask['step3'].picturesUrls = JSON.parse( res.data.result.mpd_after_pics )
+                }
+                catch(err) {
+                    console.log( err )
+                }
                 for( let [ index,value ] of uploadTask['step1'].picturesUrls.entries() ){
 
                     let url = domain + value
@@ -797,6 +804,24 @@ console.log(data)
                 });
             }
         });
+    },
+    debugDelete(){
+        wx.showModal({
+            title: '提示',
+            content: '是否重置当天盘货信息',
+            success: function(res) {
+                if (res.confirm) {
+                    let uid = 3217
+                    let shop_id = 362
+                    utils.post(`${domain}qiyue/deletePanhuo`,{ uid,shop_id },{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+                        console.log('deletePanhuo',res)//res.data.result == null
+                        //status == 200是删除成功，1是删除错误
+                    })
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
+            }
+        })
     },
     onUnload(){
         wx.setNavigationBarTitle({
