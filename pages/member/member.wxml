@@ -89,7 +89,7 @@
 
             <view class='weui-flex__item order_status' bindtap='jumpUrl' data-url="/pages/member/orders/orders?otype=4&fromTM=0">
               <view class='status_list_li'>
-                <view class='order_nums_tip' wx:if="{{ blz_finish_nums > 0 }}">{{ blz_finish_nums }}</view>
+                <view class='order_nums_tip blz'></view>
                 <image src='/assets/member/order_finish.png' mode="widthFix" ></image>
                 <text>已完成</text>
               </view>
