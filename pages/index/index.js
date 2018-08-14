@@ -680,9 +680,21 @@ Page({
     },
 
     onLoad: function (options) {
-      console.log(options)
-        //小程序码扫进来的优先
+
+        //小程序码扫进来的
         var shopid = options['shopid']
+
+        let shop_idq = undefined
+        //二维码扫进来的
+        if( options.hasOwnProperty('q')){
+            let temp = options['q'].match(/(%2F)\d+/g)
+            if( temp == null ){
+                temp = options['q'].match(/(%2F)\d+.html/g)
+            }
+            shop_idq = temp[0].match(/\d+/g)[1]
+        }
+
+        //缓存的shopid
         var storage_shopid = wx.getStorageSync('shop_id')
 
         //如果是扫小程序码进的,直接跳转到便利架
@@ -696,6 +708,20 @@ Page({
 
             //更新一下缓存，并且跳页
             wx.setStorageSync('shop_id', shopid)
+            wx.navigateTo({
+                url:'/pages/shelf/index'
+            })
+        }
+        //如果是扫二维码进来的
+        else if( !!shop_idq ){
+            if(shop_idq != storage_shopid){
+                if(wx.getStorageSync('customer') !=""){
+                    wx.removeStorageSync('customer')
+                }
+            }
+
+            //更新一下缓存，并且跳页
+            wx.setStorageSync('shop_id', shop_idq)
             wx.navigateTo({
                 url:'/pages/shelf/index'
             })
