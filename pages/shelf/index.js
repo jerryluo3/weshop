@@ -312,7 +312,7 @@ Page({
                             list[ i ].number = 0
                         }
                         list[ i ].number+=1
-                        this._fly(e,60,60,id)
+                        // this._fly(e,60,60,id)
                     }
                     console.log(`总共${il}条数据，当前循环到第${i}条，break`)
                     break;
@@ -327,7 +327,7 @@ Page({
         else{
             //如果操作的是customer
             if(op=='addOne'){
-                this._fly(e,60,500,id)
+                // this._fly(e,60,500,id)
             }
 
         }
@@ -337,16 +337,7 @@ Page({
           key:"customer",
           data:customer
       })
-
-
-
-
-
-
-
-
-
-  },
+    },
 
     //授权
     bindGetUserInfo(e){

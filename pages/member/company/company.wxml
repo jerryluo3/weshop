@@ -47,11 +47,12 @@
 
         </view>
         <view class="block block2">
-            <view class="tab-bar">
-                <view class="tab">栖金榜</view>
-                <view class="tab">栖金规则</view>
-                <view class="tab">我的栖金</view>
+            <view class="tab-bar weui-flex">
+                <view class="tab tab1 weui-flex__item">栖金榜</view>
+                <view class="tab tab2 weui-flex__item">栖金规则</view>
+                <view class="tab tab3 weui-flex__item tab-active">我的栖金</view>
             </view>
+            <view class="line-shadow"></view>
         </view>
     </view>
 

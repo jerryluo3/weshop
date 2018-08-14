@@ -134,3 +134,12 @@ margin-left:-290rpx;
 .popkefu_btn{position:absolute;z-index:1000;left:0;top:0;right:0;bottom:0;}
 
 .flex-column{flex-direction:column;}
+.ft34{ font-size:34rpx; }
+.ft32{ font-size:32rpx; }
+.ft30{ font-size:30rpx; }
+.ft28{ font-size:28rpx; }
+.ft26{ font-size:26rpx; }
+.white{ color:white; }
+.red{ color:red; }
+.green{ color:green; }
+.blue{ color:blue; }
