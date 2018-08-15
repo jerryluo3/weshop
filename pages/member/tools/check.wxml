@@ -206,7 +206,7 @@
             </view>
             <view class="bd">
                 <view class="tips">
-                    <text wx:if="{{!uploadTask['step2'].completed}}">需上传</text>
+                    <text wx:if="{{!uploadTask['step2'].completed}}">暂未上传盘货信息</text>
                     <view wx:else>
                         <icon size="20" type="success" style='margin-right:15rpx;'></icon><text style='font-size:30rpx;'>已上传</text>
                     </view>
