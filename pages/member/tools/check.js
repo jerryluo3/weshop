@@ -612,9 +612,9 @@ if(questList[ nowIndex ].userChose != 0){
     //拉取商品列表
     _updateProductList(callback = function(){} ){
         var scope = this;
-        // let shop_id = wx.getStorageSync('shop_id')
-        let shop_id = 362//测试拉取362
-        utils.post(`${domain}qiyue/getShopProducts `,{ shop_id },{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
+        let shop_id = wx.getStorageSync('shop_id')
+        // let shop_id = 362//测试拉取362
+        utils.post(`${domain}qiyue/getShopProducts`,{ shop_id },{"Content-Type": "application/x-www-form-urlencoded"}).then((res)=>{
             console.log('_updateProductList',res)
             let productList = scope.data.productList
             //原始数据备份
