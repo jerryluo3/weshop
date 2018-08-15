@@ -262,7 +262,7 @@
                             </view>
                         </view>
                         <view class="input-container weui-flex">
-                            <input type="tel" class="number-input {{item.disabled!=''?'disabled':''}}" data-pid="{{item.mp_pid}}" bindinput="oninput" disabled="{{item.disabled}}" value="{{((item.mp_pid == 393)||(item.mp_pid == 394)||(item.mp_pid == 395))?item.mp_stocks:''}}"/>
+                            <input type="number" class="number-input {{item.disabled!=''?'disabled':''}}" data-id="{{item.mp_id}}" bindinput="oninput" disabled="{{item.disabled}}" value="{{((item.mp_pid == 393)||(item.mp_pid == 394)||(item.mp_pid == 395)||(item.mp_pid == 427))?item.mp_stocks:''}}"/>
                         </view>
                     </view>
                 </scroll-view>

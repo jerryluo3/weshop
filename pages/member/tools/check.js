@@ -157,12 +157,12 @@ if(questList[ nowIndex ].userChose != 0){
     },
     oninput(e){
         let target = e.currentTarget
-        let pid = target.dataset['pid']
+        let id = target.dataset['id']
 
         let uploadTask = this.data.uploadTask
 
         let formData = uploadTask['step2'].formData
-        formData[ pid ] = e.detail.value
+        formData[ id ] = e.detail.value
         this.setData({
             uploadTask
         })
@@ -629,14 +629,15 @@ if(questList[ nowIndex ].userChose != 0){
                 productList.forEach(( value, index )=>{
                     var disabled = ''
                     let pid = value[ 'mp_pid' ]
-                    formHiddenData[ pid ] = value['mp_stocks']
+                    let mp_id = value[ 'mp_id' ]
+                    formHiddenData[ mp_id ] = value['mp_stocks']
 
                     if( pid == 393 || pid == 394 || pid == 395 ){
                         disabled = 'true'
-                        formData[ pid ] = value['mp_stocks']
+                        formData[ mp_id ] = value['mp_stocks']
                     }
                     else{
-                        formData[ pid ] = 0
+                        formData[ mp_id ] = 0
                     }
                     let url = value['mp_picture']
                     //处理缩略图
