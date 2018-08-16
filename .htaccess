@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+RewriteRule ^(zaohuijingying|shouxianpeixun|yingxiaojiqiao|jingyingguanli|zengyuanzhuanti|shuominghui|xianzhongfenxi|baoxianruanjian|baoxianshipin)-([0-9]+).html$ index.php/channel/$2 [L]
